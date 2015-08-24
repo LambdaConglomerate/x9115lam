@@ -13,3 +13,7 @@ Output of the commands `python --version`
 `easy_install -h`
 
 ![alt text](https://raw.githubusercontent.com/LambdaConglomerate/x9115lam/master/hw/code/1/pics/easy_install.png)
+
+A screen shot of what it looks like to write code in your preferred Python IDE (hint: need to see syntax highlighting).
+
+![alt text](https://raw.githubusercontent.com/LambdaConglomerate/x9115lam/master/hw/code/1/pics/syntax.png)
