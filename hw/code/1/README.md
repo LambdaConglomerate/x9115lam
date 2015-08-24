@@ -17,3 +17,6 @@ Output of the commands `python --version`
 A screen shot of what it looks like to write code in your preferred Python IDE (hint: need to see syntax highlighting).
 
 ![alt text](https://raw.githubusercontent.com/LambdaConglomerate/x9115lam/master/hw/code/1/pics/syntax.png)
+
+A screenshot or output of your okok.py test(defined below).
+![output](./pics/output.png)

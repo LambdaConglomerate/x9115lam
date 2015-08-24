@@ -18,10 +18,15 @@ def _ok2():
 
 @ok
 def _ok3():
-  assert 3==3 
+  assert 3==3
 
 @ok
+
 def _ok4():
+  assert 'java'=='python'
+
+@ok
+def _ok5():
   assert unittest.tries==4
   assert unittest.fails==1
-  print unittest.score() 
+  print unittest.score()
