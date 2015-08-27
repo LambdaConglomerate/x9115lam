@@ -46,3 +46,28 @@ def do_four(f, val):
     do_twice(f, val)
 
 do_four(print_twice, 'spam')
+
+#3.5
+def print_2x2_grid():
+    print "+ - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |")
+    print "+ - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |")
+    print "+ - - - - + - - - - +"
+    
+def print_4x4_grid():
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    
+print
+print_2x2_grid()
+
+print
+print_4x4_grid()
