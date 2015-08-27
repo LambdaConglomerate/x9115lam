@@ -28,3 +28,21 @@ def right_justify(s):
     print(s)
 
 right_justify('allen')
+
+#3.4
+def do_twice(f, val):
+    f(val)
+    f(val)
+    
+def print_spam():
+    print 'spam'
+    
+def print_twice(s):
+    print s
+    print s
+    
+def do_four(f, val):
+    do_twice(f, val)
+    do_twice(f, val)
+
+do_four(print_twice, 'spam')
