@@ -18,3 +18,13 @@ def print_lyrics():
     print "I sleep all night and I work all day."
 
 repeat_lyrics()
+
+# 3.3
+def right_justify(s):
+    spaces_to_insert = 70 - len(s)
+    for i in range(0, spaces_to_insert):
+        print " ",
+        
+    print(s)
+
+right_justify('allen')
