@@ -32,11 +32,29 @@ def circle(t, radius):
   # polygon(t, length, num_sides)
 
 def flower():
-  for i in range (50):
-    if i % 2 != 0:
-      lt(bob, 45)
+  num_petals = 20.0
+  angle_increment = 360.0 / num_petals
+  for i in range (42):
+    # arc(bob, 10, 15)
+    # lt(bob, 90)
+    arc(bob, 150, 30)
+    lt(bob, 135)
+    if(i % 2 == 0):
+       lt(bob, 15)
+
+  wait_for_user()
+
+def flower1():
+  for i in range (8):
     arc(bob, 50, 90)
-    lt(bob, 45)
+    lt(bob, 135)
+
+def flower2():
+  for i in range (20):
+    arc(bob, 50, 90)
+    lt(bob, 90)
+    if(i % 2 == 0):
+      lt(bob, 36)
 
 world = TurtleWorld()
 bob = Turtle()
