@@ -43,14 +43,28 @@ def flower(t, num_petals, petal_angle, radius):
     petal(t, radius, petal_angle)
     lt(t, angle_increment)
 
+def diag_length(num_sides, length, diagonal_angle):
+  diagonal_angle = math.radians(diagonal_angle)
+  diagonal = (length / 2) / math.cos(diagonal_angle)
+  return diagonal
+
+def diag_angle(num_sides, length):
+  sum_int_angles = 180 * (num_sides - 2)
+  int_angle = sum_int_angles / num_sides
+  diagonal_angle = int_angle / 2
+  return diagonal_angle
+
 def pie(t, length, num_sides):
   polygon(t, length, num_sides)
 
-  diag = (.5 * length)/.59
-  lt(t, 54)
+  # diag = (.5 * length)/.59
+  diagonal_angle = diag_angle(num_sides, length)
+  diag = diag_length(num_sides, length, diagonal_angle)
+  triangle_peak = 180 - (diagonal_angle + 90)
+  lt(t, diagonal_angle)
   fd(t, diag)
   for i in range (num_sides - 1):
-    lt(t, 72/2)
+    lt(t, triangle_peak)
     fd(t, diag)
     lt(t, 180)
     fd(t, diag)
@@ -72,7 +86,10 @@ def pie(t, length, num_sides):
 world = TurtleWorld()
 bob = Turtle()
 bob.delay = 0.1
-pie(bob, 50, 5)
+pie(bob, 50, 9)
+
+
+
 
 def draw_flowers():
   # Flower1
