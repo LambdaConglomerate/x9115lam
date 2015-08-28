@@ -18,3 +18,56 @@ def print_lyrics():
     print "I sleep all night and I work all day."
 
 repeat_lyrics()
+
+# 3.3
+def right_justify(s):
+    spaces_to_insert = 70 - len(s)
+    for i in range(0, spaces_to_insert):
+        print " ",
+        
+    print(s)
+
+right_justify('allen')
+
+#3.4
+def do_twice(f, val):
+    f(val)
+    f(val)
+    
+def print_spam():
+    print 'spam'
+    
+def print_twice(s):
+    print s
+    print s
+    
+def do_four(f, val):
+    do_twice(f, val)
+    do_twice(f, val)
+
+do_four(print_twice, 'spam')
+
+#3.5
+def print_2x2_grid():
+    print "+ - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |")
+    print "+ - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |")
+    print "+ - - - - + - - - - +"
+    
+def print_4x4_grid():
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    do_twice(print_twice, "|         |         |         |         |")
+    print "+ - - - - + - - - - + - - - - + - - - - +"
+    
+print
+print_2x2_grid()
+
+print
+print_4x4_grid()
