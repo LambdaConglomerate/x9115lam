@@ -31,41 +31,69 @@ def circle(t, radius):
   # length = circumference / num_sides
   # polygon(t, length, num_sides)
 
-def flower():
-  num_petals = 20.0
+def petal(t, radius, angle):
+  arc(t, radius, angle)
+  lt(t, 180 - angle)
+  arc(t, radius, angle)
+  lt(t, 180 - angle)
+
+def flower(t, num_petals, petal_angle, radius):
   angle_increment = 360.0 / num_petals
-  for i in range (42):
-    # arc(bob, 10, 15)
-    # lt(bob, 90)
-    arc(bob, 150, 30)
-    lt(bob, 135)
-    if(i % 2 == 0):
-       lt(bob, 15)
+  for i in range (int(num_petals) ):
+    petal(t, radius, petal_angle)
+    lt(t, angle_increment)
+
+def pie(t, length, num_sides):
+  polygon(t, length, num_sides)
+
+  diag = (.5 * length)/.59
+  lt(t, 54)
+  fd(t, diag)
+  for i in range (num_sides - 1):
+    lt(t, 72/2)
+    fd(t, diag)
+    lt(t, 180)
+    fd(t, diag)
 
   wait_for_user()
 
-def flower1():
-  for i in range (8):
-    arc(bob, 50, 90)
-    lt(bob, 135)
+# def flower1():
+#   for i in range (8):
+#     arc(bob, 50, 90)
+#     lt(bob, 135)
 
-def flower2():
-  for i in range (20):
-    arc(bob, 50, 90)
-    lt(bob, 90)
-    if(i % 2 == 0):
-      lt(bob, 36)
+# def flower2():
+#   for i in range (20):
+#     arc(bob, 50, 90)
+#     lt(bob, 90)
+#     if(i % 2 == 0):
+#       lt(bob, 36)
 
 world = TurtleWorld()
 bob = Turtle()
+bob.delay = 0.1
+pie(bob, 50, 5)
 
-# Make bob fast
-bob.delay = 0.01
+def draw_flowers():
+  # Flower1
+  world.clear()
+  bob = Turtle()
+  bob.delay = 0.01
+  flower(bob, 7, 40.0, 100.0)
+
+  # Flower2
+  world.clear()
+  bob = Turtle()
+  bob.delay = 0.01
+  flower(bob, 10, 90.0, 100.0)
+
+  # Flower3
+  world.clear()
+  bob = Turtle()
+  bob.delay = 0.01
+  flower(bob, 20, 18, 250.0)
 
 
-
-
-flower()
 # arc(bob, 50, 180)
 # circle(bob, 20)
 # polygon(bob, 100, 6)
