@@ -21,11 +21,13 @@ repeat_lyrics()
 
 # 3.3
 def right_justify(s):
-    spaces_to_insert = 70 - len(s)
-    for i in range(0, spaces_to_insert):
-        print " ",
-        
-    print(s)
+    # For some reason the solution here before printed
+    # tabs instead of simple spaces printing to out.txt
+    # gives the last character of allen in the 70th column
+    print ' '*(70 - len(s)) + s
+    # for i in range(0, spaces_to_insert):
+    #     print " "
+    # print(s)
 
 right_justify('allen')
 
@@ -33,14 +35,14 @@ right_justify('allen')
 def do_twice(f, val):
     f(val)
     f(val)
-    
+
 def print_spam():
     print 'spam'
-    
+
 def print_twice(s):
     print s
     print s
-    
+
 def do_four(f, val):
     do_twice(f, val)
     do_twice(f, val)
@@ -54,7 +56,7 @@ def print_2x2_grid():
     print "+ - - - - + - - - - +"
     do_twice(print_twice, "|         |         |")
     print "+ - - - - + - - - - +"
-    
+
 def print_4x4_grid():
     print "+ - - - - + - - - - + - - - - + - - - - +"
     do_twice(print_twice, "|         |         |         |         |")
@@ -65,7 +67,7 @@ def print_4x4_grid():
     print "+ - - - - + - - - - + - - - - + - - - - +"
     do_twice(print_twice, "|         |         |         |         |")
     print "+ - - - - + - - - - + - - - - + - - - - +"
-    
+
 print
 print_2x2_grid()
 
