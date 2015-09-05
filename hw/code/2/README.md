@@ -5,6 +5,9 @@
 The program runs as normal.
 ![3.2](./pics/3.2.png)
 
+3.3 - 3.5:
+![3.3-3.5](./pics/3.3-5.png)
+
 ###Exercise 4
 
 Running `think4.py` will open 6 windows with each of the flowers and each of the pies.  
