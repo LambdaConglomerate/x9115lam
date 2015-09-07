@@ -166,7 +166,7 @@ if __name__ == '__main__':
     prob_dict = {'high_card': 0, 'one_pair': 0, 'two_pair': 0, 'three_of_a_kind': 0, \
                     'straight': 0, 'flush': 0, 'full_house': 0, 'four_of_a_kind': 0,\
                     'straight_flush': 0}
-    num_decks = 100000
+    num_decks = 10000000
     # Originally had this set to 7 and when
     # comparing to probabilities on wikipedia
     # with seven cards probabilities don't line

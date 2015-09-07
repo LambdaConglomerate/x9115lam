@@ -39,3 +39,4 @@ ehthumbs.db
 Thumbs.db
 
 # Project Specific Git Ignore #
+~.*
