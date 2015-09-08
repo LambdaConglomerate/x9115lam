@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{arisholm10}
+Erik Arisholm, Lionel~C. Briand, and Eivind~B. Johannessen.
+\newblock A systematic and comprehensive investigation of methods to build and
+  evaluate fault prediction models.
+\newblock {\em J. Syst. Softw.}, 83(1):2--17, January 2010.
+
+\bibitem{menzies10}
+Tim Menzies, Zach Milton, Burak Turhan, Bojan Cukic, Yue Jiang, and Ayşe
+  Bener.
+\newblock Defect prediction from static code features: current results,
+  limitations, new approaches.
+\newblock {\em Automated Software Engineering}, 17(4):375--407, 2010.
+
+\bibitem{posnett11}
+D.~Posnett, V.~Filkov, and P.~Devanbu.
+\newblock Ecological inference in empirical software engineering.
+\newblock In {\em Automated Software Engineering (ASE), 2011 26th IEEE/ACM
+  International Conference on}, pages 362--371, Nov 2011.
+
+\end{thebibliography}
