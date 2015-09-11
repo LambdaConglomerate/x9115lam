@@ -22,7 +22,7 @@ Arisholm et al \cite{arisholm10} listed below.
 A measurement of the likelihood of software or software component
 error. 
 \item [{Object-oriented~(OO)~code~measures}] Measurement of the structural
-properties of the source code. 
+properties of the source code. For example cyclomatic complexity and LOC.
 \item [{Delta~measures}] Measurement of the amount of change (churn) in
 a file between two successive releases. 
 \item [{Process~measures}] Measures from a configuration management system.
@@ -33,23 +33,12 @@ number of line added, the number of lines removed.
 
 \section*{Feature Extraction}
 \begin{description}
-\item [{Motivational~statements}] The authors mentioned that most previous
-studies only examined the structure of the code when constructing
-fault-proneness prediction models. In the few studies that did not,
-they failed to systematically measure the cost-effectiveness of the
-models with factors with different data collection costs. Very few
-studies have looked at the methods and criteria for evaluating the
-models. Finally, it is very difficult to draw specific conclusions
-using confusion matrices since they do not provide any insight into
-determining the cost-effectiveness of the models under test. 
-\item [{Motivational Statements}] The motivation was to provide a systematic
-methodology for comparing modeling techniques. The authors state that
-little to no effort was put forth to prior to this paper in that area. 
+\item [{Motivational~statements}] The motivation of this study was to compare multiple feature sets, machine learning techniques, and evaluation criteria to determine the most useful combination at predicting fault-proneness in a continually changing codebase. The authors leverage both structural measurements inherent to the code and process measurements derived from configuration management systems. Due to the lack of evidence for the economic viability of fault-proneness detection, the authors introduce a novel evaluation criteria, cost-effectiveness (CE) measure, which incorporates the verification costs of detected faults.
 \item [{Patterns}] The authors provide an overview of a number of different
 techniques and different metric sets in an attempt to prove which
 provides the best results across comparison techniques. The results
 seem to show that the ROC curve combined with cost effectiveness comparisons
-provide a good deal of insight into the performance of techniques
+provide more insight into the performance of techniques
 and matrices as compared to using the confusion matrix approach. 
 \item [{Future~Work}] The authors used the default parameters for the
 statistical techniques they employed in the study. They have stated
@@ -76,7 +65,7 @@ while OO outperforms the baseline by a significant margin.
 in 1989 to cite a percentage of effort spent on testing. Is there
 a more recent paper the authors could have chosen to cite? If not,
 why quote a figure that is 26 years old and quite possibly outdated? 
-\item While the way that the authors combined data in an attempt to consolidate
+\item While the way the authors combined data in an attempt to consolidate
 it to a smaller number of tables was very clever, it produces tables
 that are very difficult to interpret. They have split the data into
 a standard set of stats (mean, median, Q1, Q3) on half of the table
@@ -89,8 +78,8 @@ would have been preferable with an appendix of the tables and data
 sets split out into more easily decipherable tables. 
 \item The authors mentioned that one threat to the validity of the study
 was that the cost of making the measures available and collecting
-them was not accounted for. It seems that such calcuations should
-be taken into account. Additionally, they note that the Process metric
+them was not accounted for. It seems that such calculations should
+be taken into account. Additionally, they note the Process metric
 set has a high cost of data reporting and collection but was found
 to be the most cost-effective. It is hard to say if Process is indeed
 the most cost-effective, since all cost measures were not taken into
