@@ -1,18 +1,17 @@
 import random, math, sys
 
-s0 = (0, 0)
+global k_max
 k_max = 10000
-epsilon = 0.01
 
 def schaffer(f1, f2):
   f1 = f1*f1
   f2 = (f2 - 2) * (f2 - 2)
   return f1 + f2
 
-def energy(f1, f2, b1, b2, func):
-  bound_tup = base_runner()
-  func_val = func(f1, f2)
-  return (func_val - b1) / (b2 - b1)
+def normalize(b1, b2, func):
+  def e(f1, f2):
+    return (func(f1, f2) - b1) / (b2 - b1)
+  return e
 
 def base_runner():
   # list of minimum observations for 100 iterations
@@ -51,11 +50,84 @@ def base_runner():
 
   return (abs_min,abs_max)
 
-def runner():
-  base_tup = base_runner()
-  print energy(base_tup[1][0], base_tup[1][1], base_tup[0][2], base_tup[1][2], schaffer)
 
-runner()
+def neighbor(s):
+  epsilon = 0.01
+  add_f1 = bool(random.getrandbits(1))
+  add_f2 = bool(random.getrandbits(1))
+  if add_f1:
+    f1_delta = epsilon
+  else:
+    f1_delta = -epsilon
+
+  if add_f2:
+    f2_delta = epsilon
+  else:
+    f2_delta = -epsilon
+  return (s[0] + f1_delta, s[1] + f2_delta)
+
+def prob(old, new, k):
+  if k == 0:
+    return 1
+  else:
+    return math.exp(-1*(new - old)/k)
+
+def say(x):
+  sys.stdout.write(str(x)); sys.stdout.flush()
+
+def sim_anneal(energy, emax):
+  s0 = (0.0, 0.0)
+  s = s0
+  e = energy(s[0], s[1])
+  sb = s
+  eb = e
+  k = 0
+
+  while k < k_max and e > emax:
+    sn = neighbor(s)
+    en = energy(sn[0], sn[1])
+
+    if en < eb:
+      sb = sn
+      eb = en
+      say("!")
+
+    if en < e:
+      s = sn
+      e = en
+      say("+")
+    elif prob(e, en, k/k_max) > random.random():
+      s = sn
+      e = en
+      say("?")
+
+    say(".")
+    k += 1
+
+    if k % 50 == 0:
+      say("\n" + "({0:.3f},{0:.3f})".format(sb[0], sb[1]))
+
+
+if __name__ == "__main__":
+  bound_tup = base_runner()
+  base_tup = base_runner()
+  energy = normalize(base_tup[0][2], base_tup[1][2], schaffer)
+  print 'min energy before normalization ' + str(base_tup[0][2])
+  print 'max energy before normalization ' + str(base_tup[1][2])
+  print 'min energy after normalization ' + str(energy(base_tup[0][0], base_tup[0][1]))
+  print 'max energy after normalization ' + str(energy(base_tup[1][0], base_tup[1][1]))
+
+  #sim_anneal(energy, 0.0)
+
+
+
+
+
+
+
+#   sim_anneal(schaffer)
+
+
 
   #  # Run the baseline model test 100 times
   # for i in range(100):
@@ -89,68 +161,6 @@ runner()
 #   bound_tup = base_runner()
 #   func_val = func(f1, f2)
 #   return (func_val - b1) / (b2 - b1)
-
-# def neighbor(s):
-#   add_f1 = bool(random.getrandbits(1))
-#   add_f2 = bool(random.getrandbits(1))
-#   if add_f1:
-#     f1_delta = epsilon
-#   else:
-#     f1_delta = -epsilon
-
-#   if add_f2:
-#     f2_delta = epsilon
-#   else:
-#     f2_delta = -epsilon
-
-#   return (s[0] + f1_delta, s[1] + f2_delta)
-
-# def prob(old, new, k):
-#   t = 1 - (k/k_max)
-#   return math.exp(-1*(new - old)/t)
-
-# def say(x):
-#   sys.stdout.write(str(x)); sys.stdout.flush()
-
-# def sim_anneal(func, emax):
-#   s = s0
-#   e = energy(s[0], s[1], func)
-#   print e
-#   sb = s
-#   eb = e
-#   k = 0
-#   #print "Initial setup (s, e, e_max, sb, eb, k, k_max): ", s, e, e_max, sb, eb, k, k_max
-
-#   while k < k_max and e < e_max:
-#     sn = neighbor(s)
-#     en = energy(sn[0], sn[1], func)
-
-#     if en < eb:
-#       sb = sn
-#       eb = en
-#       say("!")
-
-#     if en < e:
-#       s = sn
-#       e = en
-#       say("+")
-#     elif prob(e, en, (1-k)/k_max) > random.random():
-#       s = sn
-#       e = en
-#       say("?")
-
-#     say(".")
-#     k = k + 1
-
-#     if k % 50 == 0:
-#       say("\n" + "({0:.3f},{0:.3f})".format(sb[0], sb[1]))
-
-# if __name__ == "__main__":
-#   bound_tup = base_runner()
-
-#   sim_anneal(schaffer)
-
-
 
 
 
