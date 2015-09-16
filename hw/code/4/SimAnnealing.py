@@ -1,166 +1,150 @@
 import random, math, sys
 
-global k_max
-k_max = 10000
+# Calculates f1 and f2 and then
+# returns the values in a tuple
+# f1,f2
+def schaffer(x):
+  f1 = x * x
+  f2 = (x - 2)**2
+  return (f1, f2)
 
-def schaffer(f1, f2):
-  f1 = f1*f1
-  f2 = (f2 - 2) * (f2 - 2)
-  return f1 + f2
+# This returns the normalization function
+# for one of the two observation functions (f1, f2)
+# b1 is the minimum, b2 is the maximum
+def normalize(b1, b2):
+  def n(x):
+    return (x - b1) / (b2 - b1)
+  return n
 
-def normalize(b1, b2, func):
-  def e(f1, f2):
-    return (func(f1, f2) - b1) / (b2 - b1)
+# This returns the energy function for x
+# basically it takes the two normalization
+# functions as parameters and then treats those
+# normalization functions return values as the
+# x and y values in the x,y plane.  F1 returns x,
+# f2 returns y.  We know for schaffer that hell
+# is at (1,1) in this graph.  We calculate distance
+# to hell from our x,y point and return it as our
+# energy value.  For this simplified environment
+# emax is sqrt(2).
+def energy(f1_norm, f2_norm):
+  def e(x):
+    s = schaffer(x)
+    x = f1_norm(s[0])
+    y = f2_norm(s[1])
+    dist_from_hell = ((1 - x)**2 + (1 - y)**2)**0.5
+    return dist_from_hell
   return e
 
-def base_runner():
-  # list of minimum observations for 100 iterations
-  # of the model being run 100 times each
-  min_obs = []
-  # list of max observations for 100 iterations
-  # of the model being run 100 times each
-  max_obs = []
 
-  # list of the energies for 100 iterations
-  # of the model being run 100 times each
-  max_energies = []
+def base_runner():
+  f1_obs = []
+  f2_obs = []
+  obs = []
 
   # Run the baseline model test 100 times
-  for i in range(100):
-    # observations for each run
-    obs = []
-    # Run the model 100 times
-    for j in range(100):
-      f1 = random.random()
-      f2 = random.random()
-      obs.append((f1,f2, schaffer(f1,f2)))
+  for j in range(100):
+    x = random.random()
+    y_tup = schaffer(x)
 
-    # Sort by the schaffer value
-    obs = sorted(obs, key=lambda ob: ob[2])
+    obs.append(y_tup)
 
-    # Add the min and max of this run
-    min_obs.append(obs[0])
-    max_obs.append(obs[-1])
+    # Sort by f1 values
+    f1_obs = sorted(obs, key=lambda ob: ob[0])
+    # Sort by f2 values
+    f2_obs = sorted(obs, key=lambda ob: ob[1])
 
-  min_obs = sorted(min_obs, key=lambda ob: ob[2])
-  max_obs = sorted(max_obs, key=lambda ob: ob[2])
+  # Returns normalization function for f1
+  norm_f1 = normalize(f1_obs[0][0], f1_obs[-1][0])
 
-  abs_min = min_obs[0]
-  abs_max = max_obs[-1]
+  # Returns normalization function for f2
+  norm_f2 = normalize(f2_obs[0][1], f2_obs[-1][1])
 
-  return (abs_min,abs_max)
+  # This is all just a sanity check.  To make sure that
+  # everything works as expected.  Check it out if you want.
+  #
+  # norm_f1_obs = [norm_f1(f1) for f1,f2 in f1_obs]
+  # norm_f2_obs = [norm_f2(f2) for f1,f2 in f2_obs]
 
+  # for norm_ob in norm_f2_obs:
+  #   print norm_ob
 
-def neighbor(s):
+  # print '---------------------'
+  # print 'f1_max ' + str(f1_obs[-1][0])
+  # print 'f1_max normalized ' + str(norm_f1(f1_obs[-1][0]))
+  # print 'f1_min ' + str(f1_obs[0][0])
+  # print 'f1_min normalized ' + str(norm_f1(f1_obs[0][0]))
+  # print '---------------------'
+  # print 'f2_max ' + str(f2_obs[-1][1])
+  # print 'f2_max normalized ' + str(norm_f2(f2_obs[-1][1]))
+  # print 'f2_min ' + str(f2_obs[0][1])
+  # print 'f2_min normalized ' + str(norm_f2(f2_obs[0][1]))
+
+  return (norm_f1, norm_f2)
+
+def neighbor(x):
   epsilon = 0.01
-  add_f1 = bool(random.getrandbits(1))
-  add_f2 = bool(random.getrandbits(1))
-  if add_f1:
-    f1_delta = epsilon
+  add = bool(random.getrandbits(1))
+  if add:
+    x += epsilon
   else:
-    f1_delta = -epsilon
-
-  if add_f2:
-    f2_delta = epsilon
-  else:
-    f2_delta = -epsilon
-  return (s[0] + f1_delta, s[1] + f2_delta)
-
-def prob(old, new, k):
-  if k == 0:
-    return 1
-  else:
-    return math.exp(-1*(new - old)/k)
+    x -= epsilon
+  return x
 
 def say(x):
   sys.stdout.write(str(x)); sys.stdout.flush()
 
-def sim_anneal(energy, emax):
-  s0 = (0.0, 0.0)
+# Something isn't right here.
+def prob(old, new, k):
+  return math.exp( -1.0 * ((new - old) / k))
+
+global kmax
+global emax
+kmax = 10000.0
+emax = (2)**0.5
+
+def sim_anneal(energy):
+  s0 = 0.0
   s = s0
-  e = energy(s[0], s[1])
+  e = energy(s)
   sb = s
   eb = e
-  k = 0
+  k = 1.0
 
-  while k < k_max and e > emax:
+  while k < kmax and e < emax:
     sn = neighbor(s)
-    en = energy(sn[0], sn[1])
+    en = energy(sn)
 
-    if en < eb:
+    # Is this a best overall?
+    if en > eb:
       sb = sn
       eb = en
       say("!")
 
-    if en < e:
+    # Is this better than where we were last?
+    if en > e:
       s = sn
       e = en
       say("+")
-    elif prob(e, en, k/k_max) > random.random():
+
+    elif prob(e, en, k / kmax) > random.random():
       s = sn
       e = en
       say("?")
 
     say(".")
-    k += 1
+    k += 1.0
 
     if k % 50 == 0:
-      say("\n" + "({0:.3f},{0:.3f})".format(sb[0], sb[1]))
+      say("\n" + "({0:.3f}".format(sb))
 
+  print '\n \n best solution ' + str(sb)
+  print 'energy of best solution ' + str(energy(sb))
 
 if __name__ == "__main__":
-  bound_tup = base_runner()
-  base_tup = base_runner()
-  energy = normalize(base_tup[0][2], base_tup[1][2], schaffer)
-  print 'min energy before normalization ' + str(base_tup[0][2])
-  print 'max energy before normalization ' + str(base_tup[1][2])
-  print 'min energy after normalization ' + str(energy(base_tup[0][0], base_tup[0][1]))
-  print 'max energy after normalization ' + str(energy(base_tup[1][0], base_tup[1][1]))
+  norm_tup = base_runner()
+  e = energy(norm_tup[0], norm_tup[1])
+  sim_anneal(e)
 
-  #sim_anneal(energy, 0.0)
-
-
-
-
-
-
-
-#   sim_anneal(schaffer)
-
-
-
-  #  # Run the baseline model test 100 times
-  # for i in range(100):
-  #   # energies for each run
-  #   energies = []
-  #   # Run the model 100 times
-  #   for j in range(100):
-  #     f1 = random.random()
-  #     f2 = random.random()
-  #     energies.append((f1, f2, energy(f1, f2, schaffer)))
-
-  #   # Sort by the schaffer value
-  #   energies = sorted(energies, key = lambda en: en[2])
-
-  #   # Add the max energy of this run
-  #   max_energies.append(energies[-1])
-
-  # max_energies = sorted(max_energies, key = lambda en: en[2])
-
-  # global e_max
-
-  # e_max = max_energies[-1][2]
-
-  # print 'median min observation: ' + str(min_obs[49][0]) + '\t' + str(min_obs[49][1]) + '\t' + str(min_obs[49][2])
-  # print 'median max observation: ' + str(max_obs[49][0]) + '\t' + str(max_obs[49][1]) + '\t' + str(max_obs[49][2])
-  # print 'abs min observation: ' + str(min_obs[0][0]) + '\t' + str(min_obs[0][1]) + '\t' + str(min_obs[0][2])
-  # print 'abs max observation: ' + str(max_obs[-1][0]) + '\t' + str(max_obs[-1][1]) + '\t' + str(max_obs[-1][2])
-  # print 'max energy: ' + str(max_energies[-1][0]) + '\t' + str(max_energies[-1][1]) + '\t' + str(max_energies[-1][2])
-
-# def energy(f1, f2, b1, b2, func):
-#   bound_tup = base_runner()
-#   func_val = func(f1, f2)
-#   return (func_val - b1) / (b2 - b1)
 
 
 
