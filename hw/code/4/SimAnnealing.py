@@ -135,9 +135,9 @@ def sim_anneal(energy):
     k += 1.0
 
     if k % 50 == 0:
-      say("\n" + "({0:.3f}".format(sb))
+      say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb))
 
-  print '\n \n best solution ' + str(sb)
+  print '\n \nbest solution ' + str(sb)
   print 'energy of best solution ' + str(energy(sb))
 
 if __name__ == "__main__":
