@@ -31,7 +31,15 @@ def energy(f1_norm, f2_norm):
     s = schaffer(x)
     x = f1_norm(s[0])
     y = f2_norm(s[1])
+    # print '\n'
+    # print 'x is ' + str(x)
+    # print 'f1 is ' + str(s[0])
+    # print 'f2 is ' + str(s[1])
+    # print 'f1 normlized is ' + str(x)
+    # print 'f2 normalized is ' + str(y)
     dist_from_hell = ((1 - x)**2 + (1 - y)**2)**0.5
+    # print 'dist from hell ' + str(dist_from_hell)
+
     return dist_from_hell
   return e
 
@@ -42,7 +50,7 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 100 times
-  for j in range(100):
+  for j in range(1000):
     x = random.random()
     y_tup = schaffer(x)
 
@@ -53,6 +61,11 @@ def base_runner():
     # Sort by f2 values
     f2_obs = sorted(obs, key=lambda ob: ob[1])
 
+  # print 'f1 max ' +  str(f1_obs[-1][0])
+  # print 'f1 min ' + str(f1_obs[0][0])
+  # print 'f2 max ' + str(f2_obs[-1][1])
+  # print 'f2 min ' + str(f2_obs[0][1])
+
   # Returns normalization function for f1
   norm_f1 = normalize(f1_obs[0][0], f1_obs[-1][0])
 
@@ -62,6 +75,7 @@ def base_runner():
   # This is all just a sanity check.  To make sure that
   # everything works as expected.  Check it out if you want.
   #
+
   # norm_f1_obs = [norm_f1(f1) for f1,f2 in f1_obs]
   # norm_f2_obs = [norm_f2(f2) for f1,f2 in f2_obs]
 
@@ -131,7 +145,7 @@ def sim_anneal(energy):
       e = en
       say("?")
 
-    say(".")
+    #say(".")
     k += 1.0
 
     if k % 50 == 0:
@@ -144,19 +158,3 @@ if __name__ == "__main__":
   norm_tup = base_runner()
   e = energy(norm_tup[0], norm_tup[1])
   sim_anneal(e)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
