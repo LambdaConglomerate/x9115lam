@@ -96,7 +96,7 @@ def base_runner():
   return (norm_f1, norm_f2)
 
 def neighbor(x):
-  epsilon = 0.001
+  epsilon = 0.01
   add = bool(random.getrandbits(1))
   if add:
     x += epsilon
@@ -157,7 +157,7 @@ def sim_anneal(energy):
     #say(".")
     k += 1.00
 
-    if math.floor(k) % 50 == 0:
+    if k % 50 == 0:
       say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb))
 
   print '\n \nbest solution ' + str(sb)
