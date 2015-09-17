@@ -114,10 +114,8 @@ def neighbor(x):
 def say(x):
   sys.stdout.write(str(x)); sys.stdout.flush()
 
-# Something isn't right here.
 def prob(old, new, k):
   x = math.exp(((new - old) / k))
-  #say(x)
   return x
 
 global kmax
@@ -126,12 +124,15 @@ kmax = 10000.0
 emax = (2)**0.5
 
 def sim_anneal(energy):
-  s0 = 0.0
+  s0 = 0.5
   s = s0
   e = energy(s)
+  print "Initial energy", e
   sb = s
   eb = e
   k = 1.0
+  
+  say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
 
   while k < kmax and e < emax:
     sn = neighbor(s)
@@ -149,16 +150,16 @@ def sim_anneal(energy):
       e = en
       say("+")
 
-    elif prob(e, en, (kmax - k) / kmax) > random.random():
+    elif prob(e, en, k / kmax) < random.random():
       s = sn
       e = en
       say("?")
 
-    #say(".")
+    say(".")
     k += 1.00
 
     if k % 50 == 0:
-      say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb))
+      say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
 
   print '\n \nbest solution ' + str(sb)
   print 'energy of best solution ' + str(energy(sb))
