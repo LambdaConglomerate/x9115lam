@@ -96,12 +96,19 @@ def base_runner():
   return (norm_f1, norm_f2)
 
 def neighbor(x):
-  epsilon = 0.01
+  epsilon = 0.001
   add = bool(random.getrandbits(1))
   if add:
     x += epsilon
   else:
     x -= epsilon
+
+  if x < 0.0:
+    x = x + 1.0
+
+  if x > 1.0:
+    x = x - 1.0
+     
   return x
 
 def say(x):
@@ -109,7 +116,9 @@ def say(x):
 
 # Something isn't right here.
 def prob(old, new, k):
-  return math.exp( -1.0 * ((new - old) / k))
+  x = math.exp(((new - old) / k))
+  #say(x)
+  return x
 
 global kmax
 global emax
@@ -140,15 +149,15 @@ def sim_anneal(energy):
       e = en
       say("+")
 
-    elif prob(e, en, k / kmax) > random.random():
+    elif prob(e, en, (kmax - k) / kmax) > random.random():
       s = sn
       e = en
       say("?")
 
     #say(".")
-    k += 1.0
+    k += 1.00
 
-    if k % 50 == 0:
+    if math.floor(k) % 50 == 0:
       say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb))
 
   print '\n \nbest solution ' + str(sb)
