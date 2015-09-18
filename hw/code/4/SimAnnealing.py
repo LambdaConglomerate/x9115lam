@@ -95,8 +95,8 @@ def base_runner():
 
   return (norm_f1, norm_f2)
 
-def neighbor(x):
-  epsilon = 0.01
+def neighbor(x, temp):
+  epsilon = temp * random.random()
   add = bool(random.getrandbits(1))
   if add:
     x += epsilon
@@ -135,7 +135,7 @@ def sim_anneal(energy):
   say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
 
   while k < kmax and e < emax:
-    sn = neighbor(s)
+    sn = neighbor(s, (kmax - k)/kmax)
     en = energy(sn)
 
     # Is this a best overall?
