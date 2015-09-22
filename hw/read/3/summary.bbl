@@ -7,4 +7,10 @@ Christian Bird, Nachiappan Nagappan, Premkumar Devanbu, Harald Gall, and
   case study of windows vista.
 \newblock {\em Commun. ACM}, 52(8):85--93, August 2009.
 
+\bibitem{posnett11}
+D.~Posnett, V.~Filkov, and P.~Devanbu.
+\newblock Ecological inference in empirical software engineering.
+\newblock In {\em Automated Software Engineering (ASE), 2011 26th IEEE/ACM
+  International Conference on}, pages 362--371, Nov 2011.
+
 \end{thebibliography}
