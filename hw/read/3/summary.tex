@@ -26,7 +26,7 @@ Bird et al \cite{bird09} listed below.
 
 \section*{Feature Extraction}
 \begin{description}
-\item [{Motivational~statements}] The motivation of this study was to compare the post release failures of Windows Vista components developed in a distributed fashion to those developed by collocated teams as to attain insight into the affect of distributed team development against collocated team development.
+\item [{Motivational~statements}] The motivation of this study was to compare the post release failures of Windows Vista components developed in a distributed fashion to those developed by collocated teams as to attain insight into the affect of distributed team development against collocated team development.  Additionally, they aim to study whether the projects assigned to distributed teams were less complex.  The idea there is that post release failures are expected in distributed teams to some degree, so are managers making attempts to prevent those failures by assigning simpler projects to those teams.
 \item[Hypotheses] The authors list two hypotheses \cite{bird09}: 
 \begin{quote}
 \emph{H1: Binaries that are developed by teams of engineers that are distributed will have more post-release failures than those developed by collocated engineers.}
@@ -34,15 +34,17 @@ Bird et al \cite{bird09} listed below.
 \begin{quote}
 \emph{H2: Binaries that are distributed will be less complex, experience less code churn, and have fewer dependencies than collocated binaries.}
 \end{quote}
-\item[Future Work] The authors note that there haven't been any causal relationshisp established between development practices and effective distributed development. They suggest studies to examine the effects of various development practices on distributed development.
+\item[Future Work] The authors note that there haven't been any causal relationships established between development practices and effective distributed development. They suggest studies to examine the effects of various development practices on distributed development.
+\item[Informative Visualizations] The visualizations on page 523 of the paper are particularly useful.  Figure 2 shows a breakdown of where people working on a specific dll are working geographically to give an idea of the level of distribution Microsoft was dealing with.  The other vissualization on the same page, a Venn diagram showing concentric circles of the percentages of binaries at each distribution level, is very useful in understanding how distributed the project was overall.
 \end{description}
 
 \section*{Possible Improvements}
+This paper was incredibly well written and makes its argument in a fairly air tight manner.  I think as it is, it would be difficult to improve upon it.  That said, perhaps some data on outsourced projects within Microsoft for comparison or distributed projects within companies recently acquired by Microsoft would make that piece of their argument more solid, but could quickly turn into a book rather than an article.  The project detailed was so specific and the organizations so specific that it would be difficult generalize to any other company.  For example, the authors mention the fact that Microsoft sent a number of developers that had worked at Microsoft for over ten years, but were from the same cultural group to work with a distributed team in India.   Not many companies would have either the staff or resources to do the same.
 
 \section*{Connection to Other Papers}
-	Our first paper \cite{posnett11} cited geographical issues as a difficulty in interpreting aggregated results. They ask how the work should be divided among multiple locations to maximize quality and productivity, initially suggesting that development should not be split over different locations. They note that this study found different results, that geographical distribution had little to no effect on software quality. 
+Our first paper \cite{posnett11} cited geographical issues as a difficulty in interpreting aggregated results. They ask how the work should be divided among multiple locations to maximize quality and productivity, initially suggesting that development should not be split over different locations. They note that this study found different results, that geographical distribution had little to no effect on software quality. 
 
-The authors also mentioned that this study examined software on the binary level (an aggregated level), which supports their claim that aggregation is very common in defect modeling research.
+The authors also mentioned that this study examined software on the binary level (an aggregated level), which supports their claim that aggregation is very common in defect modeling research.  This paper was not mentioned in paper two \cite{arisholm10}.
 
 
 \bibliographystyle{plain}

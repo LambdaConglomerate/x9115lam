@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{arisholm10}
+Erik Arisholm, Lionel~C. Briand, and Eivind~B. Johannessen.
+\newblock A systematic and comprehensive investigation of methods to build and
+  evaluate fault prediction models.
+\newblock {\em J. Syst. Softw.}, 83(1):2--17, January 2010.
+
 \bibitem{bird09}
 Christian Bird, Nachiappan Nagappan, Premkumar Devanbu, Harald Gall, and
   Brendan Murphy.
