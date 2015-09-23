@@ -8,6 +8,18 @@ def osyczka2(x1, x2, x3, x4, x5, x6):
   f2 = x1**2 + x2**2 + x3**2 + x4**2 + x5**2 + x6**2
   return (f1, f2)
 
+#osyczka2 constraints: checks all costraints, returns true is all constraints met
+#new mutation should be done if this returns false
+def constraints(x1, x2, x3, x4, x5, x6):
+  if(x1 + x2 - 2 < 0): return False
+  if(6 - x1 - x2 < 0): return False
+  if(2 - x2 + x1 < 0): return False
+  if(4 - (x3 - 3)**2 - x4 < 0): return False
+  if((x5 - 3)**3 + x6 - 4 < 0): return False
+
+  return True
+
+
 # This returns the normalization function
 # for one of the two observation functions (f1, f2)
 # b1 is the minimum, b2 is the maximum
@@ -51,10 +63,17 @@ def base_runner():
   f2_obs = []
   obs = []
 
-  # Run the baseline model test 100 times
+  # Run the baseline model test 1000 times
+  # bounds:
+  # x1 >= 0
+  # x2 <= 10
+  # x3 >= 1
+  # x5 <= 5
+  # 0 <= x4 <= 6
+  # 0 <= x6 <= 10
   for j in range(1000):
     x = random.random()
-    y_tup = schaffer(x)
+    y_tup = oszyzcka2(x)
 
     obs.append(y_tup)
 
