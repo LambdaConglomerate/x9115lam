@@ -20,6 +20,12 @@ def constraints(x1, x2, x3, x4, x5, x6):
   return True
 
 
+#returns bounds function that takes a random and returns a value within in the bounds
+def bounds(min, max):
+  def f(rand):
+    return ((max-min) * rand) + min
+  return f
+
 # This returns the normalization function
 # for one of the two observation functions (f1, f2)
 # b1 is the minimum, b2 is the maximum
@@ -39,6 +45,7 @@ def normalize(b1, b2):
 # energy value.  For this simplified environment
 # emax is sqrt(2).
 
+
 def energy(f1_norm, f2_norm):
   def e(x):
     s = osyczka2(x)
@@ -56,6 +63,13 @@ def energy(f1_norm, f2_norm):
     return dist_from_hell
   return e
 
+GLOBAL_BOUND_MAX = 100000
+x1bound = bounds(0 , GLOBAL_BOUND_MAX)
+x2bound = bounds(-GLOBAL_BOUND_MAX, 10)
+x3bound = bounds(1, GLOBAL_BOUND_MAX)
+x4bound = bounds(0, 6)
+x5bound = bounds(-GLOBAL_BOUND_MAX, 5)
+x6bound = bounds(0, 10)
 
 #TODO: adapt for oszyzcka2 constraints
 def base_runner():
