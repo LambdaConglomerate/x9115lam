@@ -65,7 +65,7 @@
 # keys sorts state 
 
 # Even though domain specific languages is general models, it's an exmaple of making python business user readable
-
+#elite sampling
 
 
 #python below here about 
