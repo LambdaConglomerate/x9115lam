@@ -200,7 +200,13 @@ def maxWalkSat(energy):
 
     if(chance >= 0.5):
       #jump to random spot
+      #if you wanted to mutate all values
       sn = generateValidValues()
+
+      #If you wanted to change mutate only one value
+      # c = int(math.floor(6 * random.random()))
+      # sn[c] = xbounds[c](random.random())
+      # while not constraintsStack[int(math.floor(c/2))](sn[int(math.floor(c/2) * 2)], sn[int(math.floor(c/2) * 2) + 1]): sn[c] = xbounds[c](random.random())
     else:
       #step function
       #pick the x to mutate
