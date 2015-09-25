@@ -114,6 +114,9 @@ def generateValidValues():
     xtemp[5] = xbounds[5](random.random())
   
 
+  # say("\nxtemp = ")
+  # say(xtemp)
+
   return(xtemp)
 
 #TODO: adapt for oszyzcka2 constraints
@@ -123,7 +126,7 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 1000 times
-  for j in range(10000):
+  for j in range(1000):
     x = generateValidValues()
     y_tup = osyczka2(x)
 
@@ -178,7 +181,8 @@ def prob(old, new, k):
 global kmax
 global emax
 kmax = 1000.0
-emax = (2)**0.5
+emax = (6)**0.5
+#emax = 100
 
 def maxWalkSat(energy):
   s0 = generateValidValues()
@@ -205,13 +209,15 @@ def maxWalkSat(energy):
       sn = generateValidValues()
     else:
       c = int(math.floor(6 * random.random()))
-      # say("c = ")
+      # say("\nc = ")
       # say(c)
       tempS = sn
       tempE = energy(sn)
       for i in range(1, 10):
         stepX = xbounds[c](i / 10.0)
         tempS[c] = stepX
+        # say("\ntempS = ")
+        # say(tempS)
         if(constraintsStack[int(math.floor(c/2))](tempS[int(math.floor(c/2) * 2)], tempS[int(math.floor(c/2) * 2) + 1])):
           if energy(tempS) > tempE:
             sn = tempS
