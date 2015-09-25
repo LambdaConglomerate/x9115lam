@@ -10,15 +10,7 @@ def osyczka2(x):
 
 #osyczka2 constraints: checks all costraints, returns true is all constraints met
 #new mutation should be done if this returns false
-
-
 def constraints12(x1, x2):
-  # say("\nconstrains12")
-  # say(x1)
-  # say(" ")
-  # say(x2)
-  # say("\n3rd:")
-  # say(6 - x1 - x2)
   if(x1 + x2 - 2 < 0): return False
   if(6 - x1 - x2 < 0): return False
   if(2 - x2 + x1 < 0): return False
@@ -32,8 +24,8 @@ def constraints56(x5, x6):
   if((x5 - 3)**3 + x6 - 4 < 0): return False
   return True
 
+#constraint stack, makes dealing with the step function easier
 constraintsStack = []
-
 constraintsStack.append(constraints12)
 constraintsStack.append(constraints34)
 constraintsStack.append(constraints56)
@@ -69,7 +61,6 @@ def energy(f1_norm, f2_norm):
     s = osyczka2(x)
     x = f1_norm(s[0])
     y = f2_norm(s[1])
-
     # print '\n'
     # print 'x is ' + str(x)
     # print 'f1 is ' + str(s[0])
@@ -78,7 +69,6 @@ def energy(f1_norm, f2_norm):
     # print 'f2 normalized is ' + str(y)
     dist_from_hell = ((1 - x)**2 + (1 - y)**2)**0.5
     # print 'dist from hell ' + str(dist_from_hell)
-
     return dist_from_hell
   return e
 
@@ -90,6 +80,7 @@ def energy(f1_norm, f2_norm):
 # 1 <= x5 <= 5
 # 0 <= x6 <= 10
 
+#bound list, makes dealing with steps easier
 xbounds = []
 xbounds.append(bounds(0, 10))
 xbounds.append(bounds(0, 10))
@@ -162,8 +153,8 @@ def base_runner():
   norm_f1_obs = [norm_f1(f1) for f1,f2 in f1_obs]
   norm_f2_obs = [norm_f2(f2) for f1,f2 in f2_obs]
 
-  for norm_ob in norm_f2_obs:
-    print norm_ob
+  # for norm_ob in norm_f2_obs:
+  #   print norm_ob
 
   # print '---------------------'
   # print 'f1_max ' + str(f1_obs[-1][0])
@@ -189,7 +180,6 @@ global kmax
 global emax
 kmax = 1000.0
 emax = (2)**0.5
-#emax = 100
 
 def maxWalkSat(energy):
   s0 = generateValidValues()
@@ -203,30 +193,29 @@ def maxWalkSat(energy):
   
   #say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
  
-  #shitty print function
   say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
 
   while k < kmax and e < emax:
-
-
     chance = random.random()
 
     if(chance >= 0.5):
-
+      #jump to random spot
       sn = generateValidValues()
     else:
-
+      #step function
+      #pick the x to mutate
       c = int(math.floor(6 * random.random()))
       tempS = list(sn)
       tempE = energy(sn)
+      #for the each tenth go through bounds of x
       for i in range(1, 10):
         stepX = xbounds[c](i / 10.0)
+        #mutate 
         tempS[c] = stepX
-
+        #check constraints and if energy we are at a better energy
         if constraintsStack[int(math.floor(c/2))](tempS[int(math.floor(c/2) * 2)], tempS[int(math.floor(c/2) * 2) + 1]) and energy(tempS) > tempE: 
           sn = list(tempS)
           tempE = energy(tempS)
-          
             
     en = energy(sn)
 
@@ -242,11 +231,6 @@ def maxWalkSat(energy):
       e = en
       say("+")
 
-    # elif prob(e, en, k / kmax) < random.random():
-    #   s = sn
-    #   e = en
-    #   say("?")
-
     say(".")
     k += 1.00
 
@@ -257,9 +241,6 @@ def maxWalkSat(energy):
   print '\n \nbest solution ' + str(sb)
   print 'energy of best solution ' + str(energy(sb))
   print("\n")
-
-  for i in range(0, 3):
-    print(constraintsStack[i](sb[0 + 2*i], sb[1 + 2*i]))
 
 if __name__ == "__main__":
   norm_tup = base_runner()
