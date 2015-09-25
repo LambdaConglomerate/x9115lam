@@ -68,12 +68,18 @@ def energy(f1_norm, f2_norm):
     return dist_from_hell
   return e
 
-GLOBAL_BOUND_MAX = 100000
-x1bound = bounds(0 , GLOBAL_BOUND_MAX)
-x2bound = bounds(-GLOBAL_BOUND_MAX, 10)
-x3bound = bounds(1, GLOBAL_BOUND_MAX)
+# bounds:
+# 0 <= x1 <= 10
+# 0 <= x2 <= 10
+# 1 <= x3 <= 5
+# 0 <= x4 <= 6
+# 1 <= x5 <= 5
+# 0 <= x6 <= 10
+x1bound = bounds(0, 10)
+x2bound = bounds(0, 10)
+x3bound = bounds(1, 5)
 x4bound = bounds(0, 6)
-x5bound = bounds(-GLOBAL_BOUND_MAX, 5)
+x5bound = bounds(1, 5)
 x6bound = bounds(0, 10)
 
 def generateValidValues():
@@ -108,13 +114,6 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 1000 times
-  # bounds:
-  # x1 >= 0
-  # x2 <= 10
-  # x3 >= 1
-  # x5 <= 5
-  # 0 <= x4 <= 6
-  # 0 <= x6 <= 10
   for j in range(100):
     x = generateValidValues()
     y_tup = osyczka2(x)
