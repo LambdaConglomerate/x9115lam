@@ -13,6 +13,12 @@ def osyczka2(x):
 
 
 def constraints12(x1, x2):
+  # say("\nconstrains12")
+  # say(x1)
+  # say(" ")
+  # say(x2)
+  # say("\n3rd:")
+  # say(6 - x1 - x2)
   if(x1 + x2 - 2 < 0): return False
   if(6 - x1 - x2 < 0): return False
   if(2 - x2 + x1 < 0): return False
@@ -63,6 +69,7 @@ def energy(f1_norm, f2_norm):
     s = osyczka2(x)
     x = f1_norm(s[0])
     y = f2_norm(s[1])
+
     # print '\n'
     # print 'x is ' + str(x)
     # print 'f1 is ' + str(s[0])
@@ -126,7 +133,7 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 1000 times
-  for j in range(10000):
+  for j in range(1000):
     x = generateValidValues()
     y_tup = osyczka2(x)
 
@@ -158,16 +165,16 @@ def base_runner():
   for norm_ob in norm_f2_obs:
     print norm_ob
 
-  print '---------------------'
-  print 'f1_max ' + str(f1_obs[-1][0])
-  print 'f1_max normalized ' + str(norm_f1(f1_obs[-1][0]))
-  print 'f1_min ' + str(f1_obs[0][0])
-  print 'f1_min normalized ' + str(norm_f1(f1_obs[0][0]))
-  print '---------------------'
-  print 'f2_max ' + str(f2_obs[-1][1])
-  print 'f2_max normalized ' + str(norm_f2(f2_obs[-1][1]))
-  print 'f2_min ' + str(f2_obs[0][1])
-  print 'f2_min normalized ' + str(norm_f2(f2_obs[0][1]))
+  # print '---------------------'
+  # print 'f1_max ' + str(f1_obs[-1][0])
+  # print 'f1_max normalized ' + str(norm_f1(f1_obs[-1][0]))
+  # print 'f1_min ' + str(f1_obs[0][0])
+  # print 'f1_min normalized ' + str(norm_f1(f1_obs[0][0]))
+  # print '---------------------'
+  # print 'f2_max ' + str(f2_obs[-1][1])
+  # print 'f2_max normalized ' + str(norm_f2(f2_obs[-1][1]))
+  # print 'f2_min ' + str(f2_obs[0][1])
+  # print 'f2_min normalized ' + str(norm_f2(f2_obs[0][1]))
 
   return (norm_f1, norm_f2)
 
@@ -200,32 +207,27 @@ def maxWalkSat(energy):
   say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
 
   while k < kmax and e < emax:
-    # say("\nsn = ")
-    # say(sn)
+
 
     chance = random.random()
 
     if(chance >= 0.5):
+
       sn = generateValidValues()
     else:
+
       c = int(math.floor(6 * random.random()))
-      # say("\nc = ")
-      # say(c)
-      tempS = sn
+      tempS = list(sn)
       tempE = energy(sn)
       for i in range(1, 10):
         stepX = xbounds[c](i / 10.0)
         tempS[c] = stepX
-        # say("\ntempS = ")
-        # say(tempS)
-        if(constraintsStack[int(math.floor(c/2))](tempS[int(math.floor(c/2) * 2)], tempS[int(math.floor(c/2) * 2) + 1])):
-          if energy(tempS) > tempE:
-            sn = tempS
-            tempE = energy(tempS)
 
-
-
-   
+        if constraintsStack[int(math.floor(c/2))](tempS[int(math.floor(c/2) * 2)], tempS[int(math.floor(c/2) * 2) + 1]) and energy(tempS) > tempE: 
+          sn = list(tempS)
+          tempE = energy(tempS)
+          
+            
     en = energy(sn)
 
     # Is this a best overall?
@@ -254,6 +256,10 @@ def maxWalkSat(energy):
 
   print '\n \nbest solution ' + str(sb)
   print 'energy of best solution ' + str(energy(sb))
+  print("\n")
+
+  for i in range(0, 3):
+    print(constraintsStack[i](sb[0 + 2*i], sb[1 + 2*i]))
 
 if __name__ == "__main__":
   norm_tup = base_runner()
