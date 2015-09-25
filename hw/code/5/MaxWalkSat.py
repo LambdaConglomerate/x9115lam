@@ -10,6 +10,8 @@ def osyczka2(x):
 
 #osyczka2 constraints: checks all costraints, returns true is all constraints met
 #new mutation should be done if this returns false
+
+
 def constraints12(x1, x2):
   if(x1 + x2 - 2 < 0): return False
   if(6 - x1 - x2 < 0): return False
@@ -24,6 +26,11 @@ def constraints56(x5, x6):
   if((x5 - 3)**3 + x6 - 4 < 0): return False
   return True
 
+constraintsStack = []
+
+constraintsStack.append(constraints12)
+constraintsStack.append(constraints34)
+constraintsStack.append(constraints56)
 
 #returns bounds function that takes a random and returns a value within in the bounds
 def bounds(min, max):
@@ -75,37 +82,39 @@ def energy(f1_norm, f2_norm):
 # 0 <= x4 <= 6
 # 1 <= x5 <= 5
 # 0 <= x6 <= 10
-x1bound = bounds(0, 10)
-x2bound = bounds(0, 10)
-x3bound = bounds(1, 5)
-x4bound = bounds(0, 6)
-x5bound = bounds(1, 5)
-x6bound = bounds(0, 10)
+
+xbounds = []
+xbounds.append(bounds(0, 10))
+xbounds.append(bounds(0, 10))
+xbounds.append(bounds(1, 5))
+xbounds.append(bounds(0, 6))
+xbounds.append(bounds(1, 5))
+xbounds.append(bounds(0, 10))
 
 def generateValidValues():
-  x1temp = x1bound(random.random())
-  x2temp = x2bound(random.random())
-  x3temp = x3bound(random.random())
-  x4temp = x4bound(random.random())
-  x5temp = x5bound(random.random())
-  x6temp = x6bound(random.random())
 
-  while(not constraints12(x1temp, x2temp)):
-    x1temp = x1bound(random.random())
-    x2temp = x2bound(random.random())
+  xtemp = []
+
+  for i in range(0, 6):
+    xtemp.append(xbounds[i](random.random()))
+   
+
+  while(not constraints12(xtemp[0], xtemp[1])):
+    xtemp[0] = xbounds[0](random.random())
+    xtemp[1] = xbounds[1](random.random())
   
 
-  while(not constraints34(x3temp, x4temp)):
-    x3temp = x3bound(random.random())
-    x4temp = x4bound(random.random())
+  while(not constraints34(xtemp[2], xtemp[3])):
+    xtemp[2] = xbounds[2](random.random())
+    xtemp[3] = xbounds[3](random.random())
   
 
-  while(not constraints56(x5temp, x6temp)):
-    x5temp = x5bound(random.random())
-    x6temp = x6bound(random.random())
+  while(not constraints56(xtemp[4], xtemp[5])):
+    xtemp[4] = xbounds[4](random.random())
+    xtemp[5] = xbounds[5](random.random())
   
 
-  return(x1temp, x2temp, x3temp, x4temp, x5temp, x6temp)
+  return(xtemp)
 
 #TODO: adapt for oszyzcka2 constraints
 def base_runner():
@@ -114,7 +123,7 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 1000 times
-  for j in range(100):
+  for j in range(10000):
     x = generateValidValues()
     y_tup = osyczka2(x)
 
@@ -179,6 +188,7 @@ def maxWalkSat(energy):
   sb = s
   eb = e
   k = 1.0
+  sn = sb
   
   #say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
  
@@ -186,7 +196,30 @@ def maxWalkSat(energy):
   say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
 
   while k < kmax and e < emax:
-    sn = generateValidValues()
+    # say("\nsn = ")
+    # say(sn)
+
+    chance = random.random()
+
+    if(chance >= 0.5):
+      sn = generateValidValues()
+    else:
+      c = int(math.floor(6 * random.random()))
+      # say("c = ")
+      # say(c)
+      tempS = sn
+      tempE = energy(sn)
+      for i in range(1, 10):
+        stepX = xbounds[c](i / 10.0)
+        tempS[c] = stepX
+        if(constraintsStack[int(math.floor(c/2))](tempS[int(math.floor(c/2) * 2)], tempS[int(math.floor(c/2) * 2) + 1])):
+          if energy(tempS) > tempE:
+            sn = tempS
+            tempE = energy(tempS)
+
+
+
+   
     en = energy(sn)
 
     # Is this a best overall?
