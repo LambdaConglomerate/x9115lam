@@ -126,7 +126,7 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 1000 times
-  for j in range(1000):
+  for j in range(10000):
     x = generateValidValues()
     y_tup = osyczka2(x)
 
@@ -181,7 +181,7 @@ def prob(old, new, k):
 global kmax
 global emax
 kmax = 1000.0
-emax = (6)**0.5
+emax = (2)**0.5
 #emax = 100
 
 def maxWalkSat(energy):
