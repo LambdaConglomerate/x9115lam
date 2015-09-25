@@ -36,6 +36,7 @@ def constraints_all(s):
   if(2 - x2 + x1 < 0): return False
   if(4 - (x3 - 3)**2 - x4 < 0): return False
   if((x5 - 3)**3 + x6 - 4 < 0): return False
+  return True
 
 
 #returns bounds function that takes a random and returns a value within in the bounds
@@ -191,7 +192,6 @@ def mutate(c, s, energy):
   step_val = (b[1] - b[0])/num_steps
   while num_steps > 0:
     while not constraints_all(s) and num_steps > 0:
-      print 'bad constraint'
       s[c] += step_val
       num_steps -= 1
     e = energy(s)
@@ -199,11 +199,17 @@ def mutate(c, s, energy):
       sb = s
       eb = e
     num_steps -= 1
-    print 'sb is '
     print sb
-    print ' num steps ' + str(num_steps)
   return sb
 
+def tweak(c, s):
+  epsilon = 0.1
+  add = random.getrandbits(1)
+  if(add):
+    s[c] += epsilon
+  else:
+    s[c] -= epsilon
+  return s
 
 def maxWalkSat(energy):
   max_changes = 100
@@ -217,20 +223,21 @@ def maxWalkSat(energy):
     e = energy(s)
     sb = s
     eb = e
-    print "Initial energy " + e + " try number " + i
+    en = e
+    print "Initial energy " + str(e) + " try number " + str(i)
     for j in range(max_changes):
       if e > emax:
         return s
-      victim = randint(0,5)
+      victim = random.randint(0,5)
 
       # We print the hat if we try all of the values of a var
       # We print the question mark if we try something random
       # in the neighborhood
       if prob < random.random():
-        s = tweak(victim, s)
+        sn = tweak(victim, s)
         say("?")
       else:
-        s = mutate(victim, s)
+        sn = mutate(victim, s, energy)
         say("^")
       # Keeping the concept of energy new and solution
       # new only for the purpose of defining whether
@@ -246,8 +253,8 @@ def maxWalkSat(energy):
 
       say(".")
       # Always promote the last solution
-      # s = sn
-      # e = en
+      s = sn
+      e = en
 
     # Best solution over all tries
     if eb > ebo:
@@ -257,6 +264,9 @@ def maxWalkSat(energy):
 
   # Down here we're out of both for loops so we
   # return the best we have overall
+  if(sbo == None):
+    sbo = sb
+
   return sbo
 
 
@@ -274,8 +284,7 @@ if __name__ == "__main__":
   norm_tup = base_runner()
   e = energy(norm_tup[0], norm_tup[1])
   s = generateValidValues()
-  mutate(1, s, e)
-  # ret = maxWalkSat(e)
-  # print '\n \nbest solution ' + str(ret)
-  # print 'energy of best solution ' + str(energy(ret))
+  ret = maxWalkSat(e)
+  print '\n \nbest solution ' + str(ret)
+  print 'energy of best solution ' + str(e(ret))
 
