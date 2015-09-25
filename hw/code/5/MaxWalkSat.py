@@ -160,77 +160,65 @@ def base_runner():
 
   return (norm_f1, norm_f2)
 
-# def neighbor(x, temp):
-#   epsilon = temp * random.random()
-#   add = bool(random.getrandbits(1))
-#   if add:
-#     x += epsilon
-#   else:
-#     x -= epsilon
+def say(x):
+  sys.stdout.write(str(x)); sys.stdout.flush()
 
-#   if x < 0.0:
-#     x = x + 1.0
+def prob(old, new, k):
+  x = math.exp(((new - old) / k))
+  return x
 
-#   if x > 1.0:
-#     x = x - 1.0
-     
-#   return x
+global kmax
+global emax
+kmax = 1000.0
+emax = (2)**0.5
 
-# def say(x):
-#   sys.stdout.write(str(x)); sys.stdout.flush()
-
-# def prob(old, new, k):
-#   x = math.exp(((new - old) / k))
-#   return x
-
-# global kmax
-# global emax
-# kmax = 10000.0
-# emax = (2)**0.5
-
-# def sim_anneal(energy):
-#   s0 = 0.5
-#   s = s0
-#   e = energy(s)
-#   print "Initial energy", e
-#   sb = s
-#   eb = e
-#   k = 1.0
+def maxWalkSat(energy):
+  s0 = generateValidValues()
+  s = s0
+  e = energy(s)
+  print "Initial energy", e
+  sb = s
+  eb = e
+  k = 1.0
   
-#   say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
+  #say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
+ 
+  #shitty print function
+  say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
 
-#   while k < kmax and e < emax:
-#     sn = neighbor(s, (kmax - k)/kmax)
-#     en = energy(sn)
+  while k < kmax and e < emax:
+    sn = generateValidValues()
+    en = energy(sn)
 
-#     # Is this a best overall?
-#     if en > eb:
-#       sb = sn
-#       eb = en
-#       say("!")
+    # Is this a best overall?
+    if en > eb:
+      sb = sn
+      eb = en
+      say("!")
 
-#     # Is this better than where we were last?
-#     if en > e:
-#       s = sn
-#       e = en
-#       say("+")
+    # Is this better than where we were last?
+    if en > e:
+      s = sn
+      e = en
+      say("+")
 
-#     elif prob(e, en, k / kmax) < random.random():
-#       s = sn
-#       e = en
-#       say("?")
+    # elif prob(e, en, k / kmax) < random.random():
+    #   s = sn
+    #   e = en
+    #   say("?")
 
-#     say(".")
-#     k += 1.00
+    say(".")
+    k += 1.00
 
-#     if k % 50 == 0:
-#       say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
+    if k % 50 == 0:
+      say("\n" + 'K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
+      #say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
 
-#   print '\n \nbest solution ' + str(sb)
-#   print 'energy of best solution ' + str(energy(sb))
+  print '\n \nbest solution ' + str(sb)
+  print 'energy of best solution ' + str(energy(sb))
 
 if __name__ == "__main__":
   norm_tup = base_runner()
   e = energy(norm_tup[0], norm_tup[1])
-  #sim_anneal(e)
+  maxWalkSat(e)
 
