@@ -24,6 +24,19 @@ def constraints56(x5, x6):
   if((x5 - 3)**3 + x6 - 4 < 0): return False
   return True
 
+def constraints_all(s):
+  x1 = s[0]
+  x2 = s[1]
+  x3 = s[2]
+  x4 = s[3]
+  x5 = s[4]
+  x6 = s[5]
+  if(x1 + x2 - 2 < 0): return False
+  if(6 - x1 - x2 < 0): return False
+  if(2 - x2 + x1 < 0): return False
+  if(4 - (x3 - 3)**2 - x4 < 0): return False
+  if((x5 - 3)**3 + x6 - 4 < 0): return False
+
 
 #returns bounds function that takes a random and returns a value within in the bounds
 def bounds(min, max):
@@ -82,7 +95,8 @@ x4bound = bounds(0, 6)
 x5bound = bounds(1, 5)
 x6bound = bounds(0, 10)
 
-def generateValidValues():
+
+def generateValidValues(poke=None):
   x1temp = x1bound(random.random())
   x2temp = x2bound(random.random())
   x3temp = x3bound(random.random())
@@ -93,19 +107,15 @@ def generateValidValues():
   while(not constraints12(x1temp, x2temp)):
     x1temp = x1bound(random.random())
     x2temp = x2bound(random.random())
-  
-
   while(not constraints34(x3temp, x4temp)):
     x3temp = x3bound(random.random())
     x4temp = x4bound(random.random())
-  
-
   while(not constraints56(x5temp, x6temp)):
     x5temp = x5bound(random.random())
     x6temp = x6bound(random.random())
-  
 
-  return(x1temp, x2temp, x3temp, x4temp, x5temp, x6temp)
+
+  return[x1temp, x2temp, x3temp, x4temp, x5temp, x6temp]
 
 #TODO: adapt for oszyzcka2 constraints
 def base_runner():
@@ -143,19 +153,19 @@ def base_runner():
   norm_f1_obs = [norm_f1(f1) for f1,f2 in f1_obs]
   norm_f2_obs = [norm_f2(f2) for f1,f2 in f2_obs]
 
-  for norm_ob in norm_f2_obs:
-    print norm_ob
+  # for norm_ob in norm_f2_obs:
+  #   print norm_ob
 
-  print '---------------------'
-  print 'f1_max ' + str(f1_obs[-1][0])
-  print 'f1_max normalized ' + str(norm_f1(f1_obs[-1][0]))
-  print 'f1_min ' + str(f1_obs[0][0])
-  print 'f1_min normalized ' + str(norm_f1(f1_obs[0][0]))
-  print '---------------------'
-  print 'f2_max ' + str(f2_obs[-1][1])
-  print 'f2_max normalized ' + str(norm_f2(f2_obs[-1][1]))
-  print 'f2_min ' + str(f2_obs[0][1])
-  print 'f2_min normalized ' + str(norm_f2(f2_obs[0][1]))
+  # print '---------------------'
+  # print 'f1_max ' + str(f1_obs[-1][0])
+  # print 'f1_max normalized ' + str(norm_f1(f1_obs[-1][0]))
+  # print 'f1_min ' + str(f1_obs[0][0])
+  # print 'f1_min normalized ' + str(norm_f1(f1_obs[0][0]))
+  # print '---------------------'
+  # print 'f2_max ' + str(f2_obs[-1][1])
+  # print 'f2_max normalized ' + str(norm_f2(f2_obs[-1][1]))
+  # print 'f2_min ' + str(f2_obs[0][1])
+  # print 'f2_min normalized ' + str(norm_f2(f2_obs[0][1]))
 
   return (norm_f1, norm_f2)
 
@@ -166,58 +176,106 @@ def prob(old, new, k):
   x = math.exp(((new - old) / k))
   return x
 
-global kmax
-global emax
-kmax = 1000.0
-emax = (2)**0.5
+  #say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
+  #shitty print function
+  # say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
+
+
+def mutate(c, s, energy):
+  num_steps = 10
+  bound_list = [(0, 10), (0, 10), (1, 5), (0, 6), (1, 5), (0, 10)]
+  b = bound_list[c]
+  s[c] = b[0]
+  sb = s
+  eb = energy(s)
+  step_val = (b[1] - b[0])/num_steps
+  while num_steps > 0:
+    while not constraints_all(s) and num_steps > 0:
+      print 'bad constraint'
+      s[c] += step_val
+      num_steps -= 1
+    e = energy(s)
+    if e > eb:
+      sb = s
+      eb = e
+    num_steps -= 1
+    print 'sb is '
+    print sb
+    print ' num steps ' + str(num_steps)
+  return sb
+
 
 def maxWalkSat(energy):
-  s0 = generateValidValues()
-  s = s0
-  e = energy(s)
-  print "Initial energy", e
-  sb = s
-  eb = e
-  k = 1.0
-  
-  #say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
- 
-  #shitty print function
-  say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
+  max_changes = 100
+  max_tries = 10
+  prob = 0.5
+  emax = (2)**0.5
+  ebo = 0
+  for i in range(max_tries):
+    s0 = generateValidValues()
+    s = s0
+    e = energy(s)
+    sb = s
+    eb = e
+    print "Initial energy " + e + " try number " + i
+    for j in range(max_changes):
+      if e > emax:
+        return s
+      victim = randint(0,5)
 
-  while k < kmax and e < emax:
-    sn = generateValidValues()
-    en = energy(sn)
+      # We print the hat if we try all of the values of a var
+      # We print the question mark if we try something random
+      # in the neighborhood
+      if prob < random.random():
+        s = tweak(victim, s)
+        say("?")
+      else:
+        s = mutate(victim, s)
+        say("^")
+      # Keeping the concept of energy new and solution
+      # new only for the purpose of defining whether
+      # were doing better or not.  s is always equal
+      # to sn in the next iteration
+      en = energy(sn)
+      if(en > eb):
+        sb = sn
+        eb = en
+        say("!")
+      if en > e:
+        say("+")
 
-    # Is this a best overall?
-    if en > eb:
-      sb = sn
-      eb = en
-      say("!")
+      say(".")
+      # Always promote the last solution
+      # s = sn
+      # e = en
 
-    # Is this better than where we were last?
-    if en > e:
-      s = sn
-      e = en
-      say("+")
+    # Best solution over all tries
+    if eb > ebo:
+      sbo = sb
+      # T is try number
+      say("\n" + 'T:' + str(i) + " vector: " + str(sbo[0]) + " " + str(sbo[1]) + " " + str(sbo[2]) + " " + str(sbo[3]) + " " + str(sbo[4]) + " " + str(sbo[5]))
 
-    # elif prob(e, en, k / kmax) < random.random():
-    #   s = sn
-    #   e = en
-    #   say("?")
+  # Down here we're out of both for loops so we
+  # return the best we have overall
+  return sbo
 
-    say(".")
-    k += 1.00
 
-    if k % 50 == 0:
-      say("\n" + 'K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
-      #say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
 
-  print '\n \nbest solution ' + str(sb)
-  print 'energy of best solution ' + str(energy(sb))
+
+    # k += 1.00
+
+    # if k % 50 == 0:
+    #   say("\n" + 'K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
+    #   #say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
+
+
 
 if __name__ == "__main__":
   norm_tup = base_runner()
   e = energy(norm_tup[0], norm_tup[1])
-  maxWalkSat(e)
+  s = generateValidValues()
+  mutate(1, s, e)
+  # ret = maxWalkSat(e)
+  # print '\n \nbest solution ' + str(ret)
+  # print 'energy of best solution ' + str(energy(ret))
 
