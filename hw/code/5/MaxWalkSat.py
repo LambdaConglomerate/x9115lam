@@ -24,20 +24,11 @@ def constraints56(x5, x6):
   if((x5 - 3)**3 + x6 - 4 < 0): return False
   return True
 
-def constraints_all(s):
-  x1 = s[0]
-  x2 = s[1]
-  x3 = s[2]
-  x4 = s[3]
-  x5 = s[4]
-  x6 = s[5]
-  if(x1 + x2 - 2 < 0): return False
-  if(6 - x1 - x2 < 0): return False
-  if(2 - x2 + x1 < 0): return False
-  if(4 - (x3 - 3)**2 - x4 < 0): return False
-  if((x5 - 3)**3 + x6 - 4 < 0): return False
-  return True
-
+#constraint stack, makes dealing with the step function easier
+constraintsStack = []
+constraintsStack.append(constraints12)
+constraintsStack.append(constraints34)
+constraintsStack.append(constraints56)
 
 #returns bounds function that takes a random and returns a value within in the bounds
 def bounds(min, max):
@@ -62,9 +53,7 @@ def normalize(b1, b2):
 # is at (1,1) in this graph.  We calculate distance
 # to hell from our x,y point and return it as our
 # energy value.  For this simplified environment
-# emax is sqrt(2).
-
-
+# emax is sqrt(2)
 def energy(f1_norm, f2_norm):
   def e(x):
     s = osyczka2(x)
@@ -78,7 +67,6 @@ def energy(f1_norm, f2_norm):
     # print 'f2 normalized is ' + str(y)
     dist_from_hell = ((1 - x)**2 + (1 - y)**2)**0.5
     # print 'dist from hell ' + str(dist_from_hell)
-
     return dist_from_hell
   return e
 
@@ -89,34 +77,43 @@ def energy(f1_norm, f2_norm):
 # 0 <= x4 <= 6
 # 1 <= x5 <= 5
 # 0 <= x6 <= 10
-x1bound = bounds(0, 10)
-x2bound = bounds(0, 10)
-x3bound = bounds(1, 5)
-x4bound = bounds(0, 6)
-x5bound = bounds(1, 5)
-x6bound = bounds(0, 10)
+
+#bound list, makes dealing with steps easier
+xbounds = []
+xbounds.append(bounds(0, 10))
+xbounds.append(bounds(0, 10))
+xbounds.append(bounds(1, 5))
+xbounds.append(bounds(0, 6))
+xbounds.append(bounds(1, 5))
+xbounds.append(bounds(0, 10))
+
+def generateValidValues():
+
+  xtemp = []
+
+  for i in range(0, 6):
+    xtemp.append(xbounds[i](random.random()))
 
 
-def generateValidValues(poke=None):
-  x1temp = x1bound(random.random())
-  x2temp = x2bound(random.random())
-  x3temp = x3bound(random.random())
-  x4temp = x4bound(random.random())
-  x5temp = x5bound(random.random())
-  x6temp = x6bound(random.random())
-
-  while(not constraints12(x1temp, x2temp)):
-    x1temp = x1bound(random.random())
-    x2temp = x2bound(random.random())
-  while(not constraints34(x3temp, x4temp)):
-    x3temp = x3bound(random.random())
-    x4temp = x4bound(random.random())
-  while(not constraints56(x5temp, x6temp)):
-    x5temp = x5bound(random.random())
-    x6temp = x6bound(random.random())
+  while(not constraints12(xtemp[0], xtemp[1])):
+    xtemp[0] = xbounds[0](random.random())
+    xtemp[1] = xbounds[1](random.random())
 
 
-  return[x1temp, x2temp, x3temp, x4temp, x5temp, x6temp]
+  while(not constraints34(xtemp[2], xtemp[3])):
+    xtemp[2] = xbounds[2](random.random())
+    xtemp[3] = xbounds[3](random.random())
+
+
+  while(not constraints56(xtemp[4], xtemp[5])):
+    xtemp[4] = xbounds[4](random.random())
+    xtemp[5] = xbounds[5](random.random())
+
+
+  # say("\nxtemp = ")
+  # say(xtemp)
+
+  return(xtemp)
 
 #TODO: adapt for oszyzcka2 constraints
 def base_runner():
@@ -125,7 +122,7 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 1000 times
-  for j in range(100):
+  for j in range(1000):
     x = generateValidValues()
     y_tup = osyczka2(x)
 
@@ -177,114 +174,95 @@ def prob(old, new, k):
   x = math.exp(((new - old) / k))
   return x
 
-  #say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
-  #shitty print function
-  # say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
-
-
-def mutate(c, s, energy):
-  num_steps = 10
-  bound_list = [(0, 10), (0, 10), (1, 5), (0, 6), (1, 5), (0, 10)]
-  b = bound_list[c]
-  s[c] = b[0]
-  sb = s
-  eb = energy(s)
-  step_val = (b[1] - b[0])/num_steps
-  while num_steps > 0:
-    while not constraints_all(s) and num_steps > 0:
-      s[c] += step_val
-      num_steps -= 1
-    e = energy(s)
-    if e > eb:
-      sb = s
-      eb = e
-    num_steps -= 1
-    print sb
-  return sb
-
-def tweak(c, s):
-  epsilon = 0.1
-  add = random.getrandbits(1)
-  if(add):
-    s[c] += epsilon
+def getConstraintPair(c):
+  if(c == 0 or c == 1):
+    return (0,1)
+  elif(c == 2 or c == 3):
+    return (2,3)
   else:
-    s[c] -= epsilon
-  return s
+    return (4,5)
+
+# Mutate one variable across its
+# entire range, determining whether
+# it has the best possible energy
+def mutate(c, sn, energy):
+  tempS = list(sn)
+  tempE = energy(sn)
+  #for the each tenth go through bounds of x
+  for i in range(1, 10):
+    stepX = xbounds[c](i / 10.0)
+    #mutate
+    tempS[c] = stepX
+    #check constraints and if energy we are at a better energy
+    #the call that was here before was genius but painful to read
+    f, l = getConstraintPair(c)
+    if constraintsStack[f/2](tempS[f], tempS[l]) and energy(tempS) > tempE:
+      sn = list(tempS)
+      tempE = energy(tempS)
+  return sn
+
+def tweak(c, sn):
+    sn[c] = xbounds[c](random.random())
+    f, l = getConstraintPair(c)
+    while not constraintsStack[f/2](sn[f], sn[l]):
+      sn[c] = xbounds[c](random.random())
+    return sn
 
 def maxWalkSat(energy):
-  max_changes = 100
-  max_tries = 10
-  prob = 0.5
+  max_changes = 1000
+  max_retries = 100
   emax = (2)**0.5
-  ebo = 0
-  for i in range(max_tries):
-    s0 = generateValidValues()
-    s = s0
-    e = energy(s)
-    sb = s
-    eb = e
-    en = e
-    print "Initial energy " + str(e) + " try number " + str(i)
+  s = generateValidValues()
+  e = energy(s)
+  sb = s
+  sbo = s
+  eb = e
+  ebo = e
+  sn = sb
+  for i in range(max_retries):
+    print '\nT:', i
     for j in range(max_changes):
+      # print 'S', s
       if e > emax:
-        return s
-      victim = random.randint(0,5)
-
-      # We print the hat if we try all of the values of a var
-      # We print the question mark if we try something random
-      # in the neighborhood
-      if prob < random.random():
-        sn = tweak(victim, s)
-        say("?")
+        return s,e
+      #pick the x to mutate
+      c = random.randint(0, 5)
+      if(random.random() >= 0.5):
+        sn = tweak(c, sn)
       else:
-        sn = mutate(victim, s, energy)
-        say("^")
-      # Keeping the concept of energy new and solution
-      # new only for the purpose of defining whether
-      # were doing better or not.  s is always equal
-      # to sn in the next iteration
+        sn = mutate(c, sn, energy)
       en = energy(sn)
-      if(en > eb):
+      if en > eb:
         sb = sn
         eb = en
         say("!")
       if en > e:
         say("+")
-
       say(".")
-      # Always promote the last solution
-      s = sn
+      s = list(sn)
       e = en
-
-    # Best solution over all tries
-    if eb > ebo:
-      sbo = sb
-      # T is try number
-      say("\n" + 'T:' + str(i) + " vector: " + str(sbo[0]) + " " + str(sbo[1]) + " " + str(sbo[2]) + " " + str(sbo[3]) + " " + str(sbo[4]) + " " + str(sbo[5]))
-
-  # Down here we're out of both for loops so we
-  # return the best we have overall
-  if(sbo == None):
-    sbo = sb
-
-  return sbo
-
-
-
-
-    # k += 1.00
-
-    # if k % 50 == 0:
-    #   say("\n" + 'K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
-    #   #say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
-
+    # Print our best for that try
+    print '\nSB:', sb
+    print 'EB:', eb
+    # First check if the sb for that set of changes was better
+    # Than any of our other retries
+    if(eb > ebo):
+      sbo = list(sb)
+      ebo = eb
+    # Then retry with a brand new set of values
+    s = generateValidValues()
+    e = energy(s)
+    sn = list(s)
+    en = e
+    sb = sn
+    eb = en
+  # If we're here we've run through all of our tries
+  return sbo, ebo
 
 
 if __name__ == "__main__":
   norm_tup = base_runner()
   e = energy(norm_tup[0], norm_tup[1])
-  s = generateValidValues()
-  ret = maxWalkSat(e)
-  print '\n \nbest solution ' + str(ret)
-  print 'energy of best solution ' + str(e(ret))
-
+  s,e = maxWalkSat(e)
+  print '\nEBO:', e
+  print 'SBO:', s
