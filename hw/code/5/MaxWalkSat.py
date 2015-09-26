@@ -53,9 +53,7 @@ def normalize(b1, b2):
 # is at (1,1) in this graph.  We calculate distance
 # to hell from our x,y point and return it as our
 # energy value.  For this simplified environment
-# emax is sqrt(2).
-
-
+# emax is sqrt(2)
 def energy(f1_norm, f2_norm):
   def e(x):
     s = osyczka2(x)
@@ -95,22 +93,18 @@ def generateValidValues():
 
   for i in range(0, 6):
     xtemp.append(xbounds[i](random.random()))
-   
 
   while(not constraints12(xtemp[0], xtemp[1])):
     xtemp[0] = xbounds[0](random.random())
     xtemp[1] = xbounds[1](random.random())
-  
 
   while(not constraints34(xtemp[2], xtemp[3])):
     xtemp[2] = xbounds[2](random.random())
     xtemp[3] = xbounds[3](random.random())
-  
 
   while(not constraints56(xtemp[4], xtemp[5])):
     xtemp[4] = xbounds[4](random.random())
     xtemp[5] = xbounds[5](random.random())
-  
 
   # say("\nxtemp = ")
   # say(xtemp)
@@ -176,80 +170,94 @@ def prob(old, new, k):
   x = math.exp(((new - old) / k))
   return x
 
-global kmax
-global emax
-kmax = 1000.0
-emax = (2)**0.5
+def getConstraintPair(c):
+  if(c == 0 or c == 1):
+    return (0,1)
+  elif(c == 2 or c == 3):
+    return (2,3)
+  else:
+    return (4,5)
+
+# Mutate one variable across its
+# entire range, determining whether
+# it has the best possible energy
+def mutate(c, sn, energy):
+  tempS = list(sn)
+  tempE = energy(sn)
+  #for the each tenth go through bounds of x
+  for i in range(1, 10):
+    stepX = xbounds[c](i / 10.0)
+    #mutate
+    tempS[c] = stepX
+    #check constraints and if energy we are at a better energy
+    #the call that was here before was genius but painful to read
+    f, l = getConstraintPair(c)
+    if constraintsStack[f/2](tempS[f], tempS[l]) and energy(tempS) > tempE:
+      sn = list(tempS)
+      tempE = energy(tempS)
+  return sn
+
+def tweak(c, sn):
+    sn[c] = xbounds[c](random.random())
+    f, l = getConstraintPair(c)
+    while not constraintsStack[f/2](sn[f], sn[l]):
+      sn[c] = xbounds[c](random.random())
+    return sn
 
 def maxWalkSat(energy):
-  s0 = generateValidValues()
-  s = s0
+  max_changes = 1000
+  max_retries = 100
+  emax = (2)**0.5
+  s = generateValidValues()
   e = energy(s)
-  print "Initial energy", e
   sb = s
+  sbo = s
   eb = e
-  k = 1.0
+  ebo = e
   sn = sb
-  
-  #say('(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
- 
-  say('K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
-
-  while k < kmax and e < emax:
-    chance = random.random()
-
-    if(chance >= 0.5):
-      #jump to random spot
-      #if you wanted to mutate all values
-      sn = generateValidValues()
-
-      #If you wanted to change mutate only one value
-      # c = int(math.floor(6 * random.random()))
-      # sn[c] = xbounds[c](random.random())
-      # while not constraintsStack[int(math.floor(c/2))](sn[int(math.floor(c/2) * 2)], sn[int(math.floor(c/2) * 2) + 1]): sn[c] = xbounds[c](random.random())
-    else:
-      #step function
+  for i in range(max_retries):
+    print '\nT:', i
+    for j in range(max_changes):
+      # print 'S', s
+      if e > emax:
+        return s,e
       #pick the x to mutate
-      c = int(math.floor(6 * random.random()))
-      tempS = list(sn)
-      tempE = energy(sn)
-      #for the each tenth go through bounds of x
-      for i in range(1, 10):
-        stepX = xbounds[c](i / 10.0)
-        #mutate 
-        tempS[c] = stepX
-        #check constraints and if energy we are at a better energy
-        if constraintsStack[int(math.floor(c/2))](tempS[int(math.floor(c/2) * 2)], tempS[int(math.floor(c/2) * 2) + 1]) and energy(tempS) > tempE: 
-          sn = list(tempS)
-          tempE = energy(tempS)
-            
-    en = energy(sn)
-
-    # Is this a best overall?
-    if en > eb:
-      sb = sn
-      eb = en
-      say("!")
-
-    # Is this better than where we were last?
-    if en > e:
-      s = sn
+      c = random.randint(0, 5)
+      if(random.random() >= 0.5):
+        sn = tweak(c, sn)
+      else:
+        sn = mutate(c, sn, energy)
+      en = energy(sn)
+      if en > eb:
+        sb = sn
+        eb = en
+        say("!")
+      if en > e:
+        say("+")
+      say(".")
+      s = list(sn)
       e = en
-      say("+")
-
-    say(".")
-    k += 1.00
-
-    if k % 50 == 0:
-      say("\n" + 'K:' + str(k) + " vector: " + str(sb[0]) + " " + str(sb[1]) + " " + str(sb[2]) + " " + str(sb[3]) + " " + str(sb[4]) + " " + str(sb[5]))
-      #say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(sb) + '\t')
-
-  print '\n \nbest solution ' + str(sb)
-  print 'energy of best solution ' + str(energy(sb))
-  print("\n")
+    # Print our best for that try
+    print '\nSB:', sb
+    print 'EB:', eb
+    # First check if the sb for that set of changes was better
+    # Than any of our other retries
+    if(eb > ebo):
+      sbo = list(sb)
+      ebo = eb
+    # Then retry with a brand new set of values
+    s = generateValidValues()
+    e = energy(s)
+    sn = list(s)
+    en = e
+    sb = sn
+    eb = en
+  # If we're here we've run through all of our tries
+  return sbo, ebo
 
 if __name__ == "__main__":
   norm_tup = base_runner()
   e = energy(norm_tup[0], norm_tup[1])
-  maxWalkSat(e)
-
+  s,e = maxWalkSat(e)
+  print '\nEBO:', e
+  print 'SBO:', s
