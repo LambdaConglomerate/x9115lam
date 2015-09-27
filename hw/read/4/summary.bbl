@@ -1,8 +1,16 @@
 \begin{thebibliography}{1}
 
+\bibitem{arisholm10}
+Erik Arisholm, Lionel~C. Briand, and Eivind~B. Johannessen.
+\newblock A systematic and comprehensive investigation of methods to build and
+  evaluate fault prediction models.
+\newblock {\em J. Syst. Softw.}, 83(1):2--17, January 2010.
+
 \bibitem{Vandecruys08}
-Vandecruys, Olivier and Martens, David and Baesens, Bart and Mues, Christophe and De Backer, Manu and Haesen, Raf.
-\newblock Mining Software Repositories for Comprehensible Software Fault Prediction Models.
+Olivier Vandecruys, David Martens, Bart Baesens, Christophe Mues, Manu
+  De~Backer, and Raf Haesen.
+\newblock Mining software repositories for comprehensible software fault
+  prediction models.
 \newblock {\em J. Syst. Softw.}, 81(5):823--839, May 2008.
 
 \end{thebibliography}

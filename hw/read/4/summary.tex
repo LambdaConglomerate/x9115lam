@@ -3,7 +3,6 @@
 \usepackage[latin9]{inputenc}
 \usepackage{babel}
 \begin{document}
-
 \title{Paper Four Summary}
 
 
@@ -13,7 +12,7 @@
 
 \section*{Reference}
 
-Vandecruys et al \cite{Vandecruys08} listed below.
+Vandecruys et al. \cite{Vandecruys08} listed below.
 
 
 \section*{Important Keywords}
@@ -35,10 +34,13 @@ Vandecruys et al \cite{Vandecruys08} listed below.
 
 
 \section*{Possible Improvements}
-
+\begin{itemize}
+\item Table 6 \cite[p. 835]{Vandecruys08} is rotated 90 degrees in order to fit on the page. On a computer screen, it is difficult to read without rotating the entire page 90 degrees, and then the page has to be rotated back to read the rest of the paper. Since the table is split into three sections for each of the three datasets, the large table could have been divided into tables for each dataset, which could have easily been placed vertically to fit on a page.
+\item The conclusion of the paper was very short, consisting of only about a quarter of a column. In this section, the authors reiterated their goals of reducing faults in software programs by helping software managers to better understand which modules might contain faults. They note that AntMiner+ will help to achieve these goals. But that is all they say. They did not explicitly state any plans or ideas for future work or threats to validity, which were present in previous papers we summarized. The authors should have fleshed out their conclusion a bit more to suggest some practical next steps.
+\end{itemize}
 
 \section*{Connection to Other Papers}
-
+This paper was cited by Arisholm et al. \cite{arisholm10} as part of a literature review. They cited this paper's analysis of various classification techniques and the results that there were no large differences in accuracy, sensitivity, or specificity. The paper uses these findings as well as similar findings in other papers to claim that, "the differences between modeling techniques are relatively small" \cite[p. 4]{arisholm10}. The study also notes that most of the studies it cited (including this one) only looked at structural measures to predict fault proneness and not more expensive factors like process measures. Finally, the study examined the cost-effectiveness of various modeling techniques, while this one did not.
 
 
 \bibliographystyle{plain}
