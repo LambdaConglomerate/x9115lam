@@ -1,5 +1,7 @@
 import random, math, sys
 
+emax = (2)**0.5
+
 # Calculates f1 and f2 and then
 # returns the values in a tuple
 # f1,f2
@@ -67,7 +69,7 @@ def energy(f1_norm, f2_norm):
     # print 'f2 normalized is ' + str(y)
     dist_from_hell = ((1 - x)**2 + (1 - y)**2)**0.5
     # print 'dist from hell ' + str(dist_from_hell)
-    return dist_from_hell
+    return dist_from_hell / emax
   return e
 
 # bounds:
@@ -207,7 +209,7 @@ def tweak(c, sn):
 def maxWalkSat(energy):
   max_changes = 1000
   max_retries = 100
-  emax = (2)**0.5
+  global emax
   s = generateValidValues()
   e = energy(s)
   sb = s
@@ -219,7 +221,7 @@ def maxWalkSat(energy):
     print '\nT:', i
     for j in range(max_changes):
       # print 'S', s
-      if e > emax:
+      if e >= 1:
         return s,e
       #pick the x to mutate
       c = random.randint(0, 5)
