@@ -69,7 +69,7 @@ def energy(f1_norm, f2_norm):
     # print 'f2 normalized is ' + str(y)
     dist_from_hell = ((1 - x)**2 + (1 - y)**2)**0.5
     # print 'dist from hell ' + str(dist_from_hell)
-    return dist_from_hell / emax
+    return dist_from_hell / (2**(0.5))
   return e
 
 # bounds:
@@ -120,7 +120,7 @@ def base_runner():
   obs = []
 
   # Run the baseline model test 1000 times
-  for j in range(1000):
+  for j in range(10000):
     x = generateValidValues()
     y_tup = osyczka2(x)
 
@@ -146,8 +146,8 @@ def base_runner():
   # everything works as expected.  Check it out if you want.
   #
 
-  norm_f1_obs = [norm_f1(f1) for f1,f2 in f1_obs]
-  norm_f2_obs = [norm_f2(f2) for f1,f2 in f2_obs]
+  # norm_f1_obs = [norm_f1(f1) for f1,f2 in f1_obs]
+  # norm_f2_obs = [norm_f2(f2) for f1,f2 in f2_obs]
 
   # for norm_ob in norm_f2_obs:
   #   print norm_ob
@@ -208,8 +208,8 @@ def tweak(c, sn):
 
 def maxWalkSat(energy):
   max_changes = 1000
-  max_retries = 100
-  global emax
+  max_retries = 1000
+  emax = 1
   s = generateValidValues()
   e = energy(s)
   sb = s
@@ -221,7 +221,7 @@ def maxWalkSat(energy):
     print '\nT:', i
     for j in range(max_changes):
       # print 'S', s
-      if e >= 1:
+      if e >= emax:
         return s,e
       #pick the x to mutate
       c = random.randint(0, 5)
@@ -258,8 +258,14 @@ def maxWalkSat(energy):
   return sbo, ebo
 
 if __name__ == "__main__":
-  norm_tup = base_runner()
-  e = energy(norm_tup[0], norm_tup[1])
+  # norm_tup = base_runner()
+  f1_min = -585.571879426
+  f1_max = -1.02145704618
+  f2_min = 25.4899157903
+  f2_max = 166.215983078
+  norm_f1 = normalize(f1_min, f1_max)
+  norm_f2 = normalize(f2_min, f2_max)
+  e = energy(norm_f1, norm_f2)
   s,e = maxWalkSat(e)
   print '\nEBO:', e
   print 'SBO:', s
