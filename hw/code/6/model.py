@@ -6,6 +6,7 @@ class model(object):
     self.objs = payload.objs if payload else None
     # self.energy = payload.energy if payload else None
     self.constraints = payload.cons if payload else None
+    self.bound = payload.bound if payload else None
 
   def gen_clean(self):
     vector = []
@@ -36,7 +37,12 @@ class model(object):
 
   def eval_objs(self, vector):
     eval_list = []
+    #print self.objs
     for f in self.objs:
-      eval_list.append(f(vector))
+      # print f.norm
+      if(self.bound):
+        eval_list.append(f.norm(f.func(vector)))
+      else:
+        eval_list.append(f(vector))
     # print(eval_list)
     return eval_list
