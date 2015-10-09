@@ -2,27 +2,41 @@ import random, math, sys
 class model(object):
 
   def __init__(self, payload):
-    self.decs = payload.get("decs") if payload else None
-    self.objs = payload.get("objs") if payload else None
-    self.energy = payload.get("energy") if payload else None
-    self.constraints = payload.get("constraints") if payload else None
+    self.decs = payload.decs if payload else None
+    self.objs = payload.objs if payload else None
+    # self.energy = payload.energy if payload else None
+    self.constraints = payload.cons if payload else None
 
-  def regen(self):
+  def gen_clean(self):
     vector = []
     count = 0
-    for k,v in sorted(self.decs.iteritems()):
-      vector.append(v(random.random()))
+    for dec in self.decs:
+      vector.append(dec(random.random()))
       count += 1
+    # print vector
     return vector
 
-  def gen_vals(self):
-    vector = self.regen()
-    if(self.constraints):
-      count = 0
-      while(not self.constraints(vector)):
-        print('out of constraint')
-        print(vector)
-        count += 1
-        vector = self.regen()
-      print("final count", count)
+  def gen_spec(self, ids, vector):
+    for id in ids:
+      # print('id ', id)
+      # print('vector b/4 ', vector)
+      func = getattr(self.decs, id)
+      vector[int(id[1:]) - 1] = func(random.random())
+      # print('vector after ', vector)
+    return vector
 
+  def gen_con(self, vector=None):
+    if not vector:
+      vector = self.gen_clean()
+    for c in self.constraints:
+      while not c.state(vector):
+        # print('c is', c)
+        vector = self.gen_spec(c.ids, vector)
+    return vector
+
+  def eval_objs(self, vector):
+    eval_list = []
+    for f in self.objs:
+      eval_list.append(f(vector))
+    # print(eval_list)
+    return eval_list
