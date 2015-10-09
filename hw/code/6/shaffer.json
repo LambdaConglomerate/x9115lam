@@ -1,0 +1,11 @@
+{
+  "dec":{
+    "x":[0,1]
+  },
+  "obj":{
+    "f1": "x * x",
+    "f2": "(x-2)**2"
+  },
+  "energy":"from_hell",
+  "constraints":{}
+}
