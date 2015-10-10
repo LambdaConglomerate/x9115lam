@@ -10,6 +10,7 @@ def mutate(c, sn, m):
   vect = list(sn)
   e = m.energy(sn)
   id = 'x' + str(c)
+  # print 'id is in mutate: ' + id
   #for the each tenth go through bounds of the decision
   for i in range(1, 10):
     step = getattr(m.decs, id)(i/10.0)
@@ -29,6 +30,8 @@ def mutate(c, sn, m):
 
 def tweak(c, sn, m):
     id = 'x' + str(c)
+    # print 'id is in tweak: ', id
+    # print 'sn is ', sn
     sn_temp = sn
     # Need this to be c minus 1 since we're
     # returning in a 1 based range on line 53
@@ -36,13 +39,13 @@ def tweak(c, sn, m):
     sn_temp[c - 1] = getattr(m.decs, id)(random.random())
     # we try ten times to make this work, if we fail then
     # we just leave sn alone and return it as it was
-    for i in range(0, 100):
-      if m.check_con(sn, id):
-        sn = sn_temp
-        break
-      else:
-        sn_temp[c - 1] = getattr(m.decs, id)(random.random())
-    return sn
+    # count = 0
+    while not m.check_con(sn, id):
+      sn_temp[c - 1] = getattr(m.decs, id)(random.random())
+      # count += 1
+    # print 'final sn is ', sn_temp
+    # print 'count in tweak: ' + str(count)
+    return sn_temp
 
 # Pass in the model m
 def run(m):
@@ -104,4 +107,7 @@ def run(m):
     sb = sn
     eb = en
   # If we're here we've run through all of our tries
+  print '\n'
+  print 'EBO ', ebo
+  print 'SBO ', sbo
   return sbo, ebo

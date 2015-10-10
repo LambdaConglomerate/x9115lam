@@ -46,8 +46,8 @@ constraint = collections.namedtuple('constraint', ['ids', 'state'])
 cons = collections.namedtuple('cons', ['c1', 'c2', 'c3'])
 
 funcs = osyczka2()
-obj1 = objective(funcs[0], normalize(-608.378316019, -0.423436047808))
-obj2 = objective(funcs[1], normalize(25.4899157903, 175.967589423))
+obj1 = objective(funcs[0], normalize(-640.908072277, -0.423436047808))
+obj2 = objective(funcs[1], normalize(25.4899157903, 176.005656027))
 objs = objectives(obj1, obj2)
 
 decs = decs(bounds(0,10), bounds(0,10), bounds(1,5), bounds(0,6), bounds(1,5), bounds(0,10))
@@ -61,8 +61,9 @@ cons = cons(c1, c2, c3)
 payload = payload(decs, objs, cons, True, 'from_hell')
 
 m = model.model(payload)
-# print getattr(m.decs, 'x1')
-MaxWalkSat.run(m)
+
+fin = MaxWalkSat.run(m)
+
 # vector = m.gen_con()
 # print vector
 # vector = m.gen_con()
@@ -70,3 +71,4 @@ MaxWalkSat.run(m)
 # print (m.check_con(vector, 'x' + str(7)))
 # eval_list = m.eval_objs(vector)
 # print m.energy(vector)
+# print getattr(m.decs, 'x1')

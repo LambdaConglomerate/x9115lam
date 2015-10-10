@@ -80,13 +80,13 @@ class model(object):
         eval_list.append(norm)
       else:
         eval_list.append(f(vector))
-    print 'f1: ', eval_list[0]
-    print 'f2: ', eval_list[1]
+    # print 'f1: ', eval_list[0]
+    # print 'f2: ', eval_list[1]
     return eval_list
 
   # Simple normalization function to
   # normalize (b1, b2) to range (0,1).
-  def normalize(b1, b2):
+  def normalize(self, b1, b2):
     def n(x):
       return (x - b1) / (b2 - b1)
     return n
@@ -96,7 +96,7 @@ class model(object):
   def add_vect(self):
     def func(vector):
       resp = self.eval_objs(vector)
-      norm = normalize(0, 2)
+      norm = self.normalize(0, 2)
       return norm(resp[0] + resp[1])
     return func
 
