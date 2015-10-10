@@ -236,7 +236,8 @@ def maxWalkSat(energy):
         say("!")
       if en > e:
         say("+")
-      say(".")
+      else:
+        say(".")
       s = list(sn)
       e = en
     # Print our best for that try

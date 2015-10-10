@@ -38,7 +38,7 @@ def osyczka2():
   return (f1, f2)
 
 
-payload = collections.namedtuple('payload', ['decs', 'objs', 'cons', 'bound'])
+payload = collections.namedtuple('payload', ['decs', 'objs', 'cons', 'bound', 'energy'])
 objectives = collections.namedtuple('objs', ['f1', 'f2'])
 objective = collections.namedtuple('obj', ['func', 'norm'])
 decs = collections.namedtuple('decs', ['x1', 'x2', 'x3', 'x4', 'x5', 'x6'])
@@ -56,7 +56,7 @@ c2 = constraint(('x3','x4'), funcs[1])
 c3 = constraint(('x5','x6'), funcs[2])
 cons = cons(c1, c2, c3)
 
-payload = payload(decs, objs, cons, False)
+payload = payload(decs, objs, cons, False, 'from_hell')
 
 m = model.model(payload)
 

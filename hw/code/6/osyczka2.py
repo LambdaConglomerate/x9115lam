@@ -1,4 +1,4 @@
-import collections, model
+import collections, model, MaxWalkSat
 
 def bounds(min, max):
   def f(rand):
@@ -30,25 +30,24 @@ def constraints():
 def osyczka2():
   def f1(*args):
     args = args[0]
+    # print 'f1 args ', args
     return -(25*(args[0]-2)**2 + (args[1] - 2)**2 + (args[2] - 1)**2 * (args[3]-4)**2 + (args[4] - 1)**2)
   def f2(*args):
     args = args[0]
+    # print 'f2 args ', args
     return args[0]**2 + args[1]**2 + args[2]**2 + args[3]**2 + args[4]**2 + args[5]**2
   return (f1, f2)
 
-
-payload = collections.namedtuple('payload', ['decs', 'objs', 'cons', 'bound'])
+payload = collections.namedtuple('payload', ['decs', 'objs', 'cons', 'bound', 'energy'])
 objectives = collections.namedtuple('objs', ['f1', 'f2'])
 objective = collections.namedtuple('obj', ['func', 'norm'])
-
 decs = collections.namedtuple('decs', ['x1', 'x2', 'x3', 'x4', 'x5', 'x6'])
-
 constraint = collections.namedtuple('constraint', ['ids', 'state'])
 cons = collections.namedtuple('cons', ['c1', 'c2', 'c3'])
 
 funcs = osyczka2()
 obj1 = objective(funcs[0], normalize(-608.378316019, -0.423436047808))
-obj2 = objective(funcs[1], normalize(26.1019387811, 175.967589423))
+obj2 = objective(funcs[1], normalize(25.4899157903, 175.967589423))
 objs = objectives(obj1, obj2)
 
 decs = decs(bounds(0,10), bounds(0,10), bounds(1,5), bounds(0,6), bounds(1,5), bounds(0,10))
@@ -59,9 +58,15 @@ c2 = constraint(('x3','x4'), funcs[1])
 c3 = constraint(('x5','x6'), funcs[2])
 cons = cons(c1, c2, c3)
 
-payload = payload(decs, objs, cons, True)
+payload = payload(decs, objs, cons, True, 'from_hell')
 
 m = model.model(payload)
-# m.gen_clean()
-vector = m.gen_con()
-m.eval_objs(vector)
+# print getattr(m.decs, 'x1')
+MaxWalkSat.run(m)
+# vector = m.gen_con()
+# print vector
+# vector = m.gen_con()
+# print 'length of decs', len(m.decs)
+# print (m.check_con(vector, 'x' + str(7)))
+# eval_list = m.eval_objs(vector)
+# print m.energy(vector)
