@@ -43,7 +43,8 @@ return out
 Before `out += [x]`, add `"if [x]" > 20`.
 
 1c. Repeat the above, this time using _list comprehensions_.
-Before `return out`, add `out = [x if x > 20 for x in out]`
+Before `return out`, add `out = [x for x in out if x > 20]`
+
 1d. Using list comprehensions, write a function that returns only non-whitespace
 in a string. Hint:
 
@@ -52,8 +53,12 @@ import string
 string.whitespace # <== contains all whitespace chars
 ```
 ```
-def string_no_whitespace(string):
-    return [s if s not in string.whitespace for s in string]
+def string_no_whitespace(str):
+    return [s for s in str if s not in string.whitespace]
+```
+
+```
+
 ```
 1e. Using list comprehensions and the following code,
 return all lines in a multi-line
@@ -72,7 +77,12 @@ def lines(string):
   if tmp:
   yield tmp
 ```
-  
+```
+str = [x for x in lines("abcdksjfa;lksadjfadsf;\ndef\n\nghi") if x and len(x) > 20]
+      
+for s in str:
+    print s
+```
 ### 2. Dunders
 
 
@@ -85,6 +95,15 @@ class o:
   def __setitem__(i,k,v) : i.__dict__[k] = v
   def __getitem__(i,k)   : return i.__dict__[k]
   def __repr__(i)        : return 'o'+str(i.__dict__)
+```
+
+The dunders are `__init__`, `_setitem__`, `__getitem__`, and `__repr__`. 
+
+```
+obj = o(foo="bar")
+obj["foo"] = "foobar"
+print obj["foo"]
+print obj
 ```
 
 2b. In the above, what is the magic __dict__ variable?
