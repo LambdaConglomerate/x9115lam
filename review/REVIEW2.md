@@ -110,6 +110,14 @@ class o:
 
 The dunders are `__init__`, `_setitem__`, `__getitem__`, and `__repr__`. 
 
+I think he's looking for what do the dunders do, this is what they do:
+
+`__init__` is a constructor for o objects.
+`__setitem__` is a setter for an attribute of o objects.
+`__getitem__` is a getter for an attribute of an o object.
+`__repr__` this is the only hard one.  repr is this weird thing that actually gives a representation of the object.  So it tells the class of the object, and where the object comes from.  [Here](http://stackoverflow.com/questions/1436703/difference-between-str-and-repr-in-python) is some interesting stuff about it.
+
+
 ```
 obj = o(foo="bar")
 obj["foo"] = "foobar"
@@ -119,7 +127,10 @@ print obj
 
 2b. In the above, what is the magic __dict__ variable?
 
-A mapping of instance variables to their values.
+A mapping of instance variables to their values.  
+
+This is right, but you can also consider it to be the entire namespace of the calss with it's attributes.
+
 
 2c. What would happen if the _last line_ in the following `__iadd__` method
 was deleted?
@@ -142,7 +153,11 @@ class Some:
 ```	
 `None` would be returned.
 
+The above isn't correct.  If iadd was deleted the function just wouldn't do what you want it to do when you add to it with the += operator.  Might not work at all, and if it did work it wouldn't do what you want.  Take a look at some.py in the same folder, run it and then comment out iadd then run it again.
+
 2d. In English, explain what the above `Some` class  does. Use it in a loop
 to keep `Some` numbers in the series 0,1,2,...999.
 
 The `Some` class keeps a certain number of items in a list. After the list has been filled to capacity, adding a new item will replace a random item in the list.
+
+One thing to add here.  If you add to the object and there isn't space, and the random test in the elif fails, then the object just isn't added and the += has no effect.
