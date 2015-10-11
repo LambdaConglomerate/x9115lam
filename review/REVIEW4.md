@@ -1,10 +1,14 @@
 
 What is the problem with local maxima?
 
-Many search spaces are not convex and have many local maxima. In optimization problems, search algorithms may not find the global maximum if they have poor initialization conditions and converge to a local maximum and not the most optimal solution. 
+Many search spaces are not convex and have many local maxima. In optimization problems, search algorithms may not find the global maximum if they have poor initialization conditions and converge to a local maximum and not the most optimal solution. This leads to a solution being over-adapted/over-specialized to a local maxima. 
 
 1. In the following diagram, each square has the same x,y,z axis. What might the names of those x,y,z values?
 ![](https://github.com/timm/sbse14/wiki/etc/img/landscape/WrightFitness.jpg)
+
+x = length of hair
+y = body weight
+z = probability of winning fight
 
 2. Explain the following, using the above diagram:
 
