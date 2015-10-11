@@ -13,11 +13,17 @@ z = probability of winning fight
 2. Explain the following, using the above diagram:
 
  * Holes
+A dip in the search space 
  * Poles
+ Mountains in the search space
  * Saddles
+Flat space between a pole(mountain) and a holeW hen all eigenvalues are real and at least one of them is positive and at least one is negative. Saddles are always unstable.
  * Local minima
+A point in the sample space whose all adjacent spaces are higher.
  * Flat
+A section of the sample space with no changes. Cannot bing anything better of worse.
  * Brittle
+ A solution that works well for a very exact environment but becomes significantly worse if there a slight pertubations to the environment.
 
 3. Explain the following term and describe how it handles the problem of flat: Retries.
 
