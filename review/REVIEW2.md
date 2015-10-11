@@ -83,6 +83,17 @@ str = [x for x in lines("abcdksjfa;lksadjfadsf;\ndef\n\nghi") if x and len(x) > 
 for s in str:
     print s
 ```
+The blocks above doesn't work actually.  It only takes the length of the currently passed back string from the lines function.  The following function works:
+
+```
+def mul_line(str):
+  ret = [s for s in lines(str) if s]
+  if(len(ret) > 20):
+    print ret
+```
+
+There's a file in the same directory as this .md file (lines.py) that shows how the other one doesn't work.  There isn't a way that I can think of to do this only with list comprehensions.
+
 ### 2. Dunders
 
 
