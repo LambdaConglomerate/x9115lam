@@ -26,6 +26,9 @@
   ```
   e^((e_old-e_new)/t)
   ```
+  Should also mention that t = k/kmax
+
+
   6. With respect to function `P(e_new, e_old, t)`, justify the following statements:
       * Initially, SA is like a drunk, then it sobers up.
         * Initially, `t` is very low, so the expression above evaluates to a high number. On line 7 in #3, this means that we are more likely to consider solutions that are worse than the current solution. We are staggering around ("like a drunk"). Over time, `t` approaches 1, which makes the probability function lower. This means that we will not consider worse solutions as much ("it sobers up").
@@ -33,5 +36,14 @@
         * The probability function itself is very simple and easy to understand. It does not use any memory of itself. It is simply working with the parameters that are passed in. It also means that we do not keep track of every solution that is generated. We only know the best solution, the current solution, and the neighboring solution.
   7. How would you terminate a stochastic algorithms such as SA sooner? (*HINT: Look at variances of epochs*)
         * We could either make e_max higher (lower the energy requirement) or decrease k_max (lower the maximum number of steps).
+
+        * Menzies response: Collect the data in eras of size N evaluations, then after each era: 
+
+          1. consider the median values. if within epsilon of some goal, stop
+
+          2. compare this era to the last. if no improvement, consider stopping (implementation detail: in my code, i give my optimizers 5 lives.  if no improvement, they lose one life. otherwise, they they five more lives. and i stop early if i run out of lives. but not that "5" is just a magic number i set by "engineering judgement")
+
   8. When finding a solution, you can either mutate towards ''Heaven'' (A better spot) or you can choose to mutate away from "Hell" (A worse spot). Why would you choose one over the other? (*HINT: One of them has a better diversity of search.*)
         * Distance from hell has better diversity of search than distance from heaven. Distance from hell is preferred because of this, since you can not only give a point with a certain distance, but you can give a greater variance of other points with that same distance than you could by using distance from heaven.
+
+        * Manish Singh's answer on the board:  "When you move away from hell, you will get to explore greater number of points, and you are more likely to have a good coverage of the pareto frontier as compared to other way around. Hence, you have 'better diversity of search'."
