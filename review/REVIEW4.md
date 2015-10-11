@@ -23,9 +23,10 @@ A point in the sample space whose all adjacent spaces are higher.
  * Flat
 A section of the sample space with no changes. Cannot bing anything better of worse.
  * Brittle
- A solution that works well for a very exact environment but becomes significantly worse if there a slight pertubations to the environment.
+ A solution that works well for a very exact environment but becomes significantly worse if there are slight pertubations to the environment.
 
 3. Explain the following term and describe how it handles the problem of flat: Retries.
+Searching locally in a flat solution space does not lead to good progress. Good solutions may be seperated by large distances. Retries leap large distances to a new space and start over overcoming the issues with flat spaces. 
 
 4. How does the following techniques avoid the problems of local maxima?
 
