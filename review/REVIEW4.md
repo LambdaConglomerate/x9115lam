@@ -18,7 +18,7 @@ A dip in the search space
  Mountains in the search space
  * Saddles
 Flat space between a pole(mountain) and a holeW hen all eigenvalues are real and at least one of them is positive and at least one is negative. Saddles are always unstable.
- * Local minima
+ * Local minima 
 A point in the sample space whose all adjacent spaces are higher.
  * Flat
 A section of the sample space with no changes. Cannot bing anything better of worse.
@@ -32,9 +32,10 @@ Searching locally in a flat solution space does not lead to good progress. Good 
 
   Simulated annealing
     - Retries
+Retries jump to 
     - Momentum (make sure you explain momentum)
   
-5. Local search can be characterized as follows
+5. Local search can be charac terized as follows
 
    + Jump all around the hills
    + Sometimes, sitting still while rolling marbles left and right
@@ -58,8 +59,3 @@ RETURN failure, best solution found
 ```
 
 
-_________
-
-<img align=right src="https://raw.githubusercontent.com/txt/mase/master/img/pd-icon.png">Copyright © 2015 [Tim Menzies](http://menzies.us).
-This is free and unencumbered software released into the public domain.   
-For more details, see the [license](https://github.com/txt/mase/blob/master/LICENSE.md).
