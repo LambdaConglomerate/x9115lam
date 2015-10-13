@@ -35,7 +35,7 @@ Risk impact = degree of delay measured in (non,min,maj)
   3. Train classifiers.
 + In the following figure label **A** and **B**:
 
-Looks like this is answered.
+~~Looks like this is answered.~~  I think they want to know terms which describe A and B. I said that A describes precision and B describes recall. (wumpafruit)
 
 ![1](https://cloud.githubusercontent.com/assets/1433964/10259938/29db384a-693c-11e5-8163-69f25542da9a.png)
 
