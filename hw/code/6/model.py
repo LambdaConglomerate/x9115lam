@@ -42,6 +42,8 @@ class model(object):
   # is only involved in one set of constraints.
   # If that isn't true we need to make changes here.
   def check_con(self, vector, id):
+    if not self.constraints:
+      return True
     for c in self.constraints:
       # print c
       # print c.ids
@@ -57,7 +59,7 @@ class model(object):
     # we don't need to do anything
     # other than regen a new vector
     if self.constraints == None:
-      vector = self.gen_clean()
+      return self.gen_clean()
 
     if not vector:
       vector = self.gen_clean()
@@ -69,7 +71,7 @@ class model(object):
 
   def eval_objs(self, vector):
     eval_list = []
-    #print self.objs
+    # print self.objs
     for f in self.objs:
       # print f
       if(self.bound):

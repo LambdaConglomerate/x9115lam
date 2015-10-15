@@ -1,4 +1,4 @@
-import collections, model, base, math
+import collections, model, math, MaxWalkSat
 
 # these are parameters used for a and b in the second objective
 a_param = 1
@@ -37,20 +37,17 @@ objectives = collections.namedtuple('objs', ['f1', 'f2'])
 objective = collections.namedtuple('obj', ['func', 'norm'])
 decs = collections.namedtuple('decs', ['x1', 'x2', 'x3'])
 constraint = collections.namedtuple('constraint', ['ids', 'state'])
-cons = ()   # no constraints needed
+cons = None
 
 funcs = kursawe()
 obj1 = objective(funcs[0], normalize(-19.8575351929, -4.98880272393))
 obj2 = objective(funcs[1], normalize(-10.587243916, 29.4348271457))
 objs = objectives(obj1, obj2)
 
-objs = objectives(funcs[0], funcs[1])
-
 decs = decs(bounds(-5,5), bounds(-5,5), bounds(-5,5))
 
-payload = payload(decs, objs, cons, False, 'from_hell')
+payload = payload(decs, objs, cons, True, 'from_hell')
 
 m = model.model(payload)
 
-b = base.base(m)
-b.run()
+fin = MaxWalkSat.run(m)

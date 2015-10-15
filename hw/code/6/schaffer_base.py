@@ -1,4 +1,4 @@
-import collections, model, base, math
+import collections, model, base, random
 
 def bounds(min, max):
   def f(rand):
@@ -10,37 +10,28 @@ def normalize(b1, b2):
     return (x - b1) / (b2 - b1)
   return n
 
-def kursawe(a, b):
-  a_param = a
-  b_param = b
+def schaffer():
   def f1(*args):
     args = args[0]
-    sum = 0
-    sum += -10 * math.exp(-0.2*math.sqrt(args[0]**2 + args[1]**2))
-    sum += -10 * math.exp(-0.2*math.sqrt(args[1]**2 + args[2]**2))
-    return sum
+    return args[0] * args[0]
     return f1
   def f2(*args):
     args = args[0]
-    sum = 0
-    sum += abs(args[0])**a_param + 5 * math.sin(args[0])**b_param
-    sum += abs(args[1])**a_param + 5 * math.sin(args[1])**b_param
-    sum += abs(args[2])**a_param + 5 * math.sin(args[2])**b_param
-    return sum
+    return (args[0] - 2)**2
   return (f1, f2)
 
 
 payload = collections.namedtuple('payload', ['decs', 'objs', 'cons', 'bound', 'energy'])
 objectives = collections.namedtuple('objs', ['f1', 'f2'])
 objective = collections.namedtuple('obj', ['func', 'norm'])
-decs = collections.namedtuple('decs', ['x1', 'x2', 'x3'])
+decs = collections.namedtuple('decs', ['x1'])
 constraint = collections.namedtuple('constraint', ['ids', 'state'])
 cons = None
 
-funcs = kursawe(1,1)
+funcs = schaffer()
 objs = objectives(funcs[0], funcs[1])
 
-decs = decs(bounds(-5,5), bounds(-5,5), bounds(-5,5))
+decs = decs(bounds(-10**(5),10**(5)))
 
 payload = payload(decs, objs, cons, False, 'from_hell')
 

@@ -37,9 +37,6 @@ def tweak(c, sn, m):
     # returning in a 1 based range on line 53
     # to make it simpler to get the id
     sn_temp[c - 1] = getattr(m.decs, id)(random.random())
-    # we try ten times to make this work, if we fail then
-    # we just leave sn alone and return it as it was
-    # count = 0
     while not m.check_con(sn, id):
       sn_temp[c - 1] = getattr(m.decs, id)(random.random())
       # count += 1
@@ -69,9 +66,9 @@ def run(m):
         print 'e was greater than e max'
         print 'e: ', e
         print 's: ', s
-        print 'constraint 1 ', m.check_con(s, 'x' + str(1))
-        print 'constraint 2 ', m.check_con(s, 'x' + str(3))
-        print 'constraint 3 ', m.check_con(s, 'x' + str(5))
+        # print 'constraint 1 ', m.check_con(s, 'x' + str(1))
+        # print 'constraint 2 ', m.check_con(s, 'x' + str(3))
+        # print 'constraint 3 ', m.check_con(s, 'x' + str(5))
         return s,e
       #pick the x to mutate
       num_decs = len(m.decs)
