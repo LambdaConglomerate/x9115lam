@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{arisholm10}
+Erik Arisholm, Lionel~C. Briand, and Eivind~B. Johannessen.
+\newblock A systematic and comprehensive investigation of methods to build and
+  evaluate fault prediction models.
+\newblock {\em J. Syst. Softw.}, 83(1):2--17, January 2010.
+
+\bibitem{Nagappan}
+Nachiappan Nagappan, Brendan Murphy, and Victor Basili.
+\newblock The influence of organizational structure on software quality: An
+  empirical case study.
+\newblock In {\em Proceedings of the 30th International Conference on Software
+  Engineering}, ICSE '08, pages 521--530, New York, NY, USA, 2008. ACM.
+
+\bibitem{Vandecruys08}
+Olivier Vandecruys, David Martens, Bart Baesens, Christophe Mues, Manu
+  De~Backer, and Raf Haesen.
+\newblock Mining software repositories for comprehensible software fault
+  prediction models.
+\newblock {\em J. Syst. Softw.}, 81(5):823--839, May 2008.
+
+\end{thebibliography}
