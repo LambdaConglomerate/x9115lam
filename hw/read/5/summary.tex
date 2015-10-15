@@ -19,11 +19,19 @@ Nagappan et al. \cite{Nagappan} listed below.
 \begin{description}
 \item [{Organizational metrics}] Metrics designed to give a balanced view of organizational complexity with respect to software development. The authors argue that these metrics, as a measure of organizational structure, greatly affect product quality.
 \item[{Failure-proneness}] The probability that a particular piece of software will fail in production. The authors hope to reduce this by incorporating organizational metrics into models.
+\item[{Software Metrics}]  The authors define them as things like code churn, code complexity, code coverage, and code dependencies.  These metrics have been used to determine fault proneness.
 \end{description}
 
 \section*{Feature Extraction}
 \begin{description}
+\item[{Motivational Statements}]  The authors perspective is that software metrics have been used to a great degree to predict fault proneness in software, but that organizational metrics have not been used to try to predict failure proneness.  Their main motivation is determining whether organizational metrics have a comparable efficacy in predicting failure proneness and also whether it is possible to accurately define and measure organizational metrics.
+
 \item[{Future Work}] The authors hope to replicate the study with other Microsoft projects as well as organizations outside of Microsoft. They have mentioned that they are already begun collaborating with the Fraunhofer research institute (pg. 10) for this purpose. The authors also hope to research open source teams and their "virtual organizations", global software development, and even the social and cognitive aspects of the engineers themselves.
+
+\item[{Baseline Results}]  The authors present strong baseline results when compared with software metrics in the area of fault predictions.  The main comparison metrics used in the paper are precision and recall.  The authors found that models using organizational metrics (specifically organizational structure) outperformed all software metric based prediction models.  The closest competitor for precision was code coverage at $83.8\%$ vs organizational structure at $86.2\%$, while for recall the closest competitor was code churn at $79.9\%$ vs organizational structure at $84.0\%$.
+
+\item[{Statistical Tests}]  The authors use Spearman's rank correlation, which is an assessment of how correlated two specific variables are.  They wanted to prove that the predicted faults and the actual faults of Windows Vista were highly correlated to show the sensitivity of their method.  They found, as shown in Figure 4 in the paper that there was a statistically significant high correlation between predicted and actual failures with $99\%$ confidence.
+
 \end{description}
 
 
