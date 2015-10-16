@@ -50,7 +50,25 @@ class Model(object):
 	def wrap(self, vector):	#wrap all values in vector
 		return self.transpose([(vector[i] % (self.bounds[i][1] - self.bounds[i][0])) + self.bounds[i][0] for i in range(1, len(vector))])
 	
+	def initializeObjectiveMaxMin(self, vector):
+		self.objectiveMaxs = [f(vector) for f in self.objectives]	#instantiate the max tracker for objectives
+		self.objectiveMins = [f(vector) for f in self.objectives]	#instantiate the min tracker for objective
 
+	def updateObjectiveMaxMin(self, vector):
+		values = [f(vector) for f in self.objectives]
+		changed = False
+		for i in range(0, len(self.objectives)):
+			if(values[i] > self.objectiveMaxs[i]):
+				self.objectiveMaxs[i] = values[i]
+				changed = True
+			if(values[i] < self.objectiveMins[i]):
+				self.objectiveMins[i] = values[i]
+				changed = True
+		if(changed):						#if objective bounds changed 
+			return True						#return true so optimizer knows to update current energies
+		else:
+			return False
 
-
+	def energy(self,v):
+		return((reduce(lambda a,b: a + b, [((f(v) - miny)/(maxy - miny))**2 for f, maxy, miny in zip(self.objectives, self.objectiveMaxs, self.objectiveMins)]))**(1/2.0) / ((len(self.objectives))**(1/2.0)))
 

@@ -11,36 +11,18 @@ def say(x):
 
 def SA(model):
 
-	emax = 0
+	emin = 0
 	kmax = 10000.0
 	k = 1
 
 	s = model.retry()
 	sb = s
 	
-	objectiveMaxs = [f(s) for f in model.objectives]	#instantiate the max tracker for objectives
-	objectiveMins = [f(s) for f in model.objectives]	#instantiate the min tracker for objective
+	model.initializeObjectiveMaxMin(s)
 
-	def energy(v):
-		return((reduce(lambda a,b: a + b, [((f(v) - miny)/(maxy - miny))**2 for f, maxy, miny in zip(model.objectives, objectiveMaxs, objectiveMins)]))**(1/2.0) / ((len(model.objectives))**(1/2.0)))
-		
-	def updateMaxMin(vector):				#tracks min and max, alternative to base runner
-		values = [f(vector) for f in model.objectives]
-		changed = False
-		for i in range(0, len(model.objectives)):
-			if(values[i] > objectiveMaxs[i]):
-				objectiveMaxs[i] = values[i]
-				changed = True
-			if(values[i] < objectiveMins[i]):
-				objectiveMins[i] = values[i]
-				changed = True
-		if(changed):						#if objective bounds changed update energies
-			e = energy(s)
-			eb = energy(sb)
+	[model.updateObjectiveMaxMin(model.retry()) for i in range(100)] #prime the maxs and mins with second values, avoids divide by 0
 
-	[updateMaxMin(model.retry()) for i in range(100)] #prime the maxs and mins with second values, avoids divide by 0
-
-	e = energy(s)
+	e = model.energy(s)
 	eb = e
 
 	def prob(old, new, t): return(math.exp(((old - new) / t)))
@@ -61,10 +43,14 @@ def SA(model):
 		return(vector)
 
 	say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(eb) + '\t')
-	while((k < kmax) & (e > emax)):
+	while((k < kmax) & (e > emin)):
 		sn = neighbor(s, (kmax - k)/kmax)
-		updateMaxMin(sn)
-		en = energy(sn)
+		
+		if(model.updateObjectiveMaxMin(sn)):	#check if new objective bounds
+			e = model.energy(s)						#adjust accordingly 
+			eb = model.energy(sb)
+		
+		en = model.energy(sn)
 
 		if(en < eb):
 			say( "!")
@@ -84,7 +70,7 @@ def SA(model):
 		say(".")
 		k += 1.00
 		if k % 50 == 0:
-			say("\n" + '(K:' + str(k) + ", SB:({0:.3f}) ".format(eb) + '\t')
+			say("\n" + '(K:' + str(k) + ", EB:({0:.3f}) ".format(eb) + '\t')
 			
 	sb.pop(0)
 	print(sb)
