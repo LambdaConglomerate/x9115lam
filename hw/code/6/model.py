@@ -1,112 +1,56 @@
-import random, math, sys
-class model(object):
+from random import *
 
-  def __init__(self, payload=None):
-    self.decs = payload.decs if payload else None
-    self.objs = payload.objs if payload else None
-    self.constraints = payload.cons if payload else None
-    self.bound = payload.bound if payload else None
-    if payload.energy == 'from_hell':
-      self.energy = self.from_hell()
-    elif payload.energy == 'add_vect':
-      self.energy = self.add_vect()
-    else:
-      self.energy = None
+class Model(object):
 
-  # Never use directly, only use
-  # check_con which calls this
-  # function when needed.  Also
-  # check con knows whether there
-  # are constraints or not.
-  def gen_clean(self):
-    vector = []
-    count = 0
-    for dec in self.decs:
-      vector.append(dec(random.random()))
-      count += 1
-    # print vector
-    return vector
+	def __init__(self, x):
+		self.numOfVars = x
+		self.constraints = []	#list of constraints
+		self.constraintsTrack = {}	#dict mapping decision index to constraint index in self.constraints
+		[self.constraintsTrack.update({i:[]}) for i in xrange(x + 1)]	#initialising constraint tracker
+		self.bounds = {}	#dict of bounds in the form of {index:[min, max]}
+		self.objectives = []	#list of objectives
 
-  def gen_spec(self, ids, vector):
-    for id in ids:
-      # print('id ', id)
-      # print('vector b/4 ', vector)
-      func = getattr(self.decs, id)
-      vector[int(id[1:]) - 1] = func(random.random())
-      # print('vector after ', vector)
-    return vector
+	def addConstraint(self, indices, f):		#adds constraints
+		constraintLocation = len(self.constraints)
+		self.constraints.append(f)
+		[self.constraintsTrack[i].append(constraintLocation) for i in indices]
+		return self
 
-  # This approach might really not work
-  # forever.
-  # Additionally this assumes that each decision
-  # is only involved in one set of constraints.
-  # If that isn't true we need to make changes here.
-  def check_con(self, vector, id):
-    if not self.constraints:
-      return True
-    for c in self.constraints:
-      # print c
-      # print c.ids
-      for i in c.ids:
-        if id == i:
-          return(c.state(vector))
-    # This should never happen, but if it does
-    # we will know something is wrong.
-    return None
+	def addBound(self, indices, min, max): 	#adds bounds
+		[self.bounds.update({x: [min,max]}) for x in indices]
+		return self
 
-  def gen_con(self, vector=None):
-    # If we don't have any constraints
-    # we don't need to do anything
-    # other than regen a new vector
-    if self.constraints == None:
-      return self.gen_clean()
+	def addObjective(self, f):	#adds objective 
+		self.objectives.append(f)
+		return self
 
-    if not vector:
-      vector = self.gen_clean()
-    for c in self.constraints:
-      while not c.state(vector):
-        # print('c is', c)
-        vector = self.gen_spec(c.ids, vector)
-    return vector
+	def boundy(self, index):	# generates new single random decision within bounds
+		return (self.bounds[index][1] - self.bounds[index][0]) * random() + self.bounds[index][0]
 
-  def eval_objs(self, vector):
-    eval_list = []
-    # print self.objs
-    for f in self.objs:
-      # print f
-      if(self.bound):
-        not_norm = f.func(vector)
-        norm = f.norm(not_norm)
-        # print 'not_norm ', not_norm
-        # print 'norm ', norm
-        eval_list.append(norm)
-      else:
-        eval_list.append(f(vector))
-    # print 'f1: ', eval_list[0]
-    # print 'f2: ', eval_list[1]
-    return eval_list
+	def retry(self, *args):	#generates new random vector
+		vector = self.transpose([self.boundy(x) for x in range(1, self.numOfVars + 1)])
+		for i in range(1, self.numOfVars + 1):
+			vector = self.singleRetry(vector, i)
+		return vector
 
-  # Simple normalization function to
-  # normalize (b1, b2) to range (0,1).
-  def normalize(self, b1, b2):
-    def n(x):
-      return (x - b1) / (b2 - b1)
-    return n
+	def singleRetry(self, vector, index): #generates single random value for single index in decision within contraints
+		vectorConstraints = self.constraintsTrack[index]	#side effect can change other indices (result of issues with Osyzka2)
+		if(len(vectorConstraints) > 0):
+			while(not reduce(lambda a,b: a & b, [self.constraints[i](vector) for i in vectorConstraints])):
+				for i in range(1, self.numOfVars):
+					if(len([x for x in self.constraintsTrack[i] if x in vectorConstraints]) > 0):
+						vector[i] = self.boundy(i)
+		return vector
 
-  # Add f1 and f2 and then normalize
-  # range [0,2] to (0,1)
-  def add_vect(self):
-    def func(vector):
-      resp = self.eval_objs(vector)
-      norm = self.normalize(0, 2)
-      return norm(resp[0] + resp[1])
-    return func
+	def transpose(self, vector): #transposes vector so first index is 1 instead of 0
+		temp = range(1)
+		temp.extend(vector)
+		return temp
 
-  # Calculate distance from (1,1) and then normalize range
-  # [0,sqrt(2)] to (0,1)
-  def from_hell(self):
-    def func(vector):
-      resp = self.eval_objs(vector)
-      dist_from_hell = ((1 - resp[0])**2 + (1 - resp[1])**2)**0.5
-      return dist_from_hell / (2**(0.5))
-    return func
+	def wrap(self, vector):	#wrap all values in vector
+		return self.transpose([(vector[i] % (self.bounds[i][1] - self.bounds[i][0])) + self.bounds[i][0] for i in range(1, len(vector))])
+	
+
+
+
+
