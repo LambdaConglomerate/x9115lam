@@ -69,6 +69,9 @@ class Model(object):
 		else:
 			return False
 
+	def checkConstraints(self, vector): reduce(lambda a, b: True & a & b, [f(vector) for f in self.constraints])
+
+
 	def energy(self,v):
 		return((reduce(lambda a,b: a + b, [((f(v) - miny)/(maxy - miny))**2 for f, maxy, miny in zip(self.objectives, self.objectiveMaxs, self.objectiveMins)]))**(1/2.0) / ((len(self.objectives))**(1/2.0)))
 
