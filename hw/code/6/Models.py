@@ -23,7 +23,7 @@ Schaffer = (Model(1)
 			)
 
 
-Ka = 2	#exponent values in kursawe
+Ka = 0.8	#exponent values in kursawe
 Kb = 3
 Kn = 3	#n values for kursawe, default to 3
 Kursawe = (Model(Kn)
