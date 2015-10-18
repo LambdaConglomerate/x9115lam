@@ -76,9 +76,6 @@ def run(m, e, retries, changes):
         print 'e was greater than e max'
         print 'e: ', e
         print 's: ', s
-        print 'constraint 1 ', m.check_con(s, 1)
-        print 'constraint 2 ', m.check_con(s, 2)
-        print 'constraint 3 ', m.check_con(s, 4)
         return s,e
       c = random.randint(0, m.num_decs() - 1)
       if(random.random() >= 0.5):
