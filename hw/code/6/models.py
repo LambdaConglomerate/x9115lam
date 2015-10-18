@@ -61,6 +61,7 @@ obs_list = (f0, (-19.8575351929, -4.98880272393)), (f1, (-10.587243916, 29.43482
 
 kursawe = model.model(decs_list, constraint_list, obs_list, True, True, "Kursawe")
 
+
 model_list = [osyczka, schaffer, kursawe]
 for m in model_list:
   for optimizer in [sa,mws]:

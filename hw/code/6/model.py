@@ -4,6 +4,9 @@ class model(object):
     self.payload = payload(decs, cons, objs, norm_objs, wrap, name)
     # print self.payload.decs
 
+  def get_bound(self, id):
+    return self.payload.decs[id]
+
   def get_name(self):
     return self.payload.name
 
