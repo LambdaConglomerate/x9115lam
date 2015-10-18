@@ -1,4 +1,7 @@
 from Models import *
 from SA import *
+from MWS import *
 
-SA(Kursawe)
+for m in [Schaffer, Osyczka2, Kursawe]:
+	for o in [SA, MWS]:
+		o(m)

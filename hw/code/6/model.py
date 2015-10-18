@@ -69,7 +69,11 @@ class Model(object):
 		else:
 			return False
 
-	def checkConstraints(self, vector): reduce(lambda a, b: True & a & b, [f(vector) for f in self.constraints])
+	def checkConstraints(self, vector): 
+		if(len(self.constraints) > 0):
+			return reduce(lambda a, b: True & a & b, [f(vector) for f in self.constraints])
+		else:
+			return True
 
 
 	def energy(self,v):
