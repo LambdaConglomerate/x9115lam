@@ -47,11 +47,6 @@ class Model(object):
 		vector = s.singleRetry(vector, index)
 		return(vector)
 
-	# def transpose(s, vector): #transposes vector so first index is 1 instead of 0
-	# 	temp = range(1)
-	# 	temp.extend(vector)
-	# 	return temp
-
 	def wrap(s, vector):	#wrap all values in vector
 		return [(vector[i] % (s.bounds[i][1] - s.bounds[i][0])) + s.bounds[i][0] for i in range(0, len(vector))]
 	
