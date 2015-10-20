@@ -6,18 +6,21 @@ class Model(object):
 		s.numOfVars = x
 		s.constraints = []	#list of constraints
 		s.constraintsTrack = {}	#dict mapping decision index to constraint index in s.constraints
-		[s.constraintsTrack.update({i:[]}) for i in xrange(x + 1)]	#initialising constraint tracker
+		for i in xrange(x):
+			s.constraintsTrack.update({i:[]})	#initialising constraint tracker
 		s.bounds = {}	#dict of bounds in the form of {index:[min, max]}
 		s.objectives = []	#list of objectives
 
 	def addConstraint(s, indices, f):		#adds constraints
 		constraintLocation = len(s.constraints)
 		s.constraints.append(f)
-		[s.constraintsTrack[i].append(constraintLocation) for i in indices]
+		for i in indices:
+			s.constraintsTrack[i].append(constraintLocation)
 		return s
 
 	def addBound(s, indices, min, max): 	#adds bounds
-		[s.bounds.update({x: [min,max]}) for x in indices]
+		for x in indices:
+			s.bounds.update({x: [min,max]})
 		return s
 
 	def addObjective(s, f):	#adds objective 
