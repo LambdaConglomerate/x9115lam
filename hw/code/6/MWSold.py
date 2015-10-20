@@ -7,8 +7,13 @@ def say(x):
     sys.stdout.write(str(x))
     sys.stdout.flush()
 
+# Logger to avoid adding tons of separate print statements
+# dynamically chooses what to print
+def log_state(T, sbo, ebo):
+    print "Ended on try: %s\n SBO: %s\nEBO: %s\n" % (T, ebo, sbo)
 
-def MWS(model):
+def MWS(model, retries, changes):
+    print "Model %s\nNum Retries %s\nNum Changes%s" % (model.name, retries, changes)
     max_changes = 1000
     max_retries = 100
     emin = 0
@@ -24,14 +29,18 @@ def MWS(model):
     eb = e
     ebo = e
     sn = list(sb)
-
     for i in range(max_retries):
-        print '\nT:', i
+        print "T: %d\n Initial Values: S: %s\n E: %s\n" % (i,e,s)
         for j in range(max_changes):
             if e <= emin:
                 sbo = list(s)
                 ebo = e
-                break
+                # This shouldn't be a break
+                # We're at that best possible
+                # overall value here
+                # just print out and stop.
+                log_state(i, sbo, ebo)
+                return
             c = randint(0, model.numOfVars - 1)
 
             if(random() >= 0.5):
@@ -66,10 +75,10 @@ def MWS(model):
                 say("+")
             else:
                 say(".")
+            # Always promote the last solution
             s = list(sn)
             e = en
-        print '\nEB:', eb
-        print 'SB:', sb
+        print "SB: %s\nEB: %s\n" % (sb, eb)
         # First check if the sb for that set of changes was better
         # Than any of our other retries
         if(eb < ebo):
@@ -83,5 +92,4 @@ def MWS(model):
         sb = list(sn)
         eb = en
 
-    print '\nEBO:', ebo
-    print 'SBO:', sbo
+    log_state(max_retries, ebo, sbo)
