@@ -13,6 +13,11 @@ class Model(object):
             s.constraintsTrack.update({i: []})
         s.bounds = {}  # dict of bounds in the form of {index:[min, max]}
         s.objectives = []  # list of objectives
+        s.name = ''
+
+    def addName(s, name):
+        s.name = name
+        return s
 
     def addConstraint(s, indices, f):  # adds constraints
         constraintLocation = len(s.constraints)
@@ -49,6 +54,8 @@ class Model(object):
                 for i in xrange(0, s.numOfVars):
                     if(len([x for x in s.constraintsTrack[i] if x in vectorConstraints]) > 0):
                         vector[i] = s.boundy(i)
+        else:
+            vector[index] = s.boundy(index)
         return vector
 
     def mutate(s, vector, index):

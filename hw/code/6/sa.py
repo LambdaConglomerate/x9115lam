@@ -1,137 +1,122 @@
-import random, math, sys
+# Notes for var names:
+# f = some anonymous function
+# x = some value
+# i = some index
+from Models import *
+from random import *
+from state import *
+import sys
 
-def neighbor(m, id, s, temp):
-  vect = list(s)
-  bound = m.get_bound(id)
-  decay = math.exp(-temp)
-  # temp is decreasing so the possibility
-  # of a completely random position also is
-  # decreasing.  If we miss this then we calculate
-  # some epsilon based on the magnitude of the
-  # difference between the max and min for the dec
-  # and then add or subtract it
-  if( random.random() < decay):
-    # print 'vect id before ', vect[id]
-    vect[id] = random.uniform(*bound)
-    # print 'vect id after ', vect[id]
-    # print 'm.check_con ', m.check_con(vect, id)
-    if m.check_con(vect, id):
-      return vect
+def prob(old, new, t):
+    p = math.exp(((old - new) / t))
+    print 'p: ', p
+    return p
+
+def neighbor(model, id, vector, t):
+    vect = list(vector)
+    bounds = model.bounds.get(id)
+    decay = math.exp(-t)
+    if( random() < decay):
+        vect = model.singleRetry(vect, id)
     else:
-      vect = list(s)
-  mag = bound[1] - bound[0]
-  # print 'bound', bound
-  # print 'mag', mag
-  # print 'temp', temp
-  epsilon = decay * abs(mag)
-  # print 'epsilon', epsilon
+        mag = bounds[1] - bounds[0]
+        epsilon = decay * abs(mag)
+        if bool(getrandbits(1)):
+            vect[id] += epsilon
+        else:
+            vect[id] -= epsilon
+        vect = model.wrap(vect)  # wrap
+    for i in range(0, len(vect)):  # check all constraints for each vector
+        # will change value if constraints aren't met
+        vect = model.singleRetry(vect, i)
+        # could implement this differently
+    return(vect)
 
-  add = bool(random.getrandbits(1))
-  if add:
-    m.add_epsilon(id, vect, epsilon)
-  else:
-    m.add_epsilon(id, vect, epsilon * -1)
-  return vect
-
-def say(x):
-  sys.stdout.write(str(x)); sys.stdout.flush()
-
-def prob(old, new, k):
-  # print 'old is ', old
-  # print 'new is ', new
-  # print 'k is ',k
-  x = math.exp(((new - old) / k))
-  # print 'x in probability is ', x
-  return x
-
-def add_vect(m, vect):
-  resp = m.eval_objs(vect)
-  # This works since the formula is
-  # x = (x - min) / (max - min)
-  # min is zero max is 2
-  norm = lambda x: x / 2
-  return norm(resp[0] + resp[1])
-
-def from_hell(m, vect):
-  resp = m.eval_objs(vect)
-  dist_from_hell = ((1 - resp[0])**2 + (1 - resp[1])**2)**0.5
-  return dist_from_hell / (2**(0.5))
-
-def run(m, e, retries, kmax, goal = 0.01, pat = 10):
-  print "\nRUN DATA "
-  print "-------------------------"
-  print "Model: ", m.get_name()
-  print "Optimizer: Simulated Annealing"
-  print 'Goal epsilon ', goal
-  emax = 1
-  if e == 'from_hell':
-    energy = from_hell
-  else:
-    energy = add_vect
-
-  sbo = None
-  ebo = None
-  for i in range(0,retries):
-    s = m.gen_con()
-    e = energy(m, s)
-    sb = s
-    eb = e
-    eblast = e
-    k = 1.0
-    patience = kmax/pat
-    say("\n" + '(K:' + str(k) + ', SB:' + ''.join(["({0:.3f}) ".format(val) for val in sb]) + ', EB:(' + str(eb) + ')\t')
-    while k < kmax and e < emax:
-      if emax - eb < goal:
-        print '\n\nQuitting early, close enough.'
-        print 'SB: ', sb
-        print 'EB: ', eb
-        print 'K: ', k
-        return
-      if eb == eblast:
-        patience -= 1
-        if patience <= 0:
-          print '\nGot bored, nothing happening.'
-          # print 'SB: ', sb
-          # print 'EB: ', eb
-          # print 'K: ', k
-          break
-      else:
-        eblast = eb
-        patience = kmax/pat
-      c = random.randint(0, m.num_decs() - 1)
-      sn = neighbor(m, c, s, k/kmax)
-      # print 'sn ', sn
-      en = energy(m, sn)
-
-      # Is this a best overall?
-      if en > eb:
-        sb = list(sn)
-        eb = energy(m, sb)
-        say("!")
-
-      # Is this better than where we were last?
-      if en > e:
-        s = list(sn)
-        e = energy(m, s)
-        say("+")
-      elif prob(e, en, k / kmax) < random.random():
-        s = list(sn)
-        e = energy(m, s)
-        say("?")
-      else:
-        say(".")
-      k += 1.00
-
-      if k % 50 == 0:
-        say("\n" + '(K:' + str(k) + ', SB:' + ''.join(["({0:.3f}) ".format(val) for val in sb]) + ', EB:(' + str(eb) + ')\t')
-
-    print '\nT: ' + str(i)
-    print 'SB: ' + str(sb)
-    print 'EB: ' + str(energy(m, sb))
-    if not ebo or eb > ebo:
-      ebo = eb
-      sbo = list(sb)
-  print '\n\nSBO: ' + str(sbo)
-  print 'EBO: ' + str(ebo) + '\n'
-
-
+"""
+Parameters:
+- model: The model you want to run.
+- retries: The number of times to completely restart from scratch with
+  a totally random vector.
+- changes: The number of times to actually run the optimizer for each retry
+- goal: This is an epsilon value.  If the energy value is within this amount
+  of the minimum/maximum energy then we decide its good enough and stop.
+- pat: This is our patience for finding a solution.  If we see the same
+  energy best value 100 times in a row we give up.  If somewhere in our
+  countdown we actually find a new best we reset the patience to its original
+  value again.
+- era: This is basically a pass through to the state of the optimizer. It determines
+  how often we will print an output line giving the best energy and best solution so far.
+"""
+def sa(model, retries, changes, goal = 0.01, pat = 100, era = 100):
+    emin = 0
+    s = model.retry()
+    model.initializeObjectiveMaxMin(s)
+    for i in xrange(1000):
+        # prime the maxs and mins with second values, avoids divide by 0
+        model.updateObjectiveMaxMin(model.retry())
+    st = state(model.name, 'SA', s, model.energy(s), retries, changes, era)
+    #changes is some static value passed by the caller
+    #st changes is actually a counter
+    while st.t:
+        st.k = changes
+        patience = pat
+        while st.k:
+            # 1st possible stopping condition
+            # close to the minimum
+            if st.eb - emin <= goal:
+                st.sbo = st.sb
+                st.eb = model.energy(st.sb)
+                st.ebo = model.energy(st.sbo)
+                st.term()
+                return
+            # 2nd stopping condition
+            # We've had the same best for
+            # a long while.
+            if st.eb == st.eblast:
+                if patience == 0:
+                    st.bored()
+                    st.k = 0
+                    break
+                else:
+                    patience -= 1
+            else:
+                patience = pat
+                st.eblast = st.eb
+            c = randint(0, model.numOfVars - 1)
+            st.sn = neighbor(model, c, st.s, st.k / changes)
+            if(model.updateObjectiveMaxMin(st.sn)):  # check if new objective bounds
+                st.e = model.energy(st.s)  # adjust accordingly
+                st.eb = model.energy(st.sb)
+                st.ebo = model.energy(st.sbo)
+            st.en = model.energy(st.sn)
+            if(st.en < st.eb):
+                st.app_out('!')
+                st.sb = st.sn
+                st.eb = st.en
+            if((st.en < st.e)):
+                st.app_out('+')
+                st.s = st.sn
+                st.e = st.en
+            elif(prob(st.e, st.en, st.k / changes) > random()):
+                st.app_out('?')
+                print 'took route'
+                st.s = st.sn
+                st.e = st.en
+            else:
+                st.app_out('.')
+            st.k -= 1
+        # First check if the sb for that set of changes was better
+        # Than any of our other retries
+        if(st.eb < st.ebo):
+            st.app_out(' ^')
+            st.sbo = list(st.sb)
+            st.ebo = st.eb
+        # Then retry with a brand new set of values
+        st.s = model.retry()
+        st.e = model.energy(st.s)
+        st.sn = list(st.s)
+        st.en = st.e
+        st.sb = list(st.sn)
+        st.eb = st.en
+        st.t -= 1
+    st.term()

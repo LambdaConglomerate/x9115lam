@@ -16,12 +16,14 @@ Osyczka2 = (Model(6)
             .addConstraint([4, 5], lambda x: ((x[4] - 3)**3 + x[5] - 4) >= 0)
             .addObjective(lambda x: -(25 * (x[0] - 2)**2 + (x[1] - 2)**2) + (x[2] - 1)**2 * (x[3] - 4)**2 + (x[4] - 1)**2)
             .addObjective(lambda x: x[0]**2 + x[1]**2 + x[2]**2 + x[3]**2 + x[4]**2 + x[5]**2)
+            .addName("Osyczka2")
             )
 
 Schaffer = (Model(1)
             .addBound([0], -10**5, 10**5)
             .addObjective(lambda x: x[0]**2)
             .addObjective(lambda x: (x[0] - 2)**2)
+            .addName("Schaffer")
             )
 
 
@@ -36,4 +38,5 @@ Kursawe = (Model(Kn)
            .addObjective(lambda x: reduce(lambda a, b: a + b,
                                           [abs(x[i])**Ka + 5 * math.sin(x[i])**Kb
                                            for i in range(0, len(x) - 1)]))
+           .addName("Kursawe")
            )
