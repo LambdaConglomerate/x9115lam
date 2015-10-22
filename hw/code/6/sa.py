@@ -18,7 +18,7 @@ def neighbor(model, id, vector, t):
     decay = math.exp(-t)
     if( random() < decay):
         print 'random '
-        vect = model.singleRetry(vect, id)
+        vect = model.mutate(vect, id)
         print 's ', vector
         print 'sn ', vect
     else:
