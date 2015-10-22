@@ -7,9 +7,9 @@ from random import *
 from state import *
 import sys
 
-def prob(old, new, t):
+def prob(old, new, t, retry):
+    if t == 0: return 0.0
     p = math.exp(((old - new) / t))
-    print 'p: ', p
     return p
 
 def neighbor(model, id, vector, t):
@@ -17,8 +17,12 @@ def neighbor(model, id, vector, t):
     bounds = model.bounds.get(id)
     decay = math.exp(-t)
     if( random() < decay):
+        print 'random '
         vect = model.singleRetry(vect, id)
+        print 's ', vector
+        print 'sn ', vect
     else:
+        print 'epsilon '
         mag = bounds[1] - bounds[0]
         epsilon = decay * abs(mag)
         if bool(getrandbits(1)):
@@ -55,6 +59,7 @@ def sa(model, retries, changes, goal = 0.01, pat = 100, era = 100):
         # prime the maxs and mins with second values, avoids divide by 0
         model.updateObjectiveMaxMin(model.retry())
     st = state(model.name, 'SA', s, model.energy(s), retries, changes, era)
+    print 'model name ', model.name
     #changes is some static value passed by the caller
     #st changes is actually a counter
     while st.t:
@@ -97,9 +102,12 @@ def sa(model, retries, changes, goal = 0.01, pat = 100, era = 100):
                 st.app_out('+')
                 st.s = st.sn
                 st.e = st.en
-            elif(prob(st.e, st.en, st.k / changes) > random()):
+            elif(st.en == st.e):
+                st.app_out('=')
+                # print 's ', st.s
+                # print 'sn ', st.sn
+            elif(prob(st.e, st.en, ((changes - st.k)/changes), st.t) < random()):
                 st.app_out('?')
-                print 'took route'
                 st.s = st.sn
                 st.e = st.en
             else:
