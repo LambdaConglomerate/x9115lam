@@ -1,0 +1,40 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{babel}
+\begin{document}
+\title{Paper Six Summary}
+
+
+\author{Matthew Neal, Joseph Sankar, and Alexander Sobran}
+
+\maketitle
+
+\section*{Reference}
+
+Rahman et al. \cite{Rahman} listed below.
+
+
+\section*{Important Keywords}
+\begin{description}
+\item [{Cross-project defect prediction}] Using data from one project to predict defects in another.
+\item [{Within-project defect prediction}] Using data from previous releases of a project to predict defects in future releases. For new projects, the lack of historical defect data makes this kind of defect prediction almost impossible.
+\item[{F-measure}] The harmonic mean of precision and recall. A unified score used to balance the trade-off between precision and recall.
+\item[{Over-fitting}] When a model has completely learned all the variances of the training data and has lost significant generality leading to significantly worse predictive performance on unseen test data. This property usually manifests as very low training error and very high test error. Over-fitting becomes more probable as a model gains greater complexity.
+
+\end{description}
+
+\section*{Feature Extraction}
+\begin{description}
+\item[{Motivational Statements}]  While within-project defect prediction can be very effective, new projects don't have the volume of data needed to create these models. Cross-project defect prediction models aim to help with this issue, but so far the results have largely been disappointing. The authors hope to show that cross-project defect prediction can be roughly as effective as traditional defect prediction by using a different set of measures, namely those based on a variety of tradeoffs of time-and-cost vs. quality.
+
+\end{description}
+
+
+\section*{Possible Improvements}
+
+\section*{Connection to Other Papers}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
