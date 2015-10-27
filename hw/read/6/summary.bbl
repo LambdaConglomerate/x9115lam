@@ -1,5 +1,12 @@
 \begin{thebibliography}{1}
 
+\bibitem{Posnett}
+Daryl Posnett, Vladimir Filkov, and Premkumar Devanbu.
+\newblock Ecological inference in empirical software engineering.
+\newblock In {\em Proceedings of the 2011 26th IEEE/ACM International
+  Conference on Automated Software Engineering}, ASE '11, pages 362--371,
+  Washington, DC, USA, 2011. IEEE Computer Society.
+
 \bibitem{Rahman}
 Foyzur Rahman, Daryl Posnett, and Premkumar Devanbu.
 \newblock Recalling the "imprecision" of cross-project defect prediction.

@@ -27,13 +27,18 @@ Rahman et al. \cite{Rahman} listed below.
 \section*{Feature Extraction}
 \begin{description}
 \item[{Motivational Statements}]  While within-project defect prediction can be very effective, new projects don't have the volume of data needed to create these models. Cross-project defect prediction models aim to help with this issue, but so far the results have largely been disappointing. The authors hope to show that cross-project defect prediction can be roughly as effective as traditional defect prediction by using a different set of measures, namely those based on a variety of tradeoffs of time-and-cost vs. quality.
+\item[{Statistical tests}] The authors used the area under the ROC curve (AUC), AUCCE, precision, recall, and f-measure statistical tests to report their results. They varied the cutoffs for precision, recall, and f-measure but used the standard 0.5 cutoff for their sanity checks.
 
 \end{description}
 
 
 \section*{Possible Improvements}
+\begin{itemize}
+\item In the Results section, some of the graphs are hard to read because they have been scaled down to fit on the page. Look at Figures 5 and 7 for example. The y-axis label runs into the labels along the y-axis. To fix this, the individual graphs should be split so that there is only one per column, or they should be combined and made bigger.
+\end{itemize}
 
 \section*{Connection to Other Papers}
+The authors state that they are examining code at the file level. They reference our first paper on ecological inference \cite{Posnett} when stating that they feared that a model on a coarser level of aggregation may not be a good predictor at the file level. 
 
 \bibliographystyle{plain}
 \bibliography{references}
