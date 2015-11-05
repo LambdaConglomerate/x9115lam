@@ -41,3 +41,4 @@ Thumbs.db
 # Project Specific Git Ignore #
 ~.*
 ~#*
+project/out.txt
