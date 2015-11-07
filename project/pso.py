@@ -51,13 +51,26 @@ Parameters:
   value again.
 - era: This is basically a pass through to the state of the optimizer. It determines
   how often we will print an output line giving the best energy and best solution so far.
+- np: The number of candidates
+- K: the constriction factor
+- w: the influence of the current velocity
+- phi_1: the social learning rate - how much you learn from other people
+- phi_2: the cognitive learning rate - how much you learn from yourself
 """
-def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, K=0.0885, w=1, phi_1=2.8, phi_2=1.3):
+def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=1, K=0.0885, w=1, phi_1=2.8, phi_2=1.3):
     emin = 0
     init_pos = [model.retry() for x in xrange(np)]
-    init_vel = [0.0 for x in xrange(np)]
+    init_vel = [[0.0 for _ in xrange(len(init_pos[i]))] for i, val in enumerate(init_pos)]
     init_bpos = list(init_pos)
     cans = [can(pos, vel, pbest) for pos, vel, pbest in zip(init_pos, init_vel, init_bpos)]
+    for c in cans:
+        print c
+
+    for c in cans:
+        for i in xrange(len(c.pos)):
+            c.vel[i] = K*(w*c.vel[i] + phi_1*random.uniform(0, c.pbest[i]-c.pos[i]) + phi_2*random.uniform(0, c.pbest[i] - c.pos[i]))
+            c.pos[i] = c.pos[i] + c.vel[i]
+
     for c in cans:
         print c
 
