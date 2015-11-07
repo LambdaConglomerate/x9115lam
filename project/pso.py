@@ -7,34 +7,35 @@ from random import *
 from state import *
 import sys, random
 
-def prob(old, new, t, retry):
-    if t == 0: return 0.0
-    p = math.exp(((old - new) / t))
-    return p
+class can(object):
+    def __init__(self, pos, vel, pbest):
+        self._pos = pos
+        self._vel = vel
+        self._pbest = pbest
 
-def neighbor(model, id, vector, t):
-    vect = list(vector)
-    bounds = model.bounds.get(id)
-    decay = math.exp(-t)
-    if( random.random() < decay):
-        print 'random '
-        vect = model.mutate(vect, id)
-        print 's ', vector
-        print 'sn ', vect
-    else:
-        print 'epsilon '
-        mag = bounds[1] - bounds[0]
-        epsilon = decay * abs(mag)
-        if bool(getrandbits(1)):
-            vect[id] += epsilon
-        else:
-            vect[id] -= epsilon
-        vect = model.wrap(vect)  # wrap
-    for i in range(0, len(vect)):  # check all constraints for each vector
-        # will change value if constraints aren't met
-        vect = model.singleRetry(vect, i)
-        # could implement this differently
-    return(vect)
+    def __str__(self):
+        return "pos: " + str(self._pos) + "\nvel: " + str(self._vel) + "\npbest: " + str(self._pbest) + '\n'
+
+    @property
+    def pos(self):
+        return self._pos
+    @pos.setter
+    def pos(self, vect):
+        self._pos = vect
+
+    @property
+    def vel(self):
+        return self._vel
+    @vel.setter
+    def vel(self, vect):
+        self._vel = vect
+
+    @property
+    def pbest(self):
+        return self._pos
+    @pbest.setter
+    def pbest(self, vect):
+        self._pbest = vect
 
 """
 Parameters:
@@ -53,89 +54,40 @@ Parameters:
 """
 def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, K=0.0885, w=1, phi_1=2.8, phi_2=1.3):
     emin = 0
-    s = model.retry()
-    model.initializeObjectiveMaxMin(s)
-    for i in xrange(1000):
-        # prime the maxs and mins with second values, avoids divide by 0
-        model.updateObjectiveMaxMin(model.retry())
-    st = state(model.name, 'PSO', s, model.energy(s), retries, changes, era)
-    print 'model name ', model.name, 'optimizer', 'PSO'
-    #changes is some static value passed by the caller
-    #st changes is actually a counter
-    while st.t:
-        st.k = changes
-        patience = pat
-        N = [model.retry() for _ in xrange(np)] #Generate an initial set of random candidates
-        V = [[0 for _ in xrange(len(N[i]))] for i, val in enumerate(N)]
-        B = [val for _, val in enumerate(N)]
-        L = [val for _, val in enumerate(N)]
-        print s
-        while st.k:
-            # 1st possible stopping condition
-            # close to the minimum
-            if st.eb - emin <= goal:
-                st.sbo = st.sb
-                st.eb = model.energy(st.sb)
-                st.ebo = model.energy(st.sbo)
-                st.term()
-                return
-            # 2nd stopping condition
-            # We've had the same best for
-            # a long while.
-            if st.eb == st.eblast:
-                if patience == 0:
-                    st.bored()
-                    st.k = 0
-                    break
-                else:
-                    patience -= 1
-            else:
-                patience = pat
-                st.eblast = st.eb
-            c = randint(0, model.numOfVars - 1)
-            st.sn = neighbor(model, c, st.s, st.k / changes)
-            if(model.updateObjectiveMaxMin(st.sn)):  # check if new objective bounds
-                st.e = model.energy(st.s)  # adjust accordingly
-                st.eb = model.energy(st.sb)
-                st.ebo = model.energy(st.sbo)
-            st.en = model.energy(st.sn)
-            if(st.en < st.eb):
-                st.app_out('!')
-                st.sb = st.sn
-                st.eb = st.en
-            if((st.en < st.e)):
-                st.app_out('+')
-                st.s = st.sn
-                st.e = st.en
-            elif(st.en == st.e):
-                st.app_out('=')
-                # print 's ', st.s
-                # print 'sn ', st.sn
-            elif(prob(st.e, st.en, ((changes - st.k)/changes), st.t) < random.random()):
-                st.app_out('?')
-                st.s = st.sn
-                st.e = st.en
-            else:
-                st.app_out('.')
+    init_pos = [model.retry() for x in xrange(np)]
+    init_vel = [0.0 for x in xrange(np)]
+    init_bpos = list(init_pos)
+    cans = [can(pos, vel, pbest) for pos, vel, pbest in zip(init_pos, init_vel, init_bpos)]
+    for c in cans:
+        print c
 
-            for i in xrange(np):
-                for j in xrange(len(N[i])):
-                    print N[i][j], V[i][j], B[i][j], L[i][j]
-                    V[i][j] = K*(w*V[i][j] + phi_1*random.uniform(0, B[i][j]-N[i][j]) + phi_2*random.uniform(0, L[i][j] - N[i][j]))
-                    N[i][j] = V[i][j] + N[i][j]
-            st.k -= 1
-        # First check if the sb for that set of changes was better
-        # Than any of our other retries
-        if(st.eb < st.ebo):
-            st.app_out(' ^')
-            st.sbo = list(st.sb)
-            st.ebo = st.eb
-        # Then retry with a brand new set of values
-        st.s = model.retry()
-        st.e = model.energy(st.s)
-        st.sn = list(st.s)
-        st.en = st.e
-        st.sb = list(st.sn)
-        st.eb = st.en
-        st.t -= 1
-    st.term()
+    # model.initializeObjectiveMaxMin(s)
+    # for i in xrange(1000):
+    #     # prime the maxs and mins with second values, avoids divide by 0
+    #     model.updateObjectiveMaxMin(model.retry())
+    # st = state(model.name, 'PSO', s, model.energy(s), retries, changes, era)
+    # print 'model name ', model.name, 'optimizer', 'PSO'
+    # #changes is some static value passed by the caller
+    # #st changes is actually a counter
+    # while st.t:
+    #     st.k = changes
+    #     patience = pat
+
+    #     while st.k:
+
+    #         st.k -= 1
+    #     # First check if the sb for that set of changes was better
+    #     # Than any of our other retries
+    #     if(st.eb < st.ebo):
+    #         st.app_out(' ^')
+    #         st.sbo = list(st.sb)
+    #         st.ebo = st.eb
+    #     # Then retry with a brand new set of values
+    #     st.s = model.retry()
+    #     st.e = model.energy(st.s)
+    #     st.sn = list(st.s)
+    #     st.en = st.e
+    #     st.sb = list(st.sn)
+    #     st.eb = st.en
+    #     st.t -= 1
+    # st.term()
