@@ -25,6 +25,7 @@ class state(object):
     self._s = list(s)
     self._sb = list(s)
     self._sbo = list(s)
+    self._sblast = list(s)
     self.sn = list(s)
     self._t = retries
     self._k = changes
@@ -139,3 +140,10 @@ class state(object):
   def sbo(self, val):
     self._sbo = list(val)
 
+  @property
+  def sblast(self):
+    """ The best candidate property. """
+    return self._sblast
+  @sblast.setter
+  def sblast(self, val):
+    self._sblast = list(val)

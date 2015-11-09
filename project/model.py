@@ -87,6 +87,9 @@ class Model(object):
         else:
             return False
 
+    def cal_objs(s, vect):
+        return [obj(vect) for obj in s.objectives]
+
     def checkConstraints(s, vector):
         if(len(s.constraints) > 0):
             return reduce(lambda a, b: True & a & b, [f(vector) for f in s.constraints])
