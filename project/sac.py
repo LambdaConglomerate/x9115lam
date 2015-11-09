@@ -77,9 +77,11 @@ Parameters:
 def sac(model, retries, changes, goal = 0.01, pat = 100, era = 100):
     emin = 0
     s = model.retry()
-    # Output will be a bit crazy since energy will remain the same for the whole
-    # duration.
-    st = state(model.name, 'SAC', s, 1, retries, changes, era)
+    model.initializeObjectiveMaxMin(s)
+    for i in xrange(1000):
+        # prime the maxs and mins with second values, avoids divide by 0
+        model.updateObjectiveMaxMin(model.retry())
+    st = state(model.name, 'SAC', s, model.energy(s), retries, changes, era)
     print 'model name ', model.name
     #changes is some static value passed by the caller
     #st changes is actually a counter
@@ -115,21 +117,29 @@ def sac(model, retries, changes, goal = 0.01, pat = 100, era = 100):
                 st.sblast = list(st.sb)
             c = randint(0, model.numOfVars - 1)
             st.sn = neighbor(model, c, st.s, st.k / changes)
+            if(model.updateObjectiveMaxMin(st.sn)):  # check if new objective bounds
+                st.e = model.energy(st.s)  # adjust accordingly
+                st.eb = model.energy(st.sb)
+                st.ebo = model.energy(st.sbo)
             best = cdom(model, st.sn, st.sb)
             better = cdom(model, st.sn, st.s)
+            st.en = model.energy(st.sn)
             if(best):
                 st.app_out('!')
                 st.sb = list(st.sn)
+                st.eb = st.en
             if(better):
                 st.app_out('+')
                 st.s = list(st.sn)
+                st.e = st.en
             # This is just pegged so that the old is better than the new
             # I'm using pretty small values here.  The actual aggregated values
             # are much larger, so obviously this isn't going to work exactly right
             # the whole point though is just to test out cdom.
-            elif(prob(0.5, 0.9, ((changes - st.k)/changes), st.t) < random()):
+            elif(prob(st.e, st.en,((changes - st.k)/changes), st.t) < random()):
                 st.app_out('?')
                 st.s = st.sn
+                st.e = st.en
             else:
                 st.app_out('.')
             st.k -= 1
@@ -139,9 +149,13 @@ def sac(model, retries, changes, goal = 0.01, pat = 100, era = 100):
         if(ultimate):
             st.app_out(' ^')
             st.sbo = list(st.sb)
+            st.ebo = st.eb
         # Then retry with a brand new set of values
         st.s = model.retry()
         st.sn = list(st.s)
         st.sb = list(st.sn)
+        st.e = model.energy(st.s)
+        st.en = st.e
+        st.eb = st.en
         st.t -= 1
     st.term()
