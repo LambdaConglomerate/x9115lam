@@ -1,5 +1,5 @@
 from random import *
-
+import math
 
 class Model(object):
 
@@ -89,6 +89,28 @@ class Model(object):
 
     def cal_objs(s, vect):
         return [obj(vect) for obj in s.objectives]
+
+    def cdom(self, c1, c2):
+        # From what I understand we could add in epsilon here
+        # to determine a worthwhile difference.
+        # I think we'd prob do something like this:
+        # if loss(model, c1, c2) + epsilon < loss(model, c2, c1)
+        # could also return something like the magnitude of the
+        # difference and use that as a sort of energy value I suppose.
+        if(self.loss(c1, c2) < self.loss(c2, c1)):
+            return True
+        else:
+            return False
+
+    # Written to assume minimization
+    # Menzies' code added flexibility to
+    # minimize or maximize.  Figured we'd
+    # just peg this for now.
+    def loss(self, c1, c2):
+        c1,c2 = self.cal_objs(c1), self.cal_objs(c2)
+        n = min(len(c1), len(c2))
+        losses = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
+        return sum(losses) / n
 
     def checkConstraints(s, vector):
         if(len(s.constraints) > 0):
