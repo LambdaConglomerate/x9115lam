@@ -90,13 +90,22 @@ class Model(object):
     def cal_objs(s, vect):
         return [obj(vect) for obj in s.objectives]
 
-    def cdom(self, c1, c2):
+    def cdom(self, c1, c2, can1=None, can2=None):
         # From what I understand we could add in epsilon here
         # to determine a worthwhile difference.
         # I think we'd prob do something like this:
         # if loss(model, c1, c2) + epsilon < loss(model, c2, c1)
         # could also return something like the magnitude of the
         # difference and use that as a sort of energy value I suppose.
+        a = self.loss(c1, c2)
+        b = self.loss(c2, c1)
+        if math.fabs(a-b) < 0.1:
+            print "ZERO DIFFERENCE"
+            if(can2):
+                print can1
+                print can2
+            # else:
+            #     print can1
         if(self.loss(c1, c2) < self.loss(c2, c1)):
             return True
         else:
