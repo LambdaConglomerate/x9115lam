@@ -1,18 +1,9 @@
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Model Name:  Osyczka2 
+Model Name:  Tanaka 
 Optimizer: PSO, K:  500.0
 ++++++++++++++++++++++++++++++++++++++++++++++++++++
-Global best:  [4.269274462196819, 1.2785734882374278, 2.3110219422141425, 2.946824241806411, 4.954012531605095, 0.4758345896994576] 
-Global best energy:  0.2334928006
-Num deaths:  14113
+Global best:  [0.05308989855374957, 1.0403522571737414] 
+Global best energy:  0.00885969164303
+Num deaths:  12877
 Total number of particles  15000.0
-Attrition 94.09 percent
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Model Name:  Fonseca 
-Optimizer: PSO, K:  500.0
-++++++++++++++++++++++++++++++++++++++++++++++++++++
-Global best:  [0.5528152098193198, 0.5528152027338336, 0.5528152081470554] 
-Global best energy:  0.69053354548
-Num deaths:  42
-Total number of particles  15000.0
-Attrition 0.28 percent
+Attrition 85.85 percent

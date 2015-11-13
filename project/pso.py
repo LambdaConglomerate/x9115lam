@@ -5,7 +5,9 @@
 from Models import *
 from random import *
 from state import *
+from grapher import *
 import sys, random, math, copy
+
 
 class can(object):
     # Didn't want to override id so used uniq
@@ -82,6 +84,10 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
     s = gens(model, np)
+    #initialize grapher
+    g = grapher(model, np)
+    for can in s:
+        g.addVector(can.pos, can.uniq)
     # Energy here is set to zero since we're not actively using it for now.
     st = state(model.name, 'PSO', s, 0, retries, changes, era)
     print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
@@ -104,6 +110,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos))) \
                     for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest, st.sb)]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
+                g.addVector(can.pos, can.uniq)
                 # Currently doing the same thing for particles that are
                 # out of bounds and out of constraints, simply killing them
                 # definitely some other options with this.  If they get to
@@ -177,4 +184,5 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
         st.t -= 1
+    g.graph()
     st.term()
