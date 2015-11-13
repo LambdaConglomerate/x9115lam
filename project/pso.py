@@ -85,7 +85,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
     # Energy here is set to zero since we're not actively using it for now.
     st = state(model.name, 'PSO', s, 0, retries, changes, era)
     print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    print 'Model Name: ', model.name, '\nOptimizer: PSO'
+    print 'Model Name: ', model.name, '\nOptimizer: PSO, K: ', changes
     # Set an initial value for the global best
     # The downside to setting pbest equal to the current
     # particle position is that if there is a high phi_1 value
@@ -99,10 +99,6 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
         st.k = changes
         patience = pat
         while st.k:
-            # print "INITIAL CANS: "
-            # for can in st.s:
-            #     print 'can.pos: ', can.pos
-            #     print 'can.pbest ', can.pbest
             num_deaths = 0
             for can in st.s:
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos))) \
@@ -116,44 +112,33 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 if not model.checkBounds(can.pos):
                     can.pos = model.retry()
                     can.vel = [0.0 for x in can.pos]
+                    # Should a killed candidate maintain it's phantom memory?
+                    # Uncomment this to wipe its memory.
+                    # can.pbest = list(can.pos)
                     num_deaths += 1
                 if not model.checkConstraints(can.pos):
-                    # print 'can ' + str(can.uniq) + ' died'
                     can.pos = model.retry()
-                    # If this is zero something really weird happens
-                    # there tends to be a can that will continue on
-                    # having a zero velocity for a long period of time.
-                    # REASON: If the can has a pbest that is its current
-                    # position and our phi_1 is much higher than phi_2
-                    # the particle will be attracted to its current position
-                    # and may not break free for a long period of time.
                     can.vel = [0.0 for x in can.pos]
                     # Should a killed candidate maintain it's phantom memory?
                     # Uncomment this to wipe its memory.
                     # can.pbest = list(can.pos)
                     num_deaths += 1
-
-                #Update objective maxs and mins    	
+                #Update objective maxs and mins
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
-            # if num_deaths > 0:
-            #     print "num deaths in era " + str(st.k) + " : " + str(num_deaths)
-            # print "CANS AFTER MOVEMENT: "
-            # for can in st.s:
-            #     print 'can.pos: ', can.pos
-            #     print 'can.pbest ', can.pbest
-            # print 'GLOBAL BEST PRIOR TO DOM: ', st.sb
-            print "======================="
-            print "BEGIN DOM PROC K: ", st.k
-            print "======================="
-            best = st.s[0]
+            # print "======================="
+            # print "BEGIN DOM PROC K: ", st.k
+            # print "======================="
+            # best = st.s[0]
+            best_list = []
+            low_diff = []
             for c in st.s:
-                # print 'c id ', c.uniq
+                best = c
+                # print 'c is ', c.uniq
                 # We first check the can's personal best
                 # and update it if its current position
                 # dominates.
                 if model.cdom(c.pos, c.pbest, c):
-                    # print "PBEST"
                     c.pbest = list(c.pos)
                 for can in st.s:
                     if c == can:
@@ -161,33 +146,35 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                     elif c.pos == can.pos:
                         print "PARTICLES IN SAME POSITION"
                         continue
-                    if model.cdom(can.pos, c.pos, can, c) and not model.cdom(c.pos, can.pos, c, can):
+                    # If we're at this point then the particles
+                    # aren't exactly equal in position, and also
+                    # aren't the same particle.
+                    diff = sum([math.fabs(x-y) for x,y in zip(c.pos, can.pos)])
+                    # if diff < 1:
+                    #     # print 'diff: ', diff, ' particle ids: ', c.uniq, can.uniq
+                    #     low_diff.append((c.uniq, can.uniq))
+                    if model.cdom(can.pos, best.pos, can, best):
                         #If we're here then we've been
                         #bettered by the next can, so we
                         #just set it to be our cursor
                         best = can
                 # Once we make it out here we should have the
                 # global best candidate.
-                print 'best id after run ', best.uniq
-                # print '+++++++++++++++++++++++++++'
-                # print 'best pos after dom ', best.pos
+                if(not best.uniq in best_list):
+                    best_list.append(best.uniq)
+                # print 'best id after run ', best.uniq
             st.sb = best.pos
             st.eb = model.energy(st.sb)
-            print 'final best id ', best.uniq
-            # Looking at this just to make sure that
-            # we are actually updating pbest.
-            # print 'CANS AFTER DOM: '
-            # for can in st.s:
-            #    print can
+            # print 'low diff list ', low_diff
+            # print 'best_list ', best_list
             st.k -= 1
         # We need a clean slate here.
-        print 'Global best: ', st.sb, 'global best energy: ', st.eb
+        print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
+        print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
         print 'Num deaths: ', tot_deaths
         print 'Total number of particles ', changes*np
         print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
         st.t -= 1
-
     st.term()
-

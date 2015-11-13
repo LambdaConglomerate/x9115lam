@@ -91,16 +91,15 @@ class Model(object):
         return [obj(vect) for obj in s.objectives]
 
     def cdom(self, c1, c2, can1=None, can2=None):
-        a = self.loss(c1, c2)
-        b = self.loss(c2, c1)
-        if math.fabs(a-b) < 0.1:
-            if(can2):
-                print "ZERO DIFFERENCE IDS: %d %d, diff: %0.3f" % (can1.uniq, can2.uniq, math.fabs(a-b))
-        #         print 'math.fabs(a-b): ', math.fabs(a-b)
-        #         print can1
-        #         print can2
-            # else:
-            #     # print "SAME CAN"
+        # if can2:
+        #     print 'comparison ids: ', can1.uniq, can2.uniq
+        # a = self.loss(c1, c2)
+        # b = self.loss(c2, c1)
+        # diff = math.fabs(a-b)
+        # print 'diff is ', diff
+        # if diff < 0.01:
+        #     if(can2):
+        #         print "ZERO DIFFERENCE IDS: %d %d, diff: %0.3f" % (can1.uniq, can2.uniq, diff)
         if(self.loss(c1, c2) < self.loss(c2, c1)):
             return True
         else:
