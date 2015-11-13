@@ -161,7 +161,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                     elif c.pos == can.pos:
                         print "PARTICLES IN SAME POSITION"
                         continue
-                    if model.cdom(can.pos, c.pos, can, c):
+                    if model.cdom(can.pos, c.pos, can, c) and not model.cdom(c.pos, can.pos, c, can):
                         #If we're here then we've been
                         #bettered by the next can, so we
                         #just set it to be our cursor
