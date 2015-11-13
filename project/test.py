@@ -10,4 +10,4 @@ from pso import *
 for m in [Kursawe]:
     for o in [pso]:
         #Absolutely do not pass integers for retries or changes
-        o(m, 1.0, 200.0)
+        o(m, 1.0, 10.0)

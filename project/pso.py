@@ -92,6 +92,8 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
     # the particle will stay still until something happens globally
     # that pushes it away.
     st.sb = st.s[0].pbest
+    #Initialize objective mins and maxs
+    model.initializeObjectiveMaxMin(st.sb)
     tot_deaths = 0
     while st.t:
         st.k = changes
@@ -130,6 +132,9 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                     # Uncomment this to wipe its memory.
                     # can.pbest = list(can.pos)
                     num_deaths += 1
+
+                #Update objective maxs and mins    	
+                model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
             # if num_deaths > 0:
             #     print "num deaths in era " + str(st.k) + " : " + str(num_deaths)
@@ -156,7 +161,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                     elif c.pos == can.pos:
                         print "PARTICLES IN SAME POSITION"
                         continue
-                    if not model.cdom(c.pos, can.pos, c, can):
+                    if model.cdom(can.pos, c.pos, can, c):
                         #If we're here then we've been
                         #bettered by the next can, so we
                         #just set it to be our cursor
@@ -167,6 +172,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 # print '+++++++++++++++++++++++++++'
                 # print 'best pos after dom ', best.pos
             st.sb = best.pos
+            st.eb = model.energy(st.sb)
             print 'final best id ', best.uniq
             # Looking at this just to make sure that
             # we are actually updating pbest.
@@ -175,7 +181,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
             #    print can
             st.k -= 1
         # We need a clean slate here.
-        print 'Global best: ', st.sb
+        print 'Global best: ', st.sb, 'global best energy: ', st.eb
         print 'Num deaths: ', tot_deaths
         print 'Total number of particles ', changes*np
         print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
