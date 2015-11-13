@@ -91,21 +91,16 @@ class Model(object):
         return [obj(vect) for obj in s.objectives]
 
     def cdom(self, c1, c2, can1=None, can2=None):
-        # From what I understand we could add in epsilon here
-        # to determine a worthwhile difference.
-        # I think we'd prob do something like this:
-        # if loss(model, c1, c2) + epsilon < loss(model, c2, c1)
-        # could also return something like the magnitude of the
-        # difference and use that as a sort of energy value I suppose.
         a = self.loss(c1, c2)
         b = self.loss(c2, c1)
         if math.fabs(a-b) < 0.1:
-            print "ZERO DIFFERENCE"
             if(can2):
-                print can1
-                print can2
+                print "ZERO DIFFERENCE IDS: %d %d, diff: %0.3f" % (can1.uniq, can2.uniq, math.fabs(a-b))
+        #         print 'math.fabs(a-b): ', math.fabs(a-b)
+        #         print can1
+        #         print can2
             # else:
-            #     print can1
+            #     # print "SAME CAN"
         if(self.loss(c1, c2) < self.loss(c2, c1)):
             return True
         else:
@@ -120,6 +115,11 @@ class Model(object):
         n = min(len(c1), len(c2))
         losses = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
         return sum(losses) / n
+
+    def checkBounds(s, vector):
+        list_of_truth = [False if vector[k] < v[0] or vector[k] > v[1] else True for k, v in s.bounds.iteritems()]
+        # returns true if all are true false if not
+        return all(list_of_truth)
 
     def checkConstraints(s, vector):
         if(len(s.constraints) > 0):

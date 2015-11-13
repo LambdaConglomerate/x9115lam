@@ -75,7 +75,7 @@ Parameters:
 - phi_1: the social learning rate - how much you learn from other people
 - phi_2: the cognitive learning rate - how much you learn from yourself
 """
-def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=5, phi_1=2.8, phi_2=1.3):
+def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3):
     emin = 0
     # pulled K from the parameters, because it can be calculated from the
     # values for phi.
@@ -87,9 +87,11 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=5, phi_1=
     print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
     print 'Model Name: ', model.name, '\nOptimizer: PSO'
     # Set an initial value for the global best
+    # The downside to setting pbest equal to the current
+    # particle position is that if there is a high phi_1 value
+    # the particle will stay still until something happens globally
+    # that pushes it away.
     st.sb = st.s[0].pbest
-    #changes is some static value passed by the caller
-    #st changes is actually a counter
     tot_deaths = 0
     while st.t:
         st.k = changes
@@ -104,6 +106,15 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=5, phi_1=
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos))) \
                     for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest, st.sb)]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
+                # Currently doing the same thing for particles that are
+                # out of bounds and out of constraints, simply killing them
+                # definitely some other options with this.  If they get to
+                # bounds can set vector to boundary, and vel ot zero, then
+                # just let them be pulled back into the space.
+                if not model.checkBounds(can.pos):
+                    can.pos = model.retry()
+                    can.vel = [0.0 for x in can.pos]
+                    num_deaths += 1
                 if not model.checkConstraints(can.pos):
                     # print 'can ' + str(can.uniq) + ' died'
                     can.pos = model.retry()
@@ -114,7 +125,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=5, phi_1=
                     # position and our phi_1 is much higher than phi_2
                     # the particle will be attracted to its current position
                     # and may not break free for a long period of time.
-                    can.vel = [0.1 for x in can.pos]
+                    can.vel = [0.0 for x in can.pos]
                     # Should a killed candidate maintain it's phantom memory?
                     # Uncomment this to wipe its memory.
                     # can.pbest = list(can.pos)
@@ -128,28 +139,35 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=5, phi_1=
             #     print 'can.pbest ', can.pbest
             # print 'GLOBAL BEST PRIOR TO DOM: ', st.sb
             print "======================="
-            print "BEGIN DOM PROC"
+            print "BEGIN DOM PROC K: ", st.k
             print "======================="
+            best = st.s[0]
             for c in st.s:
-                best = c
+                # print 'c id ', c.uniq
                 # We first check the can's personal best
                 # and update it if its current position
                 # dominates.
-                if model.cdom(best.pos, c.pbest, best):
+                if model.cdom(c.pos, c.pbest, c):
                     # print "PBEST"
-                    c.pbest = list(best.pos)
+                    c.pbest = list(c.pos)
                 for can in st.s:
-                    if best.pos == can.pos:
+                    if c == can:
                         continue
-                    if not model.cdom(best.pos, can.pos, best, can):
+                    elif c.pos == can.pos:
+                        print "PARTICLES IN SAME POSITION"
+                        continue
+                    if not model.cdom(c.pos, can.pos, c, can):
                         #If we're here then we've been
                         #bettered by the next can, so we
                         #just set it to be our cursor
-                        best.pos = list(can.pos)
+                        best = can
                 # Once we make it out here we should have the
                 # global best candidate.
-                st.sb = best.pos
-                print 'GLOBAL BEST AFTER DOM: ', st.sb
+                print 'best id after run ', best.uniq
+                # print '+++++++++++++++++++++++++++'
+                # print 'best pos after dom ', best.pos
+            st.sb = best.pos
+            print 'final best id ', best.uniq
             # Looking at this just to make sure that
             # we are actually updating pbest.
             # print 'CANS AFTER DOM: '
