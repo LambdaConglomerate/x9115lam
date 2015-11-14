@@ -21,8 +21,17 @@ class grapher(object):
 
 	def graph(s):
 		plt.title(s.model.name)
+
 		for i in s.allCansX:
 			color = [colors[i]] * len(s.allCansY[i])
-			plt.scatter(s.allCansX[i], s.allCansY[i], c=color)
+			#this will calculate all the energies and then scale
+			#them to 15 which is accepted by matplotlib 
+			#this will increase the size of the circle for each 
+			#dot on the graph in proportion to it's
+			#betterness as an energy (ie the larger the dot
+			#the better the candidate)
+			energies = [(15 - (s.model.energy([x, y]) * 15)) \
+				for (x, y) in zip(s.allCansX[i], s.allCansY[i])]
+			plt.scatter(s.allCansX[i], s.allCansY[i], s=energies, c=color, alpha=0.5)
 
 		plt.show()

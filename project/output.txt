@@ -1,0 +1,144 @@
+----------------------------------------------------------------------------------------------------
+Model: Tanaka
+Optimizer: PSO
+Num Retries: 1.0
+Num Changes: 500.0
+Initial S: [<pso.can object at 0x10448fa10>, <pso.can object at 0x10448fa90>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fb50>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x1044ab050>, <pso.can object at 0x1044ab090>, <pso.can object at 0x1044ab0d0>, <pso.can object at 0x1044ab110>, <pso.can object at 0x1044ab150>, <pso.can object at 0x1044ab190>]
+Initial E: 0.000
+----------------------------------------------------------------------------------------------------
+
+K:500	EB:0.000	SB:[0.22228771981146833, 1.1316496607392175]
+
+K:400	EB:0.145	SB:[0.2116867169555965, 1.1174718708222748]
+
+K:300	EB:0.009	SB:[0.05407990251944736, 1.0379567105132834]
+
+K:200	EB:0.000	SB:[0.043526843514153805, 1.0384977167268084]
+
+K:100	EB:0.000	SB:[0.04352684351415389, 1.0384977167268084]
+
+FINAL:
+MODEL:Tanaka
+OPTIMIZER:PSO
+EBO:0.000	SBO:[<pso.can object at 0x10448fa10>, <pso.can object at 0x10448fa90>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fb50>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x1044ab050>, <pso.can object at 0x1044ab090>, <pso.can object at 0x1044ab0d0>, <pso.can object at 0x1044ab110>, <pso.can object at 0x1044ab150>, <pso.can object at 0x1044ab190>]
+
+----------------------------------------------------------------------------------------------------
+Model: Constr_Ex
+Optimizer: PSO
+Num Retries: 1.0
+Num Changes: 500.0
+Initial S: [<pso.can object at 0x10448fa90>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fb50>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10a2d6550>, <pso.can object at 0x10a2c6b90>, <pso.can object at 0x1044ab190>, <pso.can object at 0x1044ab050>, <pso.can object at 0x1044ab1d0>, <pso.can object at 0x1044ab090>]
+Initial E: 0.000
+----------------------------------------------------------------------------------------------------
+
+K:500	EB:0.000	SB:[0.9046643954972016, 0.1158589865870624]
+
+K:400	EB:0.461	SB:[0.7908492050124329, 0.3115879603114574]
+
+K:300	EB:0.326	SB:[0.6759300640502046, 0.23862150790982373]
+
+K:200	EB:0.486	SB:[0.8091795742440889, 0.06771587006104807]
+
+K:100	EB:0.571	SB:[0.8824223947882611, 0.018745131326259212]
+
+FINAL:
+MODEL:Constr_Ex
+OPTIMIZER:PSO
+EBO:0.000	SBO:[<pso.can object at 0x10448fa90>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fb50>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10a2d6550>, <pso.can object at 0x10a2c6b90>, <pso.can object at 0x1044ab190>, <pso.can object at 0x1044ab050>, <pso.can object at 0x1044ab1d0>, <pso.can object at 0x1044ab090>]
+
+----------------------------------------------------------------------------------------------------
+Model: Srinivas
+Optimizer: PSO
+Num Retries: 1.0
+Num Changes: 500.0
+Initial S: [<pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fb50>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10448fa10>, <pso.can object at 0x117329d10>, <pso.can object at 0x1173293d0>, <pso.can object at 0x117329750>, <pso.can object at 0x117329150>, <pso.can object at 0x104475190>, <pso.can object at 0x10c0727d0>]
+Initial E: 0.000
+----------------------------------------------------------------------------------------------------
+
+K:500	EB:0.000	SB:[8.18050375978347, 10.561953684128294]
+
+K:400	EB:0.391	SB:[-2.4999509304401037, 7.908712551291197]
+
+K:300	EB:0.412	SB:[-2.4999999617458024, 6.825818045599295]
+
+K:200	EB:0.417	SB:[-2.500000037919618, 6.653594952494383]
+
+K:100	EB:0.381	SB:[-2.500000027806527, 8.64262161017302]
+
+FINAL:
+MODEL:Srinivas
+OPTIMIZER:PSO
+EBO:0.000	SBO:[<pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fb50>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10448fa10>, <pso.can object at 0x117329d10>, <pso.can object at 0x1173293d0>, <pso.can object at 0x117329750>, <pso.can object at 0x117329150>, <pso.can object at 0x104475190>, <pso.can object at 0x10c0727d0>]
+
+----------------------------------------------------------------------------------------------------
+Model: Viennet2
+Optimizer: PSO
+Num Retries: 1.0
+Num Changes: 500.0
+Initial S: [<pso.can object at 0x10448fb50>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10448fa10>, <pso.can object at 0x10448fa90>, <pso.can object at 0x107d49490>, <pso.can object at 0x1172f4f50>, <pso.can object at 0x1172f4fd0>, <pso.can object at 0x1173109d0>, <pso.can object at 0x1172e4ed0>]
+Initial E: 0.000
+----------------------------------------------------------------------------------------------------
+
+K:500	EB:0.000	SB:[3.165329732144074, -3.0781658564216885]
+
+K:400	EB:0.006	SB:[1.6092548625478968, -0.5025162655274377]
+
+K:300	EB:0.006	SB:[1.6092535201719496, -0.5025156927047607]
+
+K:200	EB:0.006	SB:[1.6092535303923376, -0.5025157112499218]
+
+K:100	EB:0.006	SB:[1.609253523265287, -0.502515720103238]
+
+FINAL:
+MODEL:Viennet2
+OPTIMIZER:PSO
+EBO:0.000	SBO:[<pso.can object at 0x10448fb50>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff10>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10448fa10>, <pso.can object at 0x10448fa90>, <pso.can object at 0x107d49490>, <pso.can object at 0x1172f4f50>, <pso.can object at 0x1172f4fd0>, <pso.can object at 0x1173109d0>, <pso.can object at 0x1172e4ed0>]
+
+----------------------------------------------------------------------------------------------------
+Model: Viennet3
+Optimizer: PSO
+Num Retries: 1.0
+Num Changes: 500.0
+Initial S: [<pso.can object at 0x1172f4f50>, <pso.can object at 0x1172f4fd0>, <pso.can object at 0x1173109d0>, <pso.can object at 0x117326450>, <pso.can object at 0x1173266d0>, <pso.can object at 0x117326050>, <pso.can object at 0x1173264d0>, <pso.can object at 0x117326650>, <pso.can object at 0x117326ed0>, <pso.can object at 0x1173265d0>, <pso.can object at 0x117326190>, <pso.can object at 0x117326fd0>, <pso.can object at 0x117326f10>, <pso.can object at 0x117326a90>, <pso.can object at 0x117326c90>, <pso.can object at 0x1173269d0>, <pso.can object at 0x117326990>, <pso.can object at 0x117326850>, <pso.can object at 0x117326f50>, <pso.can object at 0x1173260d0>, <pso.can object at 0x117326a50>, <pso.can object at 0x117326dd0>, <pso.can object at 0x117326250>, <pso.can object at 0x117326cd0>, <pso.can object at 0x117326790>, <pso.can object at 0x117326e90>, <pso.can object at 0x117326810>, <pso.can object at 0x1172e8e50>, <pso.can object at 0x1172e8510>, <pso.can object at 0x1172e8710>]
+Initial E: 0.000
+----------------------------------------------------------------------------------------------------
+
+K:500	EB:0.000	SB:[1.8721920285281461, -1.5704845615712695]
+
+K:400	EB:0.101	SB:[-0.4728371434073265, 0.24456891028844963]
+
+K:300	EB:0.101	SB:[-0.4728381092681842, 0.24457590327210055]
+
+K:200	EB:0.101	SB:[-0.4728381151965427, 0.24457590248272754]
+
+K:100	EB:0.101	SB:[-0.472838115618744, 0.24457591026584508]
+
+FINAL:
+MODEL:Viennet3
+OPTIMIZER:PSO
+EBO:0.000	SBO:[<pso.can object at 0x1172f4f50>, <pso.can object at 0x1172f4fd0>, <pso.can object at 0x1173109d0>, <pso.can object at 0x117326450>, <pso.can object at 0x1173266d0>, <pso.can object at 0x117326050>, <pso.can object at 0x1173264d0>, <pso.can object at 0x117326650>, <pso.can object at 0x117326ed0>, <pso.can object at 0x1173265d0>, <pso.can object at 0x117326190>, <pso.can object at 0x117326fd0>, <pso.can object at 0x117326f10>, <pso.can object at 0x117326a90>, <pso.can object at 0x117326c90>, <pso.can object at 0x1173269d0>, <pso.can object at 0x117326990>, <pso.can object at 0x117326850>, <pso.can object at 0x117326f50>, <pso.can object at 0x1173260d0>, <pso.can object at 0x117326a50>, <pso.can object at 0x117326dd0>, <pso.can object at 0x117326250>, <pso.can object at 0x117326cd0>, <pso.can object at 0x117326790>, <pso.can object at 0x117326e90>, <pso.can object at 0x117326810>, <pso.can object at 0x1172e8e50>, <pso.can object at 0x1172e8510>, <pso.can object at 0x1172e8710>]
+
+----------------------------------------------------------------------------------------------------
+Model: Viennet4
+Optimizer: PSO
+Num Retries: 1.0
+Num Changes: 500.0
+Initial S: [<pso.can object at 0x10448fb50>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10448fa10>, <pso.can object at 0x10448fa90>, <pso.can object at 0x10448f9d0>, <pso.can object at 0x10a2f1790>, <pso.can object at 0x107d49490>, <pso.can object at 0x10073b110>, <pso.can object at 0x1173109d0>, <pso.can object at 0x117310a50>]
+Initial E: 0.000
+----------------------------------------------------------------------------------------------------
+
+K:500	EB:0.000	SB:[-0.3065686795511873, 1.8014058863786362]
+
+K:400	EB:0.143	SB:[0.5281519904066818, 1.6680451503030236]
+
+K:300	EB:0.141	SB:[0.5119495102133484, 1.6618554197335786]
+
+K:200	EB:0.137	SB:[0.533924026925127, 1.6242630022264986]
+
+K:100	EB:0.133	SB:[0.5264529308071276, 1.5277307632810846]
+
+FINAL:
+MODEL:Viennet4
+OPTIMIZER:PSO
+EBO:0.000	SBO:[<pso.can object at 0x10448fb50>, <pso.can object at 0x10448fad0>, <pso.can object at 0x10448fb10>, <pso.can object at 0x10448fb90>, <pso.can object at 0x10448fbd0>, <pso.can object at 0x10448fc10>, <pso.can object at 0x10448fc50>, <pso.can object at 0x10448f990>, <pso.can object at 0x10448fc90>, <pso.can object at 0x10448fcd0>, <pso.can object at 0x10448fd10>, <pso.can object at 0x10448fd50>, <pso.can object at 0x10448fd90>, <pso.can object at 0x10448fdd0>, <pso.can object at 0x10448fe10>, <pso.can object at 0x10448fe50>, <pso.can object at 0x10448fe90>, <pso.can object at 0x10448fed0>, <pso.can object at 0x10448ff50>, <pso.can object at 0x10448ff90>, <pso.can object at 0x10448ffd0>, <pso.can object at 0x10448fa50>, <pso.can object at 0x10448fa10>, <pso.can object at 0x10448fa90>, <pso.can object at 0x10448f9d0>, <pso.can object at 0x10a2f1790>, <pso.can object at 0x107d49490>, <pso.can object at 0x10073b110>, <pso.can object at 0x1173109d0>, <pso.can object at 0x117310a50>]
+
