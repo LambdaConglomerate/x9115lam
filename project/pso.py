@@ -133,6 +133,9 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 #Update objective maxs and mins
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
+            #if you wanter to see step by step particle movement uncomment below
+            #warning you will end up having to terminate this manually
+            #g.graph()
             # print "======================="
             # print "BEGIN DOM PROC K: ", st.k
             # print "======================="
