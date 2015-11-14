@@ -19,9 +19,10 @@ class grapher(object):
 		s.allCansX[i].append(x)
 		s.allCansY[i].append(y)
 
+	#this will graph the decisions
+	#each color is a unique candidate
 	def graph(s):
-		plt.title(s.model.name)
-
+		plt.title(s.model.name + " Decisions")
 		for i in s.allCansX:
 			color = [colors[i]] * len(s.allCansY[i])
 			#this will calculate all the energies and then scale
@@ -30,8 +31,21 @@ class grapher(object):
 			#dot on the graph in proportion to it's
 			#betterness as an energy (ie the larger the dot
 			#the better the candidate)
-			energies = [(15 - (s.model.energy([x, y]) * 15)) \
+			energies = [(s.model.energy([x, y]) * 15) \
 				for (x, y) in zip(s.allCansX[i], s.allCansY[i])]
+			#note: alpha controls conspiracy
 			plt.scatter(s.allCansX[i], s.allCansY[i], s=energies, c=color, alpha=0.5)
 
 		plt.show()
+
+	#this will graph the energies 
+	#each color is a unique candidate
+	def graphEnergy(s):
+		plt.title(s.model.name + " Energies")
+		for i in s.allCansX:
+			color = [colors[i]] * len(s.allCansX[i])
+			o1 = [s.model.calculateObjective([x,y], 0) for (x,y) in zip(s.allCansX[i], s.allCansY[i])]
+			o2 = [s.model.calculateObjective([x,y], 1) for (x,y) in zip(s.allCansX[i], s.allCansY[i])]
+			plt.scatter(o1, o2, c=color, alpha=0.5)
+		plt.show()
+

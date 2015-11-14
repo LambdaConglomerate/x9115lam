@@ -100,6 +100,9 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
     st.sb = st.s[0].pbest
     #Initialize objective mins and maxs
     model.initializeObjectiveMaxMin(st.sb)
+    #we whould do this just in case
+    for c in st.s:
+        model.updateObjectiveMaxMin(c.pos)
     tot_deaths = 0
     while st.t:
         st.k = changes
@@ -133,18 +136,18 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 #Update objective maxs and mins
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
-            #if you wanter to see step by step particle movement uncomment below
+            #if you want to see step by step particle movement uncomment below
             #warning you will end up having to terminate this manually
             #g.graph()
-            # print "======================="
-            # print "BEGIN DOM PROC K: ", st.k
-            # print "======================="
-            # best = st.s[0]
+            print "======================="
+            print "BEGIN DOM PROC K: ", st.k
+            print "======================="
+            best = st.s[0]
             best_list = []
             low_diff = []
             for c in st.s:
                 best = c
-                # print 'c is ', c.uniq
+                print 'c is ', c.uniq
                 # We first check the can's personal best
                 # and update it if its current position
                 # dominates.
@@ -172,11 +175,11 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 # global best candidate.
                 if(not best.uniq in best_list):
                     best_list.append(best.uniq)
-                # print 'best id after run ', best.uniq
+                print 'best id after run ', best.uniq
             st.sb = best.pos
             st.eb = model.energy(st.sb)
-            # print 'low diff list ', low_diff
-            # print 'best_list ', best_list
+            print 'low diff list ', low_diff
+            print 'best_list ', best_list
             st.k -= 1
         # We need a clean slate here.
         print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
@@ -188,4 +191,5 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
         st.sb = st.s[0].pbest
         st.t -= 1
     g.graph()
+    g.graphEnergy()
     st.term()

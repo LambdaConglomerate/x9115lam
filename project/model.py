@@ -35,6 +35,11 @@ class Model(object):
         s.objectives.append(f)
         return s
 
+    #takes vector and objective index argument
+    #returns normalized value for objective
+    def calculateObjective(s, v, i): 
+        return ((s.objectives[i](v) - s.objectiveMins[i])/(s.objectiveMaxs[i] - s.objectiveMins[i]))
+
     def boundy(s, index):  # generates new single random decision within bounds
         return (s.bounds[index][1] - s.bounds[index][0]) * random() + s.bounds[index][0]
 
