@@ -113,7 +113,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos))) \
                     for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest, st.sb)]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
-                g.addVector(can.pos, can.uniq)
+                
                 # Currently doing the same thing for particles that are
                 # out of bounds and out of constraints, simply killing them
                 # definitely some other options with this.  If they get to
@@ -134,6 +134,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                     # can.pbest = list(can.pos)
                     num_deaths += 1
                 #Update objective maxs and mins
+                g.addVector(can.pos, can.uniq)
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
             #if you want to see step by step particle movement uncomment below
@@ -190,6 +191,6 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
         st.t -= 1
-    #g.graph()
+    g.graph()
     g.graphEnergy()
     st.term()
