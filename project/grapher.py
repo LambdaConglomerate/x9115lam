@@ -42,10 +42,29 @@ class grapher(object):
 	#each color is a unique candidate
 	def graphEnergy(s):
 		plt.title(s.model.name + " Energies")
+		omaxs = s.model.getObjectiveMaxs()
+		omins = s.model.getObjectiveMins()
+
+		print("MAXS:")
+		print(omaxs)
+		print("MINS")
+		print(omins)
+
 		for i in s.allCansX:
-			color = [colors[i]] * len(s.allCansX[i])
-			o1 = [s.model.calculateObjective([x,y], 0) for (x,y) in zip(s.allCansX[i], s.allCansY[i])]
-			o2 = [s.model.calculateObjective([x,y], 1) for (x,y) in zip(s.allCansX[i], s.allCansY[i])]
-			plt.scatter(o1, o2, c=color, alpha=0.5)
-		plt.show()
+			allVectors = [[x,y] for x,y in zip(s.allCansX[i], s.allCansY[i])]
+			for k in allVectors:
+				ovalue = s.model.cal_objs(k)
+				for j in xrange(len(ovalue)):
+					if ovalue[j] > omaxs[j]:
+						print(str(ovalue[j]) + " is greater than max for objective " + str(j))
+					if ovalue[j] < omins[j]:
+						print(str(ovalue[j]) + " is less than min for objective " + str(j))
+
+
+		# for i in s.allCansX:
+		# 	color = [colors[i]] * len(s.allCansX[i])
+		# 	o1 = [s.model.calculateObjective([x,y], 0) for (x,y) in zip(s.allCansX[i], s.allCansY[i])]
+		# 	o2 = [s.model.calculateObjective([x,y], 1) for (x,y) in zip(s.allCansX[i], s.allCansY[i])]
+		# 	plt.scatter(o1, o2, c=color, alpha=0.5)
+		# plt.show()
 

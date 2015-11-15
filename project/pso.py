@@ -190,6 +190,6 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
         st.t -= 1
-    g.graph()
+    #g.graph()
     g.graphEnergy()
     st.term()

@@ -40,6 +40,12 @@ class Model(object):
     def calculateObjective(s, v, i): 
         return ((s.objectives[i](v) - s.objectiveMins[i])/(s.objectiveMaxs[i] - s.objectiveMins[i]))
 
+    def getObjectiveMaxs(s):
+        return s.objectiveMaxs
+
+    def getObjectiveMins(s):
+        return s.objectiveMins
+
     def boundy(s, index):  # generates new single random decision within bounds
         return (s.bounds[index][1] - s.bounds[index][0]) * random() + s.bounds[index][0]
 
