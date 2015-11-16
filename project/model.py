@@ -40,6 +40,14 @@ class Model(object):
     def calculateObjective(s, v, i): 
         return ((s.objectives[i](v) - s.objectiveMins[i])/(s.objectiveMaxs[i] - s.objectiveMins[i]))
 
+    #returns bounds for index
+    def getBounds(s, i):
+        return s.bounds[i]
+
+    #return the number of variables in the model
+    def numOfDecisions(s):
+        return s.numOfVars
+
     def getObjectiveMaxs(s):
         return s.objectiveMaxs
 

@@ -45,20 +45,20 @@ class grapher(object):
 		omaxs = s.model.getObjectiveMaxs()
 		omins = s.model.getObjectiveMins()
 
-		print("MAXS:")
-		print(omaxs)
-		print("MINS")
-		print(omins)
+		# print("MAXS:")
+		# print(omaxs)
+		# print("MINS")
+		# print(omins)
 
-		for i in s.allCansX:
-			allVectors = [[x,y] for x,y in zip(s.allCansX[i], s.allCansY[i])]
-			for k in allVectors:
-				ovalue = s.model.cal_objs(k)
-				for j in xrange(len(ovalue)):
-					if ovalue[j] > omaxs[j]:
-						print(str(ovalue[j]) + " is greater than max for objective " + str(j))
-					if ovalue[j] < omins[j]:
-						print(str(ovalue[j]) + " is less than min for objective " + str(j))
+		# for i in s.allCansX:
+		# 	allVectors = [[x,y] for x,y in zip(s.allCansX[i], s.allCansY[i])]
+		# 	for k in allVectors:
+		# 		ovalue = s.model.cal_objs(k)
+		# 		for j in xrange(len(ovalue)):
+		# 			if ovalue[j] > omaxs[j]:
+		# 				print(str(ovalue[j]) + " is greater than max for objective " + str(j))
+		# 			if ovalue[j] < omins[j]:
+		# 				print(str(ovalue[j]) + " is less than min for objective " + str(j))
 
 
 		for i in s.allCansX:

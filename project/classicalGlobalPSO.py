@@ -76,22 +76,27 @@ Parameters:
 - w: the influence of the current velocity
 - phi_1: the social learning rate - how much you learn from other people
 - phi_2: the cognitive learning rate - how much you learn from yourself
+- inertia: controls the momentum of the particle
 """
-def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3):
+def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3, inertia=0.8):
     emin = 0
-    # pulled K from the parameters, because it can be calculated from the
-    # values for phi.
-    phi_tot = phi_1 + phi_2
-    k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
+
+    #setting vmax to full search range for an particle (from lit)
+    # val bounds = [model.getBounds(i) for i in range(model.numOfDecisions())][0]
+    # val difference 
+    vmax = max([(x[1] - x[0]) for x in [model.getBounds(i) for i in range(model.numOfDecisions())]])
+
+    print(vmax)
+    
     s = gens(model, np)
     #initialize grapher
     g = grapher(model, np)
     for can in s:
         g.addVector(can.pos, can.uniq)
     # Energy here is set to zero since we're not actively using it for now.
-    st = state(model.name, 'PSO', s, 0, retries, changes, era)
+    st = state(model.name, 'classicalGlobalPSO', s, 0, retries, changes, era)
     print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    print 'Model Name: ', model.name, '\nOptimizer: PSO, K: ', changes
+    print 'Model Name: ', model.name, '\nOptimizer: Classical Global PSO, K: ', changes
     # Set an initial value for the global best
     # The downside to setting pbest equal to the current
     # particle position is that if there is a high phi_1 value
@@ -110,8 +115,10 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
         while st.k:
             num_deaths = 0
             for can in st.s:
-                can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos))) \
+                can.vel =  [inertia * vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos)) \
                     for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest, st.sb)]
+                #checking if velocity is at max
+                can.vel = [vmax if vel > vmax else vel for vel in can.vel]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
                 
                 # Currently doing the same thing for particles that are
@@ -140,15 +147,15 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
             #if you want to see step by step particle movement uncomment below
             #warning you will end up having to terminate this manually
             #g.graph()
-            print "======================="
-            print "BEGIN DOM PROC K: ", st.k
-            print "======================="
+            # print "======================="
+            # print "BEGIN DOM PROC K: ", st.k
+            # print "======================="
             best = st.s[0]
             best_list = []
             low_diff = []
             for c in st.s:
                 best = c
-                print 'c is ', c.uniq
+                # print 'c is ', c.uniq
                 # We first check the can's personal best
                 # and update it if its current position
                 # dominates.
@@ -158,7 +165,7 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                     if c == can:
                         continue
                     elif c.pos == can.pos:
-                        print "PARTICLES IN SAME POSITION"
+                        # print "PARTICLES IN SAME POSITION"
                         continue
                     # If we're at this point then the particles
                     # aren't exactly equal in position, and also
@@ -176,21 +183,21 @@ def pso(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1
                 # global best candidate.
                 if(not best.uniq in best_list):
                     best_list.append(best.uniq)
-                print 'best id after run ', best.uniq
+                # print 'best id after run ', best.uniq
             st.sb = best.pos
             st.eb = model.energy(st.sb)
-            print 'low diff list ', low_diff
-            print 'best_list ', best_list
+            # print 'low diff list ', low_diff
+            # print 'best_list ', best_list
             st.k -= 1
         # We need a clean slate here.
-        print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
-        print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
-        print 'Num deaths: ', tot_deaths
-        print 'Total number of particles ', changes*np
-        print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
+        # print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
+        # print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
+        # print 'Num deaths: ', tot_deaths
+        # print 'Total number of particles ', changes*np
+        # print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
         st.t -= 1
-    g.graph()
-    g.graphEnergy()
+    # g.graph()
+    # g.graphEnergy()
     st.term()
