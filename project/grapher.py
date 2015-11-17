@@ -8,16 +8,27 @@ class grapher(object):
 	def __init__(s, model, numOfCans):
 		s.allCansX = {}
 		s.allCansY = {}
+		s.allCansZ = {}
 		for i in xrange(numOfCans):
 			s.allCansX.update({i: []})
 			s.allCansY.update({i: []})
+			s.allCansZ.update({i: []})
 
 		s.model = model
 
 	def addVector(s, v, i):
-		x, y = v[0], v[1]
-		s.allCansX[i].append(x)
-		s.allCansY[i].append(y)
+		if(len(v) == 2){
+			x, y = v[0], v[1]
+			s.allCansX[i].append(x)
+			s.allCansY[i].append(y)
+		}
+
+		if(len(v) > 2){
+			x, y, z = v[0], v[1], v[3]
+			s.allCansX[i].append(x)
+			s.allCansX[i].append(y)
+			s.allCansX[i].append(z)
+		}
 
 	#this will graph the decisions
 	#each color is a unique candidate
