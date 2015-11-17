@@ -114,7 +114,7 @@ def repulsion(c1, c2, radius):
 #with weights added together
 #otherwise they will repulse each other based on their weights
 #and coulomb's law
-def classicalGlobalPSOV2(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=10, phi_1=2.8, phi_2=1.3, inertia=0.8):
+def classicalGlobalPSOV2(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3, inertia=0.8):
     emin = 0
 
     #setting vmax to full search range for an particle (from lit)
@@ -122,7 +122,7 @@ def classicalGlobalPSOV2(model, retries, changes, goal = 0.01, pat = 100, era = 
     # val difference 
     vmax = max([(x[1] - x[0]) for x in [model.getBounds(i) for i in range(model.numOfDecisions())]]) / 10.0
 
-    radius = vmax * 0.15;
+    radius = vmax * 0.20;
     
     s = gens(model, np, radius)
     #initialize grapher

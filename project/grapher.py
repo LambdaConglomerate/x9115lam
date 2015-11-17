@@ -17,18 +17,16 @@ class grapher(object):
 		s.model = model
 
 	def addVector(s, v, i):
-		if(len(v) == 2){
+		if(len(v) == 2):
 			x, y = v[0], v[1]
 			s.allCansX[i].append(x)
 			s.allCansY[i].append(y)
-		}
 
-		if(len(v) > 2){
+		if(len(v) > 2):
 			x, y, z = v[0], v[1], v[3]
 			s.allCansX[i].append(x)
 			s.allCansX[i].append(y)
 			s.allCansX[i].append(z)
-		}
 
 	#this will graph the decisions
 	#each color is a unique candidate
