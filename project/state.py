@@ -84,10 +84,13 @@ class state(object):
     if log_level == 'debug':
       logging.basicConfig(filename=out, format='%(message)s',level=logging.DEBUG)
     else:
-      logging.basicConfig(filename='out.txt', format='%(message)s',level=logging.INFO)
+      logging.basicConfig(filename='./out/out.txt', format='%(message)s',level=logging.INFO)
     self.logger = logging.getLogger('State')
-    self.logger.info("%s\nModel: %s\nOptimizer: %s\nNum Retries: %s\nNum Changes: %s\nInitial S: %s\nInitial E: %0.3f\n%s" % \
+    self.logger.debug("%s\nModel: %s\nOptimizer: %s\nNum Retries: %s\nNum Changes: %s\nInitial S: %s\nInitial E: %0.3f\n%s" % \
       ('-'*100, self.name, self.optimizer, self._t, self._k, self._s, self._e, '-'*100))
+    self.logger.info("%s\nModel: %s\nOptimizer: %s\nNum Retries: %s\nNum Changes: %s\n%s" % \
+      ('-'*100, self.name, self.optimizer, self._t, self._k, '-'*100))
+    self.logger.info("T:%d\n%s" % (self._t, '-'*100))
     self.outstring = ""
 
   def __str__(self):
@@ -117,40 +120,31 @@ class state(object):
     hypervolume_file = open(hypervolume_out, 'w')
     spread_file = open(spread_out, 'w')
 
-    outList = ["\n".join([" ".join(map(str,vector)) for vector in front]) for front in self.frontier]
-    outString = "\n\n".join(outList)
-    print outString
 
-
+    # Uncommenting the below will print out all of the frontiers to the console
+    # outList = ["\n".join([" ".join(map(str,vector)) for vector in front]) for front in self.frontier]
+    # outString = "\n\n".join(outList)
+    # print outString
 
     print "Dominant frontier:"
     fin = ""
     for tup in zip(*self.frontier):
       tup_string = ""
-      print tup
       best = 0
       for i in xrange(len(tup) - 1):
         if not self.cdom_spec(tup[best], tup[i+1]):
           best = i + 1
-      print "best: ", best
-      fin += str(tup[best]) + "\n"
-      # for t in zip(*tup):
-      #   tup_string += str(numpy.median(t)) + " "
-      # fin += tup_string + '\n'
+      fin += " ".join(map(str, tup[best])) + '\n'
 
     print fin
-
-
-    # outList = ["\n".join(map(str,front)) for front in self.frontier]
-    # outLine = "\n".join(outList)
-    # hypervolume_file.write(outLine)
-    # spread_file.write(outLine)
+    hypervolume_file.write(fin)
+    spread_file.write(fin)
 
     if self.outstring != "":
       self.logger.info(self.outstring)
       self.outstring =""
-    self.logger.info("\nFINAL:\nMODEL:%s\nOPTIMIZER:%s\nEBO:%0.3f\tSBO:%s\n" % \
-      (self.name, self.optimizer, self._ebo, self._sbo))
+    self.logger.info("%s\nFINAL:\nMODEL:%s\nOPTIMIZER:%s" % ('-'*100, self.name, self.optimizer))
+    self.logger.info("FRONTIER:\n%s" % fin)
 
   # Specialized version of cdom for when objectives have already been run, just a
   # short one off so doesn't support more than 2 objectives yet.
@@ -182,7 +176,8 @@ class state(object):
       self.logger.info(self.outstring)
       self.outstring =""
     if self._t != 0:
-      self.logger.info("\n%s\nT:%d\tK:%d\tEBO:%0.3f\tSBO:%s\n%s" % \
+      self.logger.info("%s\nT:%d\n%s" % ('-'*100, self._t, '-'*100))
+      self.logger.debug("\n%s\nT:%d\tK:%d\tEBO:%0.3f\tSBO:%s\n%s" % \
         ('-'*100, self._t, self._k, self._ebo, self._sbo, '-'*100))
 
   @property
