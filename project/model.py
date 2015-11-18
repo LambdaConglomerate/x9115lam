@@ -37,7 +37,7 @@ class Model(object):
 
     #takes vector and objective index argument
     #returns normalized value for objective
-    def calculateObjective(s, v, i): 
+    def calculateObjective(s, v, i):
         return ((s.objectives[i](v) - s.objectiveMins[i])/(s.objectiveMaxs[i] - s.objectiveMins[i]))
 
     #returns bounds for index
@@ -112,8 +112,13 @@ class Model(object):
     def cdom(self, c1, c2, can1=None, can2=None):
         # if can2:
         #     print 'comparison ids: ', can1.uniq, can2.uniq
+        # if(can2):
+        #     print can1
+        #     print can2
         # a = self.loss(c1, c2)
         # b = self.loss(c2, c1)
+
+
         # diff = math.fabs(a-b)
         # print 'diff is ', diff
         # if diff < 0.01:

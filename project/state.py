@@ -1,4 +1,51 @@
-import logging, sys
+import logging, sys, math
+
+"""
+Can added here because it is likely to be reused across multiple
+versions of PSO.  It seems pointless to rewrite the same block
+over and over again across those versions in the name of this
+being a more generalized model.
+"""
+class can(object):
+    # Didn't want to override id so used uniq
+    # as the variable.
+    def __init__(self, pos, vel, pbest, uniq):
+        self._pos = pos
+        self._vel = vel
+        self._pbest = pbest
+        self._uniq = uniq
+
+    def __str__(self):
+        return "id: " + str(self._uniq) + "\npos: " + str(self._pos) + "\nvel: " + str(self._vel) + "\npbest: " + str(self._pbest) + '\n'
+
+    @property
+    def pos(self):
+        return self._pos
+    @pos.setter
+    def pos(self, vect):
+        self._pos = vect
+
+    @property
+    def vel(self):
+        return self._vel
+    @vel.setter
+    def vel(self, vect):
+        self._vel = vect
+
+    @property
+    def pbest(self):
+        return self._pbest
+    @pbest.setter
+    def pbest(self, vect):
+        self._pbest = vect
+
+    @property
+    def uniq(self):
+        return self._uniq
+
+    @uniq.setter
+    def uniq(self, uniq):
+        self._uniq = uniq
 
 """
   Parameters:
@@ -14,6 +61,7 @@ import logging, sys
   - log_level:  If this is anything other than debug only the info logs will be spit out.
 """
 class state(object):
+
   def __init__(self, model_name, optimizer, s, energy, retries, changes, era, out='out.txt', log_level=None):
     self.name = model_name
     self.optimizer = optimizer
@@ -30,6 +78,9 @@ class state(object):
     self._t = retries
     self._k = changes
     self.era = era
+    self.frontier = list()
+    self.spread_path = './metrics/Spread/Obtained_PF/'
+    self.hypervolume_path = './metrics/HyperVolume/Pareto_Fronts/'
     if log_level == 'debug':
       logging.basicConfig(filename=out, format='%(message)s',level=logging.DEBUG)
     else:
@@ -52,6 +103,67 @@ class state(object):
       self.outstring =""
     self.logger.info("\nFINAL:\nMODEL:%s\nOPTIMIZER:%s\nEBO:%0.3f\tSBO:%s\n" % \
       (self.name, self.optimizer, self._ebo, self._sbo))
+
+  def addFrontier(self, obVals):
+      self.frontier.append(obVals)
+
+  """
+  This is a special method specifically for PSO to output text files for
+  the frontiers that are in the personal bests for each of the  particles.
+  """
+  def termPSO(self):
+    spread_out = self.spread_path + self.optimizer + "_" + self.name + ".txt"
+    hypervolume_out = self.hypervolume_path + self.optimizer + "_" + self.name + ".txt"
+    hypervolume_file = open(hypervolume_out, 'w')
+    spread_file = open(spread_out, 'w')
+
+    outList = ["\n".join([" ".join(map(str,vector)) for vector in front]) for front in self.frontier]
+    outString = "\n\n".join(outList)
+    print outString
+
+
+
+    print "Dominant frontier:"
+    fin = ""
+    for tup in zip(*self.frontier):
+      tup_string = ""
+      print tup
+      best = 0
+      for i in xrange(len(tup) - 1):
+        if not self.cdom_spec(tup[best], tup[i+1]):
+          best = i + 1
+      print "best: ", best
+      fin += str(tup[best]) + "\n"
+      # for t in zip(*tup):
+      #   tup_string += str(numpy.median(t)) + " "
+      # fin += tup_string + '\n'
+
+    print fin
+
+
+    # outList = ["\n".join(map(str,front)) for front in self.frontier]
+    # outLine = "\n".join(outList)
+    # hypervolume_file.write(outLine)
+    # spread_file.write(outLine)
+
+    if self.outstring != "":
+      self.logger.info(self.outstring)
+      self.outstring =""
+    self.logger.info("\nFINAL:\nMODEL:%s\nOPTIMIZER:%s\nEBO:%0.3f\tSBO:%s\n" % \
+      (self.name, self.optimizer, self._ebo, self._sbo))
+
+  # Specialized version of cdom for when objectives have already been run, just a
+  # short one off so doesn't support more than 2 objectives yet.
+  def cdom_spec(self, c1, c2):
+    n = min(len(c1), len(c2))
+    losses_a = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
+    losses_a = sum(losses_a) / n
+    losses_b = [math.exp((a - b)/n) for (a,b) in zip(c2, c1)]
+    losses_b = sum(losses_b) / n
+    if losses_a < losses_b:
+      return True
+    else:
+      return False
 
   def bored(self):
     self.app_out("\ngot bored at K:%d" % (self._k))
@@ -147,3 +259,4 @@ class state(object):
   @sblast.setter
   def sblast(self, val):
     self._sblast = list(val)
+

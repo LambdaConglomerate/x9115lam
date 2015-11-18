@@ -117,7 +117,7 @@ Parameters:
 """
 
 """
-Adaptive global with each candaidate having a probability distribution 
+Adaptive global with each candaidate having a probability distribution
 for picking global and local best
 """
 def adaptiveGlobalPSOwithProbs(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3):
@@ -159,13 +159,13 @@ def adaptiveGlobalPSOwithProbs(model, retries, changes, goal = 0.01, pat = 100, 
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (probB - pos))) \
                     for vel, pos, best, probB in zip(can.vel, can.pos, can.pbest, probBest)]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
-                
+
                 # Currently doing the same thing for particles that are
                 # out of bounds and out of constraints, simply killing them
                 # definitely some other options with this.  If they get to
                 # bounds can set vector to boundary, and vel ot zero, then
                 # just let them be pulled back into the space.
-                if not model.checkBounds(can.pos) and not model.checkConstraints(can.pos):
+                if not model.checkBounds(can.pos) or not model.checkConstraints(can.pos):
                     can.pos = model.retry()
                     can.vel = [0.0 for x in can.pos]
                     # Should a killed candidate maintain it's phantom memory?
