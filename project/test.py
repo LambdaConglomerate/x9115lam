@@ -8,7 +8,7 @@ from adaptiveGlobalPSOwithProbs import *
 # full model list
 # Osyczka2, Fonseca, ZDT1, ZDT2, ZDT3, ZDT4, ZDT6, Tanaka, Constr_Ex, Srinivas, Golinski, Viennet2, Viennet3, Viennet4, Water
 # Tanaka, Viennet2, Viennet3, Viennet4, Constr_Ex
-for m in [Fonseca]:
+for m in [DTLZ1]:
     for o in [adaptiveGlobalPSO]:
         #Absolutely do not pass integers for retries or changes
         o(m, 3.0, 200.0)
