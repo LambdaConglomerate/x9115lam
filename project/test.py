@@ -10,6 +10,6 @@ from classicalGlobalPSOV2 import *
 # Tanaka, Viennet2, Viennet3, Viennet4, Constr_Ex
 
 for m in [Fonseca]:
-    for o in [classicalGlobalPSO]:
+    for o in [adaptiveGlobalPSO]:
         #Absolutely do not pass integers for retries or changes
-        o(m, 1.0, 500.0)
+        o(m, 5.0, 500.0)

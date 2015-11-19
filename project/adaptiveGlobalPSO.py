@@ -77,16 +77,21 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
     st.sb = st.s[0].pos
     st.sblast = st.s[0].pos
     bestcan = st.s[0]
-    # #Initialize objective mins and maxs
-    model.initializeObjectiveMaxMin(st.sb)
-    # #we whould do this just in case
-    for c in st.s:
-        model.updateObjectiveMaxMin(c.pos)
+    # # #Initialize objective mins and maxs
+    # model.initializeObjectiveMaxMin(st.sb)
+    # # #we whould do this just in case
+    # for c in st.s:
+    #     model.updateObjectiveMaxMin(c.pos)
     tot_deaths = 0
     # The frontier is just a list
     # of positions, not cans!
     frontier = list()
     while st.t:
+        # #Initialize objective mins and maxs
+        model.initializeObjectiveMaxMin(st.sb)
+        # #we whould do this just in case
+        for c in st.s:
+            model.updateObjectiveMaxMin(c.pos)
         st.k = changes
         while st.k:
             if st.sb == st.sblast:
