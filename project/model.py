@@ -107,27 +107,21 @@ class Model(object):
             return False
 
     def cal_objs(s, vect):
-        return [obj(vect) for obj in s.objectives]
+        obs = list()
+        for i in xrange(len(s.objectives)):
+            obs.append(s.calculateObjective(vect, i))
+        return obs
 
     def cdom(self, c1, c2, can1=None, can2=None):
-        # if can2:
-        #     print 'comparison ids: ', can1.uniq, can2.uniq
-        # if(can2):
-        #     print can1
-        #     print can2
-        # a = self.loss(c1, c2)
-        # b = self.loss(c2, c1)
-
-
-        # diff = math.fabs(a-b)
-        # print 'diff is ', diff
-        # if diff < 0.01:
-        #     if(can2):
-        #         print "ZERO DIFFERENCE IDS: %d %d, diff: %0.3f" % (can1.uniq, can2.uniq, diff)
-        if(self.loss(c1, c2) < self.loss(c2, c1)):
-            return True
+        a = self.loss(c1, c2)
+        b = self.loss(c2, c1)
+        diff = math.fabs(a-b)
+        if diff < 0.01:
+            return -1
+        elif(a < b):
+            return 1
         else:
-            return False
+            return 0
 
     # Written to assume minimization
     # Menzies' code added flexibility to

@@ -2,7 +2,7 @@ from Models import *
 from adaptiveGlobalPSO import *
 from classicalGlobalPSO import *
 from classicalGlobalPSOV2 import *
-from adaptiveGlobalPSOwithProbs import *
+# from adaptiveGlobalPSOwithProbs import *
 #from pso import *
 
 # full model list
@@ -12,4 +12,4 @@ from adaptiveGlobalPSOwithProbs import *
 for m in [Tanaka]:
     for o in [adaptiveGlobalPSO]:
         #Absolutely do not pass integers for retries or changes
-        o(m, 3.0, 200.0)
+        o(m, 20.0, 1000.0)

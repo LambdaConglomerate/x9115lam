@@ -12,13 +12,12 @@ import sys, random, math, copy
 class can(object):
     # Didn't want to override id so used uniq
     # as the variable.
-    def __init__(self, pos, vel, pbest, uniq, num_of_cans):
+    def __init__(self, pos, vel, pbest, uniq):
         self._pos = pos
         self._vel = vel
         self._pbest = pbest
         self._uniq = uniq
-        self._probs = [1.0/num_of_cans] * num_of_cans
-        self.num_of_cans = num_of_cans
+        self._probs =
 
     def __str__(self):
         return "id: " + str(self._uniq) + "\npos: " + str(self._pos) + "\nvel: " + str(self._vel) + "\npbest: " + str(self._pbest) + '\n'
@@ -52,48 +51,12 @@ class can(object):
     def uniq(self, uniq):
         self._uniq = uniq
 
-    def increaseProbs(self, can):
-        currentProb = self._probs[can]
-        newProb = currentProb * 1.01
-        if newProb > 0.95:
-            newProb = 0.95
-        self._probs[can] = newProb
-        diff = (newProb - currentProb) / self.num_of_cans
-        for i in xrange(self.num_of_cans):
-            if i == can:
-                continue
-            else:
-                self._probs[i] -= diff
-                if self._probs[i] < 0.0: print "WARNING PROB BELOW ZERO"
-
-    def decreaseProbs(self, can):
-        currentProb = self._probs[can]
-        newProb = currentProb * 0.99
-        self._probs[can] = newProb
-        diff = (currentProb - newProb) / self.num_of_cans
-        for i in xrange(self.num_of_cans):
-            if i == can:
-                continue
-            else:
-                self._probs[i] += diff
-                if self._probs[i] > 1.0: print "WARNING PROB ABOVE ONE"
-
-    def getBest(self):
-        cutOff = random.random()
-        total = 0
-        for i in xrange(self.num_of_cans):
-            total+= self._probs[i]
-            if(total > cutOff):
-                return i
-        print("RETURNED ")
-        return self.num_of_cans - 1
-
 def gens(model, np):
     init_pos = [model.retry() for x in xrange(np)]
     init_vel = [[0.0 for _ in xrange(len(init_pos[i]))] for i, val in enumerate(init_pos)]
     init_bpos = [list(x) for x in init_pos]
     init_ids = [i for i in xrange(np)]
-    cans = [can(pos, vel, pbest, uniq, np) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
+    cans = [can(pos, vel, pbest, uniq) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
     return cans
 
 """
@@ -114,27 +77,33 @@ Parameters:
 - w: the influence of the current velocity
 - phi_1: the social learning rate - how much you learn from other people
 - phi_2: the cognitive learning rate - how much you learn from yourself
+- inertia: controls the momentum of the particle
 """
 
 """
-Adaptive global with each candaidate having a probability distribution
-for picking global and local best
+This implementation with keep a probability array that will hold the
+success probabilities for selecting the best to interpolate for the
+current probs.
 """
-def adaptiveGlobalPSOwithProbs(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3):
+def classicalGlobalPSOProbs(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3, inertia=0.8):
     emin = 0
-    # pulled K from the parameters, because it can be calculated from the
-    # values for phi.
-    phi_tot = phi_1 + phi_2
-    k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
+
+    #setting vmax to full search range for an particle (from lit)
+    # val bounds = [model.getBounds(i) for i in range(model.numOfDecisions())][0]
+    # val difference
+    vmax = max([(x[1] - x[0]) for x in [model.getBounds(i) for i in range(model.numOfDecisions())]])
+
+    print(vmax)
+
     s = gens(model, np)
     #initialize grapher
     g = grapher(model, np)
     for can in s:
         g.addVector(can.pos, can.uniq)
     # Energy here is set to zero since we're not actively using it for now.
-    st = state(model.name, 'adaptiveGlobalPSOwithProbs', s, 0, retries, changes, era)
+    st = state(model.name, 'classicalGlobalPSO', s, 0, retries, changes, era)
     print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    print 'Model Name: ', model.name, '\nOptimizer: Adaptive Global PSO With Probs, K: ', changes
+    print 'Model Name: ', model.name, '\nOptimizer: Classical Global PSO, K: ', changes
     # Set an initial value for the global best
     # The downside to setting pbest equal to the current
     # particle position is that if there is a high phi_1 value
@@ -153,11 +122,10 @@ def adaptiveGlobalPSOwithProbs(model, retries, changes, goal = 0.01, pat = 100, 
         while st.k:
             num_deaths = 0
             for can in st.s:
-                previousPos = can.pos
-                probIndex = can.getBest()
-                probBest = st.s[probIndex].pos
-                can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (probB - pos))) \
-                    for vel, pos, best, probB in zip(can.vel, can.pos, can.pbest, probBest)]
+                can.vel =  [inertia * vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos)) \
+                    for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest, st.sb)]
+                #checking if velocity is at max
+                can.vel = [vmax if vel > vmax else vel for vel in can.vel]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
 
                 # Currently doing the same thing for particles that are
@@ -165,18 +133,20 @@ def adaptiveGlobalPSOwithProbs(model, retries, changes, goal = 0.01, pat = 100, 
                 # definitely some other options with this.  If they get to
                 # bounds can set vector to boundary, and vel ot zero, then
                 # just let them be pulled back into the space.
-                if not model.checkBounds(can.pos) or not model.checkConstraints(can.pos):
+                if not model.checkBounds(can.pos):
                     can.pos = model.retry()
                     can.vel = [0.0 for x in can.pos]
                     # Should a killed candidate maintain it's phantom memory?
                     # Uncomment this to wipe its memory.
                     # can.pbest = list(can.pos)
                     num_deaths += 1
-                else:
-                    if(model.cdom(c.pos, previousPos)):
-                        can.increaseProbs(probIndex)
-                    else:
-                        can.decreaseProbs(probIndex)
+                if not model.checkConstraints(can.pos):
+                    can.pos = model.retry()
+                    can.vel = [0.0 for x in can.pos]
+                    # Should a killed candidate maintain it's phantom memory?
+                    # Uncomment this to wipe its memory.
+                    # can.pbest = list(can.pos)
+                    num_deaths += 1
                 #Update objective maxs and mins
                 g.addVector(can.pos, can.uniq)
                 model.updateObjectiveMaxMin(can.pos)

@@ -83,11 +83,11 @@ def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 10
 
     #setting vmax to full search range for an particle (from lit)
     # val bounds = [model.getBounds(i) for i in range(model.numOfDecisions())][0]
-    # val difference 
+    # val difference
     vmax = max([(x[1] - x[0]) for x in [model.getBounds(i) for i in range(model.numOfDecisions())]])
 
     print(vmax)
-    
+
     s = gens(model, np)
     #initialize grapher
     g = grapher(model, np)
@@ -120,7 +120,7 @@ def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 10
                 #checking if velocity is at max
                 can.vel = [vmax if vel > vmax else vel for vel in can.vel]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
-                
+
                 # Currently doing the same thing for particles that are
                 # out of bounds and out of constraints, simply killing them
                 # definitely some other options with this.  If they get to
@@ -190,11 +190,11 @@ def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 10
             # print 'best_list ', best_list
             st.k -= 1
         # We need a clean slate here.
-        # print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
-        # print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
-        # print 'Num deaths: ', tot_deaths
-        # print 'Total number of particles ', changes*np
-        # print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
+        print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
+        print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
+        print 'Num deaths: ', tot_deaths
+        print 'Total number of particles ', changes*np
+        print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
         st.t -= 1

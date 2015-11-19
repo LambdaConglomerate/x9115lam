@@ -18,6 +18,22 @@ def gens(model, np):
     cans = [can(pos, vel, pbest, uniq) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
     return cans
 
+def addToFront(model, frontier, pos):
+    nondom = True
+    for fpos in frontier:
+        ret_val = model.cdom(pos, fpos)
+        if ret_val == -1:
+            continue
+        elif ret_val == 1:
+            fpos = pos
+            nondom = False
+            break
+        else:
+            nondom = False
+            break
+    if nondom:
+        frontier.append(pos)
+
 """
 Parameters:
 - model: The model you want to run.
@@ -37,7 +53,7 @@ Parameters:
 - phi_1: the social learning rate - how much you learn from other people
 - phi_2: the cognitive learning rate - how much you learn from yourself
 """
-def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3):
+def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.6, phi_2=1.4):
     emin = 0
     # pulled K from the parameters, because it can be calculated from the
     # values for phi.
@@ -51,25 +67,32 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
             g.addVector(can.pos, can.uniq)
     # Energy here is set to zero since we're not actively using it for now.
     st = state(model.name, 'adaptiveGlobalPSO', s, 0, retries, changes, era)
-    print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    print 'Model Name: ', model.name, '\nOptimizer: Adaptive Global PSO, K: ', changes
+    # print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+    # print 'Model Name: ', model.name, '\nOptimizer: Adaptive Global PSO, K: ', changes
     # Set an initial value for the global best
     # The downside to setting pbest equal to the current
     # particle position is that if there is a high phi_1 value
     # the particle will stay still until something happens globally
     # that pushes it away.
-    st.sb = st.s[0].pbest
+    st.sb = st.s[0].pos
+    st.sblast = st.s[0].pos
+    bestcan = st.s[0]
     # #Initialize objective mins and maxs
     model.initializeObjectiveMaxMin(st.sb)
     # #we whould do this just in case
     for c in st.s:
         model.updateObjectiveMaxMin(c.pos)
-    st.eb = model.energy(st.sb)
     tot_deaths = 0
+    # The frontier is just a list
+    # of positions, not cans!
+    frontier = list()
     while st.t:
         st.k = changes
-        patience = pat
         while st.k:
+            if st.sb == st.sblast:
+                pat -= 1
+                if pat == 0:
+                    break
             num_deaths = 0
             for can in st.s:
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos))) \
@@ -95,64 +118,35 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
             #if you want to see step by step particle movement uncomment below
             #warning you will end up having to terminate this manually
             #g.graph()
-            # print "======================="
-            # print "BEGIN DOM PROC K: ", st.k
-            # print "======================="
-            best = st.s[0]
-            best_list = []
-            low_diff = []
-            for c in st.s:
-                best = c
-                # print 'c is ', c.uniq
-                # We first check the can's personal best
-                # and update it if its current position
-                # dominates.
-                if model.cdom(c.pos, c.pbest, c):
-                    c.pbest = list(c.pos)
-                for can in st.s:
-                    if c == can:
-                        continue
-                    elif c.pos == can.pos:
-                        # print "PARTICLES IN SAME POSITION"
-                        continue
-                    # If we're at this point then the particles
-                    # aren't exactly equal in position, and also
-                    # aren't the same particle.
-                    diff = sum([math.fabs(x-y) for x,y in zip(c.pos, can.pos)])
-                    # if diff < 1:
-                    #     # print 'diff: ', diff, ' particle ids: ', c.uniq, can.uniq
-                    #     low_diff.append((c.uniq, can.uniq))
-                    if model.cdom(can.pos, best.pos, can, best):
-                        #If we're here then we've been
-                        #bettered by the next can, so we
-                        #just set it to be our cursor
-                        best = can
-                # Once we make it out here we should have the
-                # global best candidate.
-                if(not best.uniq in best_list):
-                    best_list.append(best.uniq)
-                # print 'best id after run ', best.uniq
-            st.sb = best.pos
-            st.eb = model.energy(st.sb)
-            # print 'low diff list ', low_diff
-            # print 'best_list ', best_list
+            for i in xrange(len(st.s) - 1):
+                pbret = model.cdom(st.s[i].pos, st.s[i].pbest, st.s[i], st.s[i])
+                if pbret == 0 or pbret == -1:
+                    st.s[i].pbest = list(st.s[i].pos)
+                ret_val = model.cdom(st.sb, st.s[i+1].pos, bestcan, st.s[i+1])
+                if ret_val == 0:
+                    st.sb = st.s[i+1].pos
+                    st.sblast = st.s[i+1].pos
+                    bestcan = st.s[i+1]
+                elif ret_val == -1:
+                    addToFront(model, frontier, st.s[i+1].pos)
+            if not st.sb in frontier:
+                frontier.append(st.sb)
+                # addToFront(model, frontier, st.sb)
             st.k -= 1
         # We need a clean slate here.
-        print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
-        print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
-        print 'Num deaths: ', tot_deaths
-        print 'Total number of particles ', changes*np
-        print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
-
-        f = [model.cal_objs(can.pbest) for can in st.s]
+        # print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
+        # print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
+        # print 'Num deaths: ', tot_deaths
+        # print 'Total number of particles ', changes*np
+        # print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
+        for can in st.s:
+            addToFront(model, frontier, can.pbest)
+        f = [model.cal_objs(pos) for pos in frontier]
         st.addFrontier(f)
-
-        if st.eb < st.ebo:
-            st.ebo = st.eb
-            st.sbo = st.sb
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
-        st.eb = 0
+        st.sblast = st.s[0].pbest
+        bestcan = st.s[0]
         st.t -= 1
     if graph:
         g.graph()
