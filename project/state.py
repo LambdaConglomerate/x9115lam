@@ -122,29 +122,38 @@ class state(object):
 
 
     # Uncommenting the below will print out all of the frontiers to the console
+    outList = list()
+    for front in self.frontier:
+      for vector in front:
+        ln = " ".join(map(str, vector))
+        if not ln in outList:
+          outList.append(ln)
+    outString = "\n".join(outList)
+    print outString
+
     # outList = ["\n".join([" ".join(map(str,vector)) for vector in front]) for front in self.frontier]
-    # outString = "\n\n".join(outList)
+    # outString = "\n".join(outList)
     # print outString
 
-    print "Dominant frontier:"
-    fin = ""
-    for tup in zip(*self.frontier):
-      tup_string = ""
-      best = 0
-      for i in xrange(len(tup) - 1):
-        if not self.cdom_spec(tup[best], tup[i+1]):
-          best = i + 1
-      fin += " ".join(map(str, tup[best])) + '\n'
+    # print "Dominant frontier:"
+    # fin = ""
+    # for tup in zip(*self.frontier):
+    #   tup_string = ""
+    #   best = 0
+    #   for i in xrange(len(tup) - 1):
+    #     if not self.cdom_spec(tup[best], tup[i+1]):
+    #       best = i + 1
+    #   fin += " ".join(map(str, tup[best])) + '\n'
 
-    print fin
-    hypervolume_file.write(fin)
-    spread_file.write(fin)
+    # print fin
+    hypervolume_file.write(outString)
+    spread_file.write(outString)
 
     if self.outstring != "":
       self.logger.info(self.outstring)
       self.outstring =""
     self.logger.info("%s\nFINAL:\nMODEL:%s\nOPTIMIZER:%s" % ('-'*100, self.name, self.optimizer))
-    self.logger.info("FRONTIER:\n%s" % fin)
+    # self.logger.info("FRONTIER:\n%s" % fin)
 
   # Specialized version of cdom for when objectives have already been run, just a
   # short one off so doesn't support more than 2 objectives yet.

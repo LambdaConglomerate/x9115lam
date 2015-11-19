@@ -130,8 +130,7 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
                 elif ret_val == -1:
                     addToFront(model, frontier, st.s[i+1].pos)
             if not st.sb in frontier:
-                frontier.append(st.sb)
-                # addToFront(model, frontier, st.sb)
+                addToFront(model, frontier, st.sb)
             st.k -= 1
         # We need a clean slate here.
         # print '++++++++++++++++++++++++++++++++++++++++++++++++++++'

@@ -116,7 +116,7 @@ class Model(object):
         a = self.loss(c1, c2)
         b = self.loss(c2, c1)
         diff = math.fabs(a-b)
-        if diff < 0.01:
+        if diff < 0.1:
             return -1
         elif(a < b):
             return 1

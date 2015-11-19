@@ -1,4 +1,3 @@
-8
 0.999964318645 0.999999944067
 0.977662337406 0.999990900313
 0.999999902101 1.0
@@ -36,8 +35,3 @@
 0.995218951171 0.999916348038
 0.999999820204 0.999999819494
 0.999999816521 1.0
-Name: adaptiveGlobalPSO_DTLZ1.txt HyperVolume: 30382.0682
-Name: adaptiveGlobalPSO_Fonseca.txt HyperVolume: 0.3749
-Name: adaptiveGlobalPSO_Tanaka.txt HyperVolume: 0.4941
-Name: classicalGlobalPSO_Fonseca.txt HyperVolume: 0.3622
-Name:  classicalGlobalPSO  Spread:  1.035

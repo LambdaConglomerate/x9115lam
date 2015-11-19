@@ -8,47 +8,21 @@ from state import *
 from grapher import *
 import sys, random, math, copy
 
-
-class can(object):
-    # Didn't want to override id so used uniq
-    # as the variable.
-    def __init__(self, pos, vel, pbest, uniq):
-        self._pos = pos
-        self._vel = vel
-        self._pbest = pbest
-        self._uniq = uniq
-
-    def __str__(self):
-        return "id: " + str(self._uniq) + "\npos: " + str(self._pos) + "\nvel: " + str(self._vel) + "\npbest: " + str(self._pbest) + '\n'
-
-    @property
-    def pos(self):
-        return self._pos
-    @pos.setter
-    def pos(self, vect):
-        self._pos = vect
-
-    @property
-    def vel(self):
-        return self._vel
-    @vel.setter
-    def vel(self, vect):
-        self._vel = vect
-
-    @property
-    def pbest(self):
-        return self._pbest
-    @pbest.setter
-    def pbest(self, vect):
-        self._pbest = vect
-
-    @property
-    def uniq(self):
-        return self._uniq
-
-    @uniq.setter
-    def uniq(self, uniq):
-        self._uniq = uniq
+def addToFront(model, frontier, pos):
+    nondom = True
+    for fpos in frontier:
+        ret_val = model.cdom(pos, fpos)
+        if ret_val == -1:
+            continue
+        elif ret_val == 1:
+            fpos = pos
+            nondom = False
+            break
+        else:
+            nondom = False
+            break
+    if nondom:
+        frontier.append(pos)
 
 def gens(model, np):
     init_pos = [model.retry() for x in xrange(np)]
@@ -78,7 +52,7 @@ Parameters:
 - phi_2: the cognitive learning rate - how much you learn from yourself
 - inertia: controls the momentum of the particle
 """
-def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3, inertia=0.8):
+def classicalGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.8, phi_2=1.3, inertia=0.8):
     emin = 0
 
     #setting vmax to full search range for an particle (from lit)
@@ -90,29 +64,36 @@ def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 10
 
     s = gens(model, np)
     #initialize grapher
-    g = grapher(model, np)
-    for can in s:
-        g.addVector(can.pos, can.uniq)
+    if graph:
+        g = grapher(model, np)
+        for can in s:
+            g.addVector(can.pos, can.uniq)
     # Energy here is set to zero since we're not actively using it for now.
     st = state(model.name, 'classicalGlobalPSO', s, 0, retries, changes, era)
-    print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    print 'Model Name: ', model.name, '\nOptimizer: Classical Global PSO, K: ', changes
+    # print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+    # print 'Model Name: ', model.name, '\nOptimizer: Classical Global PSO, K: ', changes
     # Set an initial value for the global best
     # The downside to setting pbest equal to the current
     # particle position is that if there is a high phi_1 value
     # the particle will stay still until something happens globally
     # that pushes it away.
     st.sb = st.s[0].pbest
+    st.sblast = st.s[0].pos
+    bestcan = st.s[0]
     #Initialize objective mins and maxs
     model.initializeObjectiveMaxMin(st.sb)
     #we whould do this just in case
     for c in st.s:
         model.updateObjectiveMaxMin(c.pos)
     tot_deaths = 0
+    frontier = list()
     while st.t:
         st.k = changes
-        patience = pat
         while st.k:
+            if st.sb == st.sblast:
+                pat -= 1
+                if pat == 0:
+                    break
             num_deaths = 0
             for can in st.s:
                 can.vel =  [inertia * vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos)) \
@@ -126,14 +107,7 @@ def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 10
                 # definitely some other options with this.  If they get to
                 # bounds can set vector to boundary, and vel ot zero, then
                 # just let them be pulled back into the space.
-                if not model.checkBounds(can.pos):
-                    can.pos = model.retry()
-                    can.vel = [0.0 for x in can.pos]
-                    # Should a killed candidate maintain it's phantom memory?
-                    # Uncomment this to wipe its memory.
-                    # can.pbest = list(can.pos)
-                    num_deaths += 1
-                if not model.checkConstraints(can.pos):
+                if not model.checkBounds(can.pos) or not model.checkConstraints(can.pos):
                     can.pos = model.retry()
                     can.vel = [0.0 for x in can.pos]
                     # Should a killed candidate maintain it's phantom memory?
@@ -141,63 +115,46 @@ def classicalGlobalPSO(model, retries, changes, goal = 0.01, pat = 100, era = 10
                     # can.pbest = list(can.pos)
                     num_deaths += 1
                 #Update objective maxs and mins
-                g.addVector(can.pos, can.uniq)
+                if graph:
+                    g.addVector(can.pos, can.uniq)
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
             #if you want to see step by step particle movement uncomment below
             #warning you will end up having to terminate this manually
             #g.graph()
-            # print "======================="
-            # print "BEGIN DOM PROC K: ", st.k
-            # print "======================="
             best = st.s[0]
             best_list = []
             low_diff = []
-            for c in st.s:
-                best = c
-                # print 'c is ', c.uniq
-                # We first check the can's personal best
-                # and update it if its current position
-                # dominates.
-                if model.cdom(c.pos, c.pbest, c):
-                    c.pbest = list(c.pos)
-                for can in st.s:
-                    if c == can:
-                        continue
-                    elif c.pos == can.pos:
-                        # print "PARTICLES IN SAME POSITION"
-                        continue
-                    # If we're at this point then the particles
-                    # aren't exactly equal in position, and also
-                    # aren't the same particle.
-                    diff = sum([math.fabs(x-y) for x,y in zip(c.pos, can.pos)])
-                    # if diff < 1:
-                    #     # print 'diff: ', diff, ' particle ids: ', c.uniq, can.uniq
-                    #     low_diff.append((c.uniq, can.uniq))
-                    if model.cdom(can.pos, best.pos, can, best):
-                        #If we're here then we've been
-                        #bettered by the next can, so we
-                        #just set it to be our cursor
-                        best = can
-                # Once we make it out here we should have the
-                # global best candidate.
-                if(not best.uniq in best_list):
-                    best_list.append(best.uniq)
-                # print 'best id after run ', best.uniq
-            st.sb = best.pos
-            st.eb = model.energy(st.sb)
-            # print 'low diff list ', low_diff
-            # print 'best_list ', best_list
+            for i in xrange(len(st.s) - 1):
+                pbret = model.cdom(st.s[i].pos, st.s[i].pbest, st.s[i], st.s[i])
+                if pbret == 0 or pbret == -1:
+                    st.s[i].pbest = list(st.s[i].pos)
+                ret_val = model.cdom(st.sb, st.s[i+1].pos, bestcan, st.s[i+1])
+                if ret_val == 0:
+                    st.sb = st.s[i+1].pos
+                    st.sblast = st.s[i+1].pos
+                    bestcan = st.s[i+1]
+                elif ret_val == -1:
+                    addToFront(model, frontier, st.s[i+1].pos)
+            if not st.sb in frontier:
+                addToFront(model, frontier, st.sb)
             st.k -= 1
         # We need a clean slate here.
-        print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
-        print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
-        print 'Num deaths: ', tot_deaths
-        print 'Total number of particles ', changes*np
-        print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
+        # print '++++++++++++++++++++++++++++++++++++++++++++++++++++'
+        # print 'Global best: ', st.sb, '\nGlobal best energy: ', st.eb
+        # print 'Num deaths: ', tot_deaths
+        # print 'Total number of particles ', changes*np
+        # print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
+        for can in st.s:
+            addToFront(model, frontier, can.pbest)
+        f = [model.cal_objs(pos) for pos in frontier]
+        st.addFrontier(f)
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
+        st.sblast = st.s[0].pbest
+        bestcan = st.s[0]
         st.t -= 1
-    g.graph()
-    g.graphEnergy()
-    st.term()
+    if graph:
+        g.graph()
+        g.graphEnergy()
+    st.termPSO()
