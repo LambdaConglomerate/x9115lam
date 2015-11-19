@@ -195,3 +195,28 @@ Water = (Model(3)
          .addObjective(lambda x: 25 * 1.39 / (x[0] * x[1] + 4940 * x[2] - 80))
          .addName("Water")
          )
+
+# M should be between 2 and 10
+m_dtlz1 = 2
+# g function for DTLZ1
+g_dtlz1 = (lambda x: 100 * (len(x) * reduce(lambda a, b: a + b,
+                                [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in range(0, len(x))])))
+
+DTLZ1 = Model(m_dtlz1).addName("DTLZ1")
+
+for i in xrange(m_dtlz1):
+    DTLZ1.addBound([i], 0, 1)
+    DTLZ1.addObjective(lambda x: gen_dtlz1_obj(x, i))
+
+def gen_dtlz1_obj(x, i):
+    product = 1
+
+    for j in xrange(len(x) - i - 1):
+        product *= x[j]
+
+    if i > 0:
+        product *= (1 - x[len(x) - i - 1])
+
+    product *= 0.5 * (1 + g_dtlz1(x))
+
+    return product
