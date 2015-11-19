@@ -200,7 +200,7 @@ Water = (Model(3)
 m_dtlz1 = 2
 # g function for DTLZ1
 g_dtlz1 = (lambda x: 100 * (len(x) * reduce(lambda a, b: a + b,
-                                [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in range(0, len(x))])) / (len(x) - 1.0))
+                                [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in range(0, len(x))])))
 
 DTLZ1 = Model(m_dtlz1).addName("DTLZ1")
 
