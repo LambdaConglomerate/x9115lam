@@ -197,41 +197,41 @@ Water = (Model(3)
          )
 
 # 5 is recommended
-m_dtlz1 = 5
+m_dtlz1 = 3
 # g function for DTLZ1
 g_dtlz1 = (lambda x: 100 * (len(x) * reduce(lambda a, b: a + b,
                                 [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in xrange(len(x))])))
 
 DTLZ1 = Model(m_dtlz1).addName("DTLZ1")
 
-for i in xrange(m_dtlz1):
-    DTLZ1.addBound([i], 0, 1)
-    DTLZ1.addObjective(lambda x: gen_dtlz1_obj(x, i))
+for i_1 in xrange(m_dtlz1):
+    DTLZ1.addBound([i_1], 0, 1)
+    DTLZ1.addObjective(lambda x: gen_dtlz1_obj(x, i_1))
 
-def gen_dtlz1_obj(x, i):
+def gen_dtlz1_obj(x, index):
     product = 1
 
-    for j in xrange(len(x) - i - 1):
+    for j in xrange(len(x) - index - 1):
         product *= x[j]
 
-    if i > 0:
-        product *= (1 - x[len(x) - i - 1])
+    if index > 0:
+        product *= (1 - x[len(x) - index - 1])
 
     product *= 0.5 * (1 + g_dtlz1(x))
 
     return product
 
 # 10 is recommended
-m_dtlz2 = 10
+m_dtlz2 = 20
 # g function for DTLZ2
 g_dtlz2 = (lambda x: reduce(lambda a, b: a + b,
                                 [(x[i] - 0.5)**2 for i in xrange(len(x))]))
 
 DTLZ2 = Model(m_dtlz2).addName("DTLZ2")
 
-for i in xrange(m_dtlz2):
-    DTLZ2.addBound([i], 0, 1)
-    DTLZ2.addObjective(lambda x: gen_dtlz2_obj(x, i))
+for i_2 in xrange(m_dtlz2):
+    DTLZ2.addBound([i_2], 0, 1)
+    DTLZ2.addObjective(lambda x: gen_dtlz2_obj(x, i_2))
 
 def gen_dtlz2_obj(x, i):
     product = 1
@@ -247,26 +247,53 @@ def gen_dtlz2_obj(x, i):
     return product
 
 # 10 is recommended
-m_dtlz3 = 10
+m_dtlz3 = 50
 # g function for DTLZ3 is same as for DTLZ1
 g_dtlz3 = (lambda x: 100 * (len(x) * reduce(lambda a, b: a + b,
                                 [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in xrange(len(x))])))
 
 DTLZ3 = Model(m_dtlz3).addName("DTLZ3")
 
-for i in xrange(m_dtlz3):
-    DTLZ3.addBound([i], 0, 1)
-    DTLZ3.addObjective(lambda x: gen_dtlz3_obj(x, i))
+for i_3 in xrange(m_dtlz3):
+    DTLZ3.addBound([i_3], 0, 1)
+    DTLZ3.addObjective(lambda x: gen_dtlz3_obj(x, i_3))
 
-def gen_dtlz3_obj(x, i):
+def gen_dtlz3_obj(x, index):
+    product = 1
+
+    for j in xrange(len(x) - index - 1):
+        product *= math.cos(x[index]*math.pi/2.0)
+
+    if index > 0:
+        product *= math.sin(x[len(x) - index - 1]*math.pi / 2.0)
+
+    product *= (1 + g_dtlz3(x))
+
+    return product
+
+# 10 is recommended
+m_dtlz4 = 2
+# 100 is recommended
+dtlz4_alpha = 100
+# g function for DTLZ4 (same as for DTLZ2)
+g_dtlz4 = (lambda x: reduce(lambda a, b: a + b,
+                                [(x[i] - 0.5)**2 for i in xrange(len(x))]))
+
+DTLZ4 = Model(m_dtlz4).addName("DTLZ4")
+
+for i_4 in xrange(m_dtlz4):
+    DTLZ4.addBound([i_4], 0, 1)
+    DTLZ4.addObjective(lambda x: gen_dtlz4_obj(x, i_4))
+
+def gen_dtlz4_obj(x, i):
     product = 1
 
     for j in xrange(len(x) - i - 1):
-        product *= math.cos(x[i]*math.pi/2.0)
+        product *= math.cos((x[i]**dtlz4_alpha)*math.pi/2.0)
 
     if i > 0:
         product *= math.sin(x[len(x) - i - 1]*math.pi / 2.0)
 
-    product *= (1 + g_dtlz3(x))
+    product *= (1 + g_dtlz4(x))
 
     return product
