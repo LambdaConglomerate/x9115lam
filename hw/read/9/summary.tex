@@ -1,0 +1,35 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{babel}
+\begin{document}
+\title{Paper Nine Summary}
+
+
+\author{Matthew Neal, Joseph Sankar, and Alexander Sobran}
+
+\maketitle
+
+\section*{Reference}
+
+Nam et al. \cite{Nam} listed below.
+
+
+\section*{Important Keywords}
+\begin{description}
+\item[{Transfer defect learning}] Extracting common knowledge from one task domain and transferring it to another. The transferred knowledge is then used to train a prediction model.
+\item[{TCA+}] An improvement on Transfer Component Analysis. TCA can map the data of the source and target projects on a latent feature space, but is sensitive to normalization. TCA+ selects a proper normalization to yield better prediction performance.
+\item[{Data set Characteristic Vector}] A vector of six elements each relating to the distance between pairs of instances of data. DCVs are used to see how similar two projects are (see below).
+\item[{Similarity vector}] Represents the difference between two projects: a source and a target. Examples include "much more", "less", or "same". The values in the DCVs are used to calculate the similarity vectors.
+\end{description}
+
+\section*{Feature Extraction}
+
+
+\section*{Possible Improvements}
+
+\section*{Connection to Other Papers}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
