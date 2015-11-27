@@ -93,6 +93,7 @@ def classicalGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 
             if st.sb == st.sblast:
                 pat -= 1
                 if pat == 0:
+                    st.bored()
                     break
             num_deaths = 0
             for can in st.s:

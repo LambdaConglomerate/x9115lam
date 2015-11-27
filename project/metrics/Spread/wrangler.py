@@ -1,4 +1,4 @@
-fn = "./True_PF/Tanaka.txt"
+fn = "./True_PF/Water.txt"
 f = open(fn, "r")
 ln = f.readline()
 fin = ''

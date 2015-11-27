@@ -129,7 +129,7 @@ class state(object):
         if not ln in outList:
           outList.append(ln)
     outString = "\n".join(outList)
-    print outString
+    # print outString
 
     # outList = ["\n".join([" ".join(map(str,vector)) for vector in front]) for front in self.frontier]
     # outString = "\n".join(outList)
@@ -153,20 +153,20 @@ class state(object):
       self.logger.info(self.outstring)
       self.outstring =""
     self.logger.info("%s\nFINAL:\nMODEL:%s\nOPTIMIZER:%s" % ('-'*100, self.name, self.optimizer))
-    # self.logger.info("FRONTIER:\n%s" % fin)
+    self.logger.info("FRONTIER:\n%s" % outString)
 
-  # Specialized version of cdom for when objectives have already been run, just a
-  # short one off so doesn't support more than 2 objectives yet.
-  def cdom_spec(self, c1, c2):
-    n = min(len(c1), len(c2))
-    losses_a = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
-    losses_a = sum(losses_a) / n
-    losses_b = [math.exp((a - b)/n) for (a,b) in zip(c2, c1)]
-    losses_b = sum(losses_b) / n
-    if losses_a < losses_b:
-      return True
-    else:
-      return False
+  # # Specialized version of cdom for when objectives have already been run, just a
+  # # short one off so doesn't support more than 2 objectives yet.
+  # def cdom_spec(self, c1, c2):
+  #   n = min(len(c1), len(c2))
+  #   losses_a = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
+  #   losses_a = sum(losses_a) / n
+  #   losses_b = [math.exp((a - b)/n) for (a,b) in zip(c2, c1)]
+  #   losses_b = sum(losses_b) / n
+  #   if losses_a < losses_b:
+  #     return True
+  #   else:
+  #     return False
 
   def bored(self):
     self.app_out("\ngot bored at K:%d" % (self._k))

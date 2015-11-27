@@ -23,7 +23,7 @@ class grapher(object):
 			s.allCansY[i].append(y)
 
 		if(len(v) > 2):
-			x, y, z = v[0], v[1], v[3]
+			x, y, z = v[0], v[1], v[2]
 			s.allCansX[i].append(x)
 			s.allCansX[i].append(y)
 			s.allCansX[i].append(z)
@@ -35,8 +35,8 @@ class grapher(object):
 		for i in s.allCansX:
 			color = [colors[i]] * len(s.allCansY[i])
 			#this will calculate all the energies and then scale
-			#them to 15 which is accepted by matplotlib 
-			#this will increase the size of the circle for each 
+			#them to 15 which is accepted by matplotlib
+			#this will increase the size of the circle for each
 			#dot on the graph in proportion to it's
 			#betterness as an energy (ie the larger the dot
 			#the better the candidate)
@@ -47,7 +47,7 @@ class grapher(object):
 
 		plt.show()
 
-	#this will graph the energies 
+	#this will graph the energies
 	#each color is a unique candidate
 	def graphEnergy(s):
 		plt.title(s.model.name + " Objectives")

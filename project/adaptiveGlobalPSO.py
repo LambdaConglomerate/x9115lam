@@ -53,7 +53,8 @@ Parameters:
 - phi_1: the social learning rate - how much you learn from other people
 - phi_2: the cognitive learning rate - how much you learn from yourself
 """
-def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, era = 100, np=30, phi_1=2.6, phi_2=1.4):
+def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
+    era = 100, np=30, phi_1=1.0, phi_2=3.0):
     emin = 0
     # pulled K from the parameters, because it can be calculated from the
     # values for phi.
@@ -93,14 +94,17 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
         for c in st.s:
             model.updateObjectiveMaxMin(c.pos)
         st.k = changes
+        patience = pat
         while st.k:
             if st.sb == st.sblast:
-                pat -= 1
-                if pat == 0:
+                patience -= 1
+                if patience == 0:
+                    st.bored()
                     break
             num_deaths = 0
             for can in st.s:
-                can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + (phi_2 * random.uniform(0,1) * (gbest - pos))) \
+                can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + \
+                 (phi_2 * random.uniform(0,1) * (gbest - pos))) \
                     for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest, st.sb)]
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
                 # Currently doing the same thing for particles that are

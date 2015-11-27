@@ -12,4 +12,6 @@ from classicalGlobalPSOV2 import *
 for m in [Fonseca]:
     for o in [adaptiveGlobalPSO]:
         #Absolutely do not pass integers for retries or changes
-        o(m, 5.0, 500.0)
+        o(m, 15.0, 500.0)
+
+
