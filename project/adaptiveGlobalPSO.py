@@ -88,6 +88,9 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
     # of positions, not cans!
     frontier = list()
     while st.t:
+        # Print a dot at the beginning of each retry
+        # just to show that something is happening.
+        print "."
         # #Initialize objective mins and maxs
         model.initializeObjectiveMaxMin(st.sb)
         # #we whould do this just in case
