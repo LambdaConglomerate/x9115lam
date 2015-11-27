@@ -42,3 +42,4 @@ Thumbs.db
 ~.*
 ~#*
 project/out.txt
+project/out/out.txt
