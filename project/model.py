@@ -112,6 +112,12 @@ class Model(object):
             obs.append(s.calculateObjective(vect, i))
         return obs
 
+    def cal_objs_2(s, vect):
+        obs = list()
+        obs = [obj(vect) for obj in s.objectives]
+        # print obs
+        return obs
+
     def cdom(self, c1, c2, can1=None, can2=None):
         a = self.loss(c1, c2)
         b = self.loss(c2, c1)
@@ -128,7 +134,7 @@ class Model(object):
     # minimize or maximize.  Figured we'd
     # just peg this for now.
     def loss(self, c1, c2):
-        c1,c2 = self.cal_objs(c1), self.cal_objs(c2)
+        c1,c2 = self.cal_objs_2(c1), self.cal_objs_2(c2)
         n = min(len(c1), len(c2))
         losses = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
         return sum(losses) / n

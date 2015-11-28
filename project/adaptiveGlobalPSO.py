@@ -54,7 +54,7 @@ Parameters:
 - phi_2: the cognitive learning rate - how much you learn from yourself
 """
 def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
-    era = 100, np=30, phi_1=1.0, phi_2=3.0):
+    era = 100, np=30, phi_1=2.5, phi_2=1.5):
     emin = 0
     # pulled K from the parameters, because it can be calculated from the
     # values for phi.
@@ -92,18 +92,18 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
         # just to show that something is happening.
         print "."
         # #Initialize objective mins and maxs
-        model.initializeObjectiveMaxMin(st.sb)
+        # model.initializeObjectiveMaxMin(st.sb)
         # #we whould do this just in case
-        for c in st.s:
-            model.updateObjectiveMaxMin(c.pos)
+        # for c in st.s:
+            # model.updateObjectiveMaxMin(c.pos)
         st.k = changes
         patience = pat
         while st.k:
-            if st.sb == st.sblast:
-                patience -= 1
-                if patience == 0:
-                    st.bored()
-                    break
+            # if st.sb == st.sblast:
+            #     patience -= 1
+            #     if patience == 0:
+            #         st.bored()
+            #         break
             num_deaths = 0
             for can in st.s:
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + \
@@ -125,7 +125,7 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
                 #Update objective maxs and mins
                 if graph:
                     g.addVector(can.pos, can.uniq)
-                model.updateObjectiveMaxMin(can.pos)
+                # model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
             #if you want to see step by step particle movement uncomment below
             #warning you will end up having to terminate this manually
@@ -150,9 +150,9 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
         # print 'Num deaths: ', tot_deaths
         # print 'Total number of particles ', changes*np
         # print "Attrition %0.2f percent" % (100.0 * (tot_deaths/(changes*np)))
-        for can in st.s:
-            addToFront(model, frontier, can.pbest)
-        f = [model.cal_objs(pos) for pos in frontier]
+        # for can in st.s:
+        #     addToFront(model, frontier, can.pbest)
+        f = [model.cal_objs_2(pos) for pos in frontier]
         st.addFrontier(f)
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
