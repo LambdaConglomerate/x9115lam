@@ -10,12 +10,16 @@ The local and global best each have the same weight so they affect the new veloc
 ## The Adaptive Model ##
 In the classical model, there is equal weight given to the local best (aka the cognitive learning rate) and the global best (aka the social learning rate). Yuhui Shi and Russell Eberhart [2] developed an inertia weight 'w' factor to balance the local and global search to obtain better performance.
 
+In 2002, Maurice Clerc and James Kennedy [3] explored PSO from the particle's perspective and gained some unique insights, one of which was the introduction of constriction coefficients to keep the particles together. They experimented with constriction on a few benchmark functions and were able to find minima on some very complex functions, on up to thirty dimensions.
+
 ## Parameter Tuning ##
-Due to the many parameters of classical PSO, tuning these parameters is a must to get good results. A well-known paper by Anthony Carlisle and Gerry Dozier [3] does just that. Their goal was to give recommendations for the parameters that future researchers could use as a good baseline to get up and running. They found that a good population size was 30, a global neighborhood was better than a local neighborhood, asynchronous updates were less costly than synchronous updates,
+Due to the many parameters of classical PSO, tuning these parameters is a must to get good results. A well-known paper by Anthony Carlisle and Gerry Dozier [4] does just that. Their goal was to give recommendations for the parameters that future researchers could use as a good baseline to get up and running. They found that a good population size was 30, a global neighborhood was better than a local neighborhood, asynchronous updates were less costly than synchronous updates,
 
 # References
 [1] http://www.cs.tufts.edu/comp/150GA/homeworks/hw3/_reading6%201995%20particle%20swarming.pdf
 
 [2] http://dsp.szu.edu.cn/pso/ispo/download/a%20modified%20pso.pdf
 
-[3] https://github.com/timm/sbse14/wiki/etc/pdf/Off-The-Shelf_PSO.pdf
+[3] http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=985692&url=http%3A%2F%2Fieeexplore.ieee.org%2Fiel5%2F4235%2F21241%2F00985692
+
+[4] https://github.com/timm/sbse14/wiki/etc/pdf/Off-The-Shelf_PSO.pdf
