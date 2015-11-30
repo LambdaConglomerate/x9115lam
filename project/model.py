@@ -119,12 +119,13 @@ class Model(object):
         return obs
 
     def cdom(self, c1, c2, can1=None, can2=None):
+        epsilon = 0.06
         a = self.loss(c1, c2)
         b = self.loss(c2, c1)
         diff = math.fabs(a-b)
         # 0.6 is a reasonable value here in most cases
         # DTLZ is proving to need a larger value
-        if diff < 0.06:
+        if diff < epsilon:
             return -1
         elif(a < b):
             return 1

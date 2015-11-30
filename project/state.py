@@ -123,7 +123,6 @@ class state(object):
   the frontiers that are in the personal bests for each of the  particles.
   """
   def termPSO(self):
-    print(convergence())
 
     #Write to spread and hypervolume files
     spread_out = self.spread_path + self.optimizer + "_" + self.name + ".txt"
