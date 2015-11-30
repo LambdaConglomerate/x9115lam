@@ -17,7 +17,19 @@ cd ..
 cd ..
 # Run rig
 python test.py
-cd metrics/HyperVolume/
-python hypervolume_runner.py
+# Only run hypervolume if -h flag is used.
+# Partially stolen from here http://wiki.bash-hackers.org/howto/getopts_tutorial
+while getopts ":h" opt; do
+  case $opt in
+    h)
+      echo "Calculate Hypervolume" >&2
+      cd metrics/HyperVolume/
+	  python hypervolume_runner.py
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
 cd ../Spread/
 python Spread.py

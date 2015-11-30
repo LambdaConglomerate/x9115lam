@@ -108,20 +108,28 @@ class state(object):
       (self.name, self.optimizer, self._ebo, self._sbo))
 
   def addFrontier(self, obVals):
+    if obVals not in self.frontier:
       self.frontier.append(obVals)
+
+  def convergence(self):
+    # based on https://github.com/ai-se/storm/blob/master/PerformanceMetrics/IGD/IGD_Calculation.py
+    print "Calculating convergence"
+    path = "./metrics/Spread/True_PF"
+    fn = path + model_name
+
 
   """
   This is a special method specifically for PSO to output text files for
   the frontiers that are in the personal bests for each of the  particles.
   """
   def termPSO(self):
+    print(convergence())
+
+    #Write to spread and hypervolume files
     spread_out = self.spread_path + self.optimizer + "_" + self.name + ".txt"
     hypervolume_out = self.hypervolume_path + self.optimizer + "_" + self.name + ".txt"
     hypervolume_file = open(hypervolume_out, 'w')
     spread_file = open(spread_out, 'w')
-
-
-    # Uncommenting the below will print out all of the frontiers to the console
     outList = list()
     for front in self.frontier:
       for vector in front:
@@ -129,44 +137,15 @@ class state(object):
         if not ln in outList:
           outList.append(ln)
     outString = "\n".join(outList)
-    # print outString
-
-    # outList = ["\n".join([" ".join(map(str,vector)) for vector in front]) for front in self.frontier]
-    # outString = "\n".join(outList)
-    # print outString
-
-    # print "Dominant frontier:"
-    # fin = ""
-    # for tup in zip(*self.frontier):
-    #   tup_string = ""
-    #   best = 0
-    #   for i in xrange(len(tup) - 1):
-    #     if not self.cdom_spec(tup[best], tup[i+1]):
-    #       best = i + 1
-    #   fin += " ".join(map(str, tup[best])) + '\n'
-
-    # print fin
     hypervolume_file.write(outString)
     spread_file.write(outString)
 
+    #Write a closing message with frontier, name of optimizer, and name of model
     if self.outstring != "":
       self.logger.info(self.outstring)
       self.outstring =""
     self.logger.info("%s\nFINAL:\nMODEL:%s\nOPTIMIZER:%s" % ('-'*100, self.name, self.optimizer))
     self.logger.info("FRONTIER:\n%s" % outString)
-
-  # # Specialized version of cdom for when objectives have already been run, just a
-  # # short one off so doesn't support more than 2 objectives yet.
-  # def cdom_spec(self, c1, c2):
-  #   n = min(len(c1), len(c2))
-  #   losses_a = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
-  #   losses_a = sum(losses_a) / n
-  #   losses_b = [math.exp((a - b)/n) for (a,b) in zip(c2, c1)]
-  #   losses_b = sum(losses_b) / n
-  #   if losses_a < losses_b:
-  #     return True
-  #   else:
-  #     return False
 
   def bored(self):
     self.app_out("\ngot bored at K:%d" % (self._k))

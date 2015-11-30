@@ -102,7 +102,7 @@ Tanaka = (Model(2)
           .addConstraint([0, 1], lambda x: -x[0]**2 - x[1]**2 + 1 + 0.1 * math.cos(16 * math.atan(x[0] / x[1])) <= 0)
           .addConstraint([0, 1], lambda x: (x[0] - 0.5)**2 + (x[1] - 0.5)**2 <= 0.5)
           .addObjective(lambda x: x[0])
-          .addObjective(lambda x: x[0])
+          .addObjective(lambda x: x[1])
           .addName("Tanaka")
           )
 
@@ -196,30 +196,57 @@ Water = (Model(3)
          .addName("Water")
          )
 
-# 5 is recommended
+#############################################################
+# START OF DTLZ1
+#############################################################
+
+# Number of objective dimensions
 m_dtlz1 = 3
+# 5 is recommended
+k_dtlz1 = 5
+# n val
+n_dtlz1 = m_dtlz1 + k_dtlz1 - 1
+
 # g function for DTLZ1
-g_dtlz1 = (lambda x: 100 * (len(x) * reduce(lambda a, b: a + b,
-                                [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in xrange(len(x))])))
+g_dtlz1 = lambda x: 100 * (n_dtlz1 + sum(\
+    [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in xrange(n_dtlz1)]))
 
-DTLZ1 = Model(m_dtlz1).addName("DTLZ1")
 
-for i_1 in xrange(m_dtlz1):
+DTLZ1 = (Model(n_dtlz1)
+        .addName("DTLZ1")
+        .addObjective(lambda x: 0.5 * x[0] * x[1] * (1 + g_dtlz1(x)))
+        .addObjective(lambda x: 0.5 * x[0] * (1 - x[1]) * (1 + g_dtlz1(x)))
+        .addObjective(lambda x: 0.5 * (1 - x[0]) * (1 + g_dtlz1(x)))
+        )
+
+for i_1 in xrange(n_dtlz1):
     DTLZ1.addBound([i_1], 0, 1)
-    DTLZ1.addObjective(lambda x: gen_dtlz1_obj(x, i_1))
 
-def gen_dtlz1_obj(x, index):
-    product = 1
+# def gen_dtlz1_obj(x, index):
+#     if index == 0:
+#         product  = 0.5 * x[0] * x[1] * (1 - g_dtlz1(x))
 
-    for j in xrange(len(x) - index - 1):
-        product *= x[j]
+#     f_2 = 0.5 * x[0] * (1 - x[1]) * (1 - g_dtlz1(x))
+#     f_3 = 0.5 * (1 - x[0]) * (1 - g_dtlz1(x))
 
-    if index > 0:
-        product *= (1 - x[len(x) - index - 1])
 
-    product *= 0.5 * (1 + g_dtlz1(x))
 
-    return product
+#     # if x == 0:
+#     #     for j in xrange(m_dtlz1 - 1):
+#     #         product *= x[j]
+#     # else:
+#     #     for j in xrange(m_dtlz1 - 1):
+
+#     # for j in xrange(len(x) - index - 1):
+#     #     product *= x[j]
+#     # if index > 0:
+#     #     product *= (1 - x[len(x) - index - 1])
+#     # product *= (1 + g_dtlz1(x))
+#     return product
+
+#############################################################
+# START OF DTLZ2
+#############################################################
 
 # 10 is recommended
 m_dtlz2 = 20

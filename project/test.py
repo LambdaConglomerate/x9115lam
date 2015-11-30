@@ -12,6 +12,6 @@ from classicalGlobalPSOV2 import *
 for m in [Tanaka]:
     for o in [adaptiveGlobalPSO]:
         #Absolutely do not pass integers for retries or changes
-        o(m, 2.0, 2000.0)
+        o(m, 5.0, 2000.0)
 
 
