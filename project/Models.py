@@ -204,7 +204,7 @@ Water = (Model(3)
 m_dtlz1 = 3
 # 5 is recommended
 k_dtlz1 = 5
-# n val
+# Number of decisions
 n_dtlz1 = m_dtlz1 + k_dtlz1 - 1
 
 # g function for DTLZ1
@@ -248,79 +248,110 @@ for i_1 in xrange(n_dtlz1):
 # START OF DTLZ2
 #############################################################
 
+# Number of objective dimensions
+m_dtlz2 = 3
 # 10 is recommended
-m_dtlz2 = 20
+k_dtlz2 = 10
+# Number of decisions
+n_dtlz2 = m_dtlz2 + k_dtlz2 - 1
+
 # g function for DTLZ2
-g_dtlz2 = (lambda x: reduce(lambda a, b: a + b,
-                                [(x[i] - 0.5)**2 for i in xrange(len(x))]))
+g_dtlz2 = lambda x: sum(\
+    [(x[i] - 0.5)**2 for i in xrange(n_dtlz2)])
 
-DTLZ2 = Model(m_dtlz2).addName("DTLZ2")
+DTLZ2 = (Model(n_dtlz2)
+        .addName("DTLZ2")
+        .addObjective(lambda x: (1 + g_dtlz2(x)) * math.cos(x[0]*math.pi/2.0) * math.cos(x[1]*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz2(x)) * math.cos(x[0]*math.pi/2.0) * math.sin(x[1]*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz2(x)) * math.sin(x[0]*math.pi/2.0))
+        )
 
-for i_2 in xrange(m_dtlz2):
+for i_2 in xrange(n_dtlz2):
     DTLZ2.addBound([i_2], 0, 1)
-    DTLZ2.addObjective(lambda x: gen_dtlz2_obj(x, i_2))
 
-def gen_dtlz2_obj(x, i):
-    product = 1
+# def gen_dtlz2_obj(x, i):
+#     product = 1
+#
+#     for j in xrange(len(x) - i - 1):
+#         product *= math.cos(x[i]*math.pi/2.0)
+#
+#     if i > 0:
+#         product *= math.sin(x[len(x) - i - 1]*math.pi / 2.0)
+#
+#     product *= (1 + g_dtlz2(x))
+#
+#     return product
 
-    for j in xrange(len(x) - i - 1):
-        product *= math.cos(x[i]*math.pi/2.0)
+#############################################################
+# START OF DTLZ3
+#############################################################
 
-    if i > 0:
-        product *= math.sin(x[len(x) - i - 1]*math.pi / 2.0)
-
-    product *= (1 + g_dtlz2(x))
-
-    return product
-
+# Number of objective dimensions
+m_dtlz3 = 3
 # 10 is recommended
-m_dtlz3 = 50
+k_dtlz3 = 10
+# Number of decisions
+n_dtlz3 = m_dtlz3 + k_dtlz3 - 1
+
 # g function for DTLZ3 is same as for DTLZ1
-g_dtlz3 = (lambda x: 100 * (len(x) * reduce(lambda a, b: a + b,
-                                [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in xrange(len(x))])))
+g_dtlz3 = lambda x: 100 * (n_dtlz3 + sum(\
+    [(x[i] - 0.5)**2 - math.cos(20 * math.pi * (x[i] - 0.5)) for i in xrange(n_dtlz3)]))
 
-DTLZ3 = Model(m_dtlz3).addName("DTLZ3")
+DTLZ3 = (Model(n_dtlz3)
+        .addName("DTLZ3")
+        .addObjective(lambda x: (1 + g_dtlz3(x)) * math.cos(x[0]*math.pi/2.0) * math.cos(x[1]*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz3(x)) * math.cos(x[0]*math.pi/2.0) * math.sin(x[1]*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz3(x)) * math.sin(x[0]*math.pi/2.0))
+        )
 
-for i_3 in xrange(m_dtlz3):
+for i_3 in xrange(n_dtlz3):
     DTLZ3.addBound([i_3], 0, 1)
-    DTLZ3.addObjective(lambda x: gen_dtlz3_obj(x, i_3))
 
-def gen_dtlz3_obj(x, index):
-    product = 1
+# def gen_dtlz3_obj(x, index):
+#     product = 1
+#
+#     for j in xrange(len(x) - index - 1):
+#         product *= math.cos(x[index]*math.pi/2.0)
+#
+#     if index > 0:
+#         product *= math.sin(x[len(x) - index - 1]*math.pi / 2.0)
+#
+#     product *= (1 + g_dtlz3(x))
+#
+#     return product
 
-    for j in xrange(len(x) - index - 1):
-        product *= math.cos(x[index]*math.pi/2.0)
-
-    if index > 0:
-        product *= math.sin(x[len(x) - index - 1]*math.pi / 2.0)
-
-    product *= (1 + g_dtlz3(x))
-
-    return product
-
+# Number of objective dimensions
+m_dtlz4 = 3
 # 10 is recommended
-m_dtlz4 = 2
+k_dtlz4 = 10
+# Number of decisions
+n_dtlz4 = m_dtlz4 + k_dtlz4 - 1
 # 100 is recommended
 dtlz4_alpha = 100
 # g function for DTLZ4 (same as for DTLZ2)
-g_dtlz4 = (lambda x: reduce(lambda a, b: a + b,
-                                [(x[i] - 0.5)**2 for i in xrange(len(x))]))
+g_dtlz4 = lambda x: sum(\
+    [(x[i] - 0.5)**2 for i in xrange(n_dtlz4)])
 
-DTLZ4 = Model(m_dtlz4).addName("DTLZ4")
+DTLZ4 = (Model(n_dtlz4)
+        .addName("DTLZ4")
+        .addObjective(lambda x: (1 + g_dtlz4(x)) * math.cos((x[0]**dtlz4_alpha)*math.pi/2.0) * math.cos((x[1]**dtlz4_alpha)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz4(x)) * math.cos((x[0]**dtlz4_alpha)*math.pi/2.0) * math.sin((x[1]**dtlz4_alpha)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz4(x)) * math.sin((x[0]**dtlz4_alpha)*math.pi/2.0))
+        )
 
-for i_4 in xrange(m_dtlz4):
+
+for i_4 in xrange(n_dtlz4):
     DTLZ4.addBound([i_4], 0, 1)
-    DTLZ4.addObjective(lambda x: gen_dtlz4_obj(x, i_4))
 
-def gen_dtlz4_obj(x, i):
-    product = 1
-
-    for j in xrange(len(x) - i - 1):
-        product *= math.cos((x[i]**dtlz4_alpha)*math.pi/2.0)
-
-    if i > 0:
-        product *= math.sin(x[len(x) - i - 1]*math.pi / 2.0)
-
-    product *= (1 + g_dtlz4(x))
-
-    return product
+# def gen_dtlz4_obj(x, i):
+#     product = 1
+#
+#     for j in xrange(len(x) - i - 1):
+#         product *= math.cos((x[i]**dtlz4_alpha)*math.pi/2.0)
+#
+#     if i > 0:
+#         product *= math.sin(x[len(x) - i - 1]*math.pi / 2.0)
+#
+#     product *= (1 + g_dtlz4(x))
+#
+#     return product
