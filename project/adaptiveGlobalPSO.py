@@ -34,6 +34,7 @@ def addToFront(model, frontier, pos):
 
 def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
     era = 100, np=30, phi_1=1.5, phi_2=2.5):
+    g = grapher(model, int(retries))
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
@@ -73,10 +74,14 @@ def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 1
         for part in st.s:
             addToFront(model,frontier,part.pbest)
         f = [model.cal_objs_2(pos) for pos in frontier]
+        for pos in frontier:
+            g.addVector(pos, int(st.t))
         print "f: ", f
         st.addFrontier(f)
         st.s = gens(model, np)
         st.sb = st.s[0].pbest
         bestcan = st.s[0]
         st.t -= 1
+    g.graph()
+    g.graphEnergy()
     st.termPSO()
