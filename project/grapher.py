@@ -18,7 +18,7 @@ class grapher(object):
 	#each color is a unique candidate
 	def graph(s):
 		#check to see if the number of decisions is less than 3
-		if len(s.listOfVectors[1][1]) <= 2:
+		if len(s.listOfVectors[1][0]) <= 2:
 			
 			fig2 = plt.figure()
 			a2 = fig2.add_subplot(111)
@@ -62,7 +62,7 @@ class grapher(object):
 		plt.savefig("pics/" + s.model.name + "Decisions.png", bbox_inches='tight')
 	#this will graph the energies
 	#each color is a unique candidate
-	def graphEnergy(s):
+	def graphEnergy(s, truePf = True):
 		#check for of objectives
 		if s.model.numOfObjectives() <= 2:
 			
@@ -74,7 +74,16 @@ class grapher(object):
 					o = [s.model.cal_objs_2(v) for v in s.listOfVectors[i]]
 					ox = [v[0] for v in o]
 					oy = [v[1] for v in o]
-					plt.scatter(ox, oy, c=color, alpha=0.5)
+					a2.scatter(ox, oy, c=color, alpha=0.5)
+			if truePf:
+				path = "./metrics/Spread/True_PF/" + s.model.name + ".txt"
+				f = open(path, "r")
+				ln = f.readline()
+				while ln:
+					o = ln.split()
+					a2.scatter(o[0], o[1], alpha = 0.5)
+					ln = f.readline()
+
 		else:
 			#if # of objectives > 3 this will just plot the first three objectives
 			fig = plt.figure()
@@ -86,7 +95,19 @@ class grapher(object):
 					ox = [v[0] for v in o]
 					oy = [v[1] for v in o]
 					oz = [v[2] for v in o]
-					plt.scatter(ox, oy, c=color, alpha=0.5)
+					ax.scatter(ox, oy, oz, c=color, alpha=0.5)
+			if truePf:
+				path = "./metrics/Spread/True_PF/" + s.model.name + ".txt"
+				f = open(path, "r")
+				ln = f.readline()
+				while ln:
+					o = ln.split()
+					ax.scatter(o[0], o[1], o[2], alpha = 0.5)
+					ln = f.readline()
+
+
+
+
 		
 
 		plt.savefig("pics/" + s.model.name + "Objectives.png", bbox_inches='tight')
