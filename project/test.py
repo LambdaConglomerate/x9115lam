@@ -12,4 +12,4 @@ from classicalGlobalPSOV2 import *
 for m in [DTLZ1, DTLZ2, DTLZ4, Osyczka2, Fonseca, ZDT1, ZDT2, ZDT3, ZDT4, ZDT6, Tanaka, Constr_Ex, Srinivas, Viennet2, Viennet3, Viennet4]:
     for o in [adaptiveGlobalPSO]:
         #Absolutely do not pass integers for retries or changes
-        o(m, 1.0, 500.0)
+        o(m, 10.0, 500.0)

@@ -113,7 +113,7 @@ Constr_Ex = (Model(2)
              .addConstraint([0, 1],lambda x: -x[1] + 9 * x[0] >= 1)
              .addObjective(lambda x: x[0])
              .addObjective(lambda x: (0 + x[1]) / x[0])
-             .addName("Constr_Ex")
+             .addName("ConstrEx")
              )
 
 Srinivas = (Model(2)
