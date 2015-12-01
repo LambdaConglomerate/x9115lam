@@ -101,14 +101,9 @@ class grapher(object):
 				f = open(path, "r")
 				ln = f.readline()
 				while ln:
-					o = ln.split()
+					o = [float(x) for x in ln.split()]
 					ax.scatter(o[0], o[1], o[2], alpha = 0.5)
 					ln = f.readline()
-
-
-
-
-		
 
 		plt.savefig("pics/" + s.model.name + "Objectives.png", bbox_inches='tight')
 
