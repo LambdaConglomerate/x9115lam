@@ -319,9 +319,9 @@ theta_dtlz5 = lambda x, i: (math.pi)/(4*(1 + g_dtlz5(x)))*(1 + 2*g_dtlz5(x)*x[i]
 
 DTLZ5 = (Model(n_dtlz5)
         .addName("DTLZ5")
-        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(theta_dtlz5(x, 0)*math.pi/2.0) * math.cos(theta_dtlz5(x, 1)*math.pi/2.0))
-        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(theta_dtlz5(x, 0)*math.pi/2.0) * math.sin(theta_dtlz5(x, 1)*math.pi/2.0))
-        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.sin(theta_dtlz5(x, 0)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(x[0]*math.pi/2.0) * math.cos(theta_dtlz5(x, 1)))
+        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(x[0]*math.pi/2.0) * math.sin(theta_dtlz5(x, 1)))
+        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.sin(x[0]*math.pi/2.0))
         )
 
 for i_5 in xrange(n_dtlz5):
@@ -347,9 +347,9 @@ theta_dtlz6 = lambda x, i: (math.pi)/(4*(1 + g_dtlz6(x)))*(1 + 2*g_dtlz6(x)*x[i]
 
 DTLZ6 = (Model(n_dtlz6)
         .addName("DTLZ6")
-        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(theta_dtlz6(x, 0)*math.pi/2.0) * math.cos(theta_dtlz6(x, 1)*math.pi/2.0))
-        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(theta_dtlz6(x, 0)*math.pi/2.0) * math.sin(theta_dtlz6(x, 1)*math.pi/2.0))
-        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.sin(theta_dtlz6(x, 0)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(x[0]*math.pi/2.0) * math.cos(theta_dtlz6(x, 1)))
+        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(x[0]*math.pi/2.0) * math.sin(theta_dtlz6(x, 1)))
+        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.sin(x[0]*math.pi/2.0))
         )
 
 for i_6 in xrange(n_dtlz6):
