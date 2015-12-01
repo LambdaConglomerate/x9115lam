@@ -40,9 +40,16 @@ class Model(object):
     def calculateObjective(s, v, i):
         return ((s.objectives[i](v) - s.objectiveMins[i])/(s.objectiveMaxs[i] - s.objectiveMins[i]))
 
+    def unNormalizedObjective(s, v, i):
+        return s.objectives[i](v)
+
     #returns bounds for index
     def getBounds(s, i):
         return s.bounds[i]
+
+    #returns the number of objectives
+    def numOfObjectives(s):
+        return len(s.objectives)
 
     #return the number of variables in the model
     def numOfDecisions(s):
@@ -114,9 +121,8 @@ class Model(object):
         return obs
 
     def cal_objs_2(s, vect):
-        obs = list()
-        obs = [obj(vect) for obj in s.objectives]
-        return obs
+        #not sure why we create an empy list here
+        return [obj(vect) for obj in s.objectives]
 
     def cdom(self, c1, c2, can1=None, can2=None):
         epsilon = 0.06
