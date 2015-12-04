@@ -40,16 +40,9 @@ class Model(object):
     def calculateObjective(s, v, i):
         return ((s.objectives[i](v) - s.objectiveMins[i])/(s.objectiveMaxs[i] - s.objectiveMins[i]))
 
-    def unNormalizedObjective(s, v, i):
-        return s.objectives[i](v)
-
     #returns bounds for index
     def getBounds(s, i):
         return s.bounds[i]
-
-    #returns the number of objectives
-    def numOfObjectives(s):
-        return len(s.objectives)
 
     #return the number of variables in the model
     def numOfDecisions(s):
@@ -114,31 +107,29 @@ class Model(object):
             return False
 
     def cal_objs(s, vect):
-        print "vect: ", vect
+        # print "vect: ", vect
         obs = list()
         for i in xrange(len(s.objectives)):
             obs.append(s.calculateObjective(vect, i))
         return obs
 
     def cal_objs_2(s, vect):
-        #not sure why we create an empy list here
-        return [obj(vect) for obj in s.objectives]
+        obs = list()
+        obs = [obj(vect) for obj in s.objectives]
+        return obs
 
     def cdom(self, c1, c2, can1=None, can2=None):
-        epsilon = 0.06
         a = self.loss(c1, c2)
         b = self.loss(c2, c1)
         diff = math.fabs(a-b)
-        # 0.6 is a reasonable value here in most cases
-        # DTLZ is proving to need a larger value
-        if diff < epsilon:
+        if diff < 0.05:
             return -1
         elif(a < b):
             return 1
         else:
             return 0
 
-    # Written to assume minimization.
+    # Written to assume minimization
     def loss(self, c1, c2):
         c1,c2 = self.cal_objs_2(c1), self.cal_objs_2(c2)
         n = min(len(c1), len(c2))
