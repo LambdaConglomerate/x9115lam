@@ -2,7 +2,7 @@ from Models import *
 from random import *
 from state import *
 from grapher import *
-import sys, random, math, copy
+import sys, random, math, copy, operator
 
 def gens(model, np):
     init_pos = [model.retry() for x in xrange(np)]
@@ -63,8 +63,7 @@ def findEpsilon(model, setOfPos):
     k = 1.0
     objs = [model.cal_objs(pos) for pos in setOfPos]
     print objs
-    scoreList = list()
-    ob3Max = None
+    expoSumList = list()
     for i in xrange(len(objs)):
         diffVect = [[objs[i][k] - objs[j][k] for k in xrange(len(objs[i])) if j != i] for j in xrange(len(objs)) if j != i]
         diffList = [max(v) for v in diffVect]
@@ -73,29 +72,23 @@ def findEpsilon(model, setOfPos):
         diffListExpo = [-math.exp(-val/k) for val in diffList]
         # print 'diffListExpo ', diffListExpo
         expoSum = sum(diffListExpo)
-        print "expoSum ", expoSum
+        expoSumList.append(expoSum)
+        # print "expoSum ", expoSum
+        # print "\n"
+    print '\n'
+    print 'expoSumList ', expoSumList
+    print '\n'
+    # purloined from here: http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
+    min_index, min_value = min(enumerate(expoSumList), key=operator.itemgetter(1))
+    max_index, max_value = max(enumerate(expoSumList), key=operator.itemgetter(1))
+    print 'min score ', min_value, 'min objective vals ', objs[min_index]
+    print 'max score ', max_value, 'max objective vals ', objs[max_index]
 
-        # I'm not a huge fan of this, but it was the first thing that came to mind
-        # ob1 = [a[0] for a in diffVect]
-        # ob1Max = max(ob1)
-        # ob2 = [a[1] for a in diffVect]
-        # ob2Max = max(ob2)
-        # print "i ", i, "diff vect ", diffVect
-        # print "ob1 ", ob1
-        # print "ob2 ", ob2
-        # print "max in ob1 ", ob1Max
-        # print "max in ob2 ", ob2Max
-        # if len(diffVect[0]) == 3:
-        #     ob3 = [a[2] for a in diffVect]
-        #     ob3Max = max(ob3)
-        #     print "ob3 ", ob3
-        #     print "max in ob3 ", ob3Max
-        print "\n"
+
 
 def runDom(st, model):
     v = [part.pos for part in st.s]
     findEpsilon(model, v)
-    # print 'uniq ', st.s[i].uniq, ' vel ', st.s[i].vel
 
 
 
