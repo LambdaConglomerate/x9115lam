@@ -12,7 +12,7 @@ class can(object):
     def __init__(self, pos, vel, pbest, uniq):
         self._pos = pos
         self._vel = vel
-        self._pbest = pbest
+        self._pbest = list(pbest)
         self._uniq = uniq
 
     def __str__(self):

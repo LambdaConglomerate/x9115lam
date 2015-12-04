@@ -19,7 +19,7 @@ class grapher(object):
 	def graph(s):
 		#check to see if the number of decisions is less than 3
 		if len(s.listOfVectors[1][0]) <= 2:
-			
+
 			fig2 = plt.figure()
 			a2 = fig2.add_subplot(111)
 			plt.title(s.model.name + " Decisions")
@@ -65,7 +65,7 @@ class grapher(object):
 	def graphEnergy(s, truePf = True):
 		#check for of objectives
 		if s.model.numOfObjectives() <= 2:
-			
+
 			fig2 = plt.figure()
 			a2 = fig2.add_subplot(111)
 			plt.title(s.model.name + " Objectives")
@@ -81,7 +81,7 @@ class grapher(object):
 				ln = f.readline()
 				while ln:
 					o = ln.split()
-					a2.scatter(o[0], o[1], alpha = 0.5)
+					a2.scatter(o[0], o[1], alpha = 0.01)
 					ln = f.readline()
 
 		else:

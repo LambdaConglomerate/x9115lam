@@ -54,6 +54,9 @@ class Model(object):
     def getObjectiveMins(s):
         return s.objectiveMins
 
+    def numOfObjectives(s):
+        return len(s.objectives)
+
     def boundy(s, index):  # generates new single random decision within bounds
         return (s.bounds[index][1] - s.bounds[index][0]) * random() + s.bounds[index][0]
 

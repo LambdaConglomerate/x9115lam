@@ -4,25 +4,33 @@ from state import *
 from grapher import *
 import sys, random, math, copy, operator
 
-def gens(model, np):
+def gens(model, np, personalListSize):
     init_pos = [model.retry() for x in xrange(np)]
     init_vel = [[0.0 for _ in xrange(len(init_pos[i]))] for i, val in enumerate(init_pos)]
-    init_bpos = [list(x) for x in init_pos]
+    init_bpos = [[model.retry() for x in xrange(personalListSize)] for i in xrange(np)]
     init_ids = [i for i in xrange(np)]
-    cans = [can(pos, vel, pbest, uniq) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
+    cans =list()
+    for i in xrange(np):
+        cans.append(can(init_pos[i], init_vel[i], init_bpos[i], init_ids[i]))
+        # cans = [can(pos, vel, pbest, uniq) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
     return cans
 
 def PSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
-era = 100, np=30, phi_1=2.8, phi_2=1.2):
-    # g = grapher(model, int(retries))
+era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
+    g = grapher(model, int(retries))
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
-    s = gens(model, np)
+    s = gens(model, np, personalListSize)
     st = state(model.name, 'adaptiveGlobalPSO', s, 0, retries, changes, era)
     st.sb = st.s[0].pos
     bestcan = st.s[0]
     tot_deaths = 0
+    model.initializeObjectiveMaxMin(st.sb)
+    for c in st.s:
+        model.updateObjectiveMaxMin(c.pos)
+    frontier = runDom(st, model, list())
+    print 'frontier ', frontier
     #retry loop
     while st.t:
         print "."
@@ -36,33 +44,40 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2):
             for can in st.s:
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + \
                  (phi_2 * random.uniform(0,1) * (gbest - pos))) \
-                    for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest, st.sb)]
+                    for vel, pos, best, gbest in zip(can.vel, can.pos, can.pbest[0], frontier[0])]
                 # print 'can.vel ', can.vel
                 can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
                 if not model.checkBounds(can.pos) or not model.checkConstraints(can.pos):
                     can.pos = model.retry()
-                    can.vel = [0.0 for x in can.pos]
+                    can.vel = [0.1 for x in can.pos]
                     num_deaths += 1
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
             print "="*29
             print "k ", st.k
-            # print "tot_deaths ", tot_deaths
-            runDom(st, model)
+            print "tot_deaths ", tot_deaths
+            # for v in st.s:
+            #     g.addVector(v.pos, v.uniq)
+            runDom(st, model, frontier)
             st.k -= 1
-        st.s = gens(model, np)
+        st.s = gens(model, np, personalListSize)
         st.sb = st.s[0].pbest
         bestcan = st.s[0]
         st.t -= 1
-    # g.graph()
-    # g.graphEnergy()
+        print 'final front ', [model.cal_objs_2(f) for f in frontier]
+        for f in frontier:
+            g.addVector(f, int(st.t))
+        # for v in st.s:
+        #     g.addVector(v.pbest[0], v.uniq)
+    g.graph()
+    g.graphEnergy()
     st.termPSO()
 
 
-def findEpsilon(model, setOfPos):
+def dominate(model, setOfPos, pruning=10):
     max_index = 0
-    objs = list()
-    while len(setOfPos) > 10:
+    # objs = list()
+    while len(setOfPos) > pruning:
         objs = [model.cal_objs(pos) for pos in setOfPos]
         expoSumList = list()
         for i in xrange(len(objs)):
@@ -93,7 +108,7 @@ def findEpsilon(model, setOfPos):
         # print 'max idx ', max_index
         # print '\n'
         # print 'setOfPos after pop ', setOfPos, 'Set of pos length after pop ', len(setOfPos)
-    print 'objs ', objs
+    # print 'objs ', objs
     # Weird phenonmena: the max gets shoved either to the end or beginning
     # of the list fairly frequently and if we pop it off then the idx is wrong
     if max_index == len(setOfPos):
@@ -108,12 +123,26 @@ def findEpsilon(model, setOfPos):
     # print 'finalSet ', setOfPos
     return setOfPos
 
-def runDom(st, model):
-    v = [part.pos for part in st.s]
-    frontier = findEpsilon(model, v)
-    st.sb = frontier[0]
-    # vel = [x.vel for x in st.s]
-    # print 'velocities ', vel
+def runDom(st, model, frontier, globalListSize=10, personalListSize=5):
+    #for pbests
+    # print 'st.s ', st.s
+    for part in st.s:
+        # print '\n'
+        part.pbest.append(part.pos)
+        part.pbest = dominate(model, part.pbest, personalListSize)
+    # first add the current positions of all
+    # particles to their pbestlist
+    # then run the list for each of them through
+    # the domination proceedure
+    for part in st.s:
+        frontier.append(part.pbest[0])
+    # print 'frontier before ', frontier
+    frontier = dominate(model, frontier, globalListSize)
+    # print 'frontier after ', frontier
+    vel = [x.vel for x in st.s]
+    print 'velocities ', vel
+    return frontier
+
 
 
 

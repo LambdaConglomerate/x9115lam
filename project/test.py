@@ -10,7 +10,7 @@ from PSO import *
 # Osyczka2, Fonseca, ZDT1, ZDT2, ZDT3, ZDT4, ZDT6, Tanaka, Constr_Ex, Srinivas, Golinski, Viennet2, Viennet3, Viennet4, Water
 # Tanaka, Viennet2, Viennet3, Viennet4, Constr_Ex
 
-for m in [ZDT1]:
+for m in [Viennet2]:
     for o in [PSO]:
         #Absolutely do not pass integers for retries or changes
-        o(m, 1.0, 400.0)
+        o(m, 1.0, 500.0)
