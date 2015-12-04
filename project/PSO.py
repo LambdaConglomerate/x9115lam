@@ -60,9 +60,10 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2):
 
 
 def findEpsilon(model, setOfPos):
+    max_index = 0
+    objs = list()
     while len(setOfPos) > 10:
         objs = [model.cal_objs(pos) for pos in setOfPos]
-        print objs
         expoSumList = list()
         for i in xrange(len(objs)):
             # print i
@@ -79,26 +80,40 @@ def findEpsilon(model, setOfPos):
             expoSumList.append(expoSum)
             # print "expoSum ", expoSum
             # print "\n"
-        print '\n'
-        print 'expoSumList ', expoSumList
-        print '\n'
+        # print '\n'
+        # print 'expoSumList ', expoSumList
+        # print '\n'
         # purloined from here: http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
         min_index, min_value = min(enumerate(expoSumList), key=operator.itemgetter(1))
         max_index, max_value = max(enumerate(expoSumList), key=operator.itemgetter(1))
-        print 'min score ', min_value, 'min objective vals ', objs[min_index]
-        print 'max score ', max_value, 'max objective vals ', objs[max_index]
+        # print 'min score ', min_value, 'min objective vals ', objs[min_index]
+        # print 'max score ', max_value, 'max objective vals ', objs[max_index]
         setOfPos.pop(min_index)
-        print '\n'
-        print 'setOfPos after pop ', setOfPos, 'Set of pos length after pop ', len(setOfPos)
+        # print '\n'
+        # print 'max idx ', max_index
+        # print '\n'
+        # print 'setOfPos after pop ', setOfPos, 'Set of pos length after pop ', len(setOfPos)
+    print 'objs ', objs
+    # Weird phenonmena: the max gets shoved either to the end or beginning
+    # of the list fairly frequently and if we pop it off then the idx is wrong
+    if max_index == len(setOfPos):
+        max_index -= 1
+    # swap the best position to the top of the list
+    # don't really need it to be sorted, just need the
+    # best
+    tmp = setOfPos[0]
+    setOfPos[0] = setOfPos[max_index]
+    setOfPos[max_index] = tmp
+    # print '\n'
+    # print 'finalSet ', setOfPos
     return setOfPos
-
-
-
-
 
 def runDom(st, model):
     v = [part.pos for part in st.s]
-    findEpsilon(model, v)
+    frontier = findEpsilon(model, v)
+    st.sb = frontier[0]
+    # vel = [x.vel for x in st.s]
+    # print 'velocities ', vel
 
 
 
