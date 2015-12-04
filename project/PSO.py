@@ -60,29 +60,39 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2):
 
 
 def findEpsilon(model, setOfPos):
-    k = 1.0
-    objs = [model.cal_objs(pos) for pos in setOfPos]
-    print objs
-    expoSumList = list()
-    for i in xrange(len(objs)):
-        diffVect = [[objs[i][k] - objs[j][k] for k in xrange(len(objs[i])) if j != i] for j in xrange(len(objs)) if j != i]
-        diffList = [max(v) for v in diffVect]
-        # print 'diffList ', diffList
-        # print "len ", len(diffList)
-        diffListExpo = [-math.exp(-val/k) for val in diffList]
-        # print 'diffListExpo ', diffListExpo
-        expoSum = sum(diffListExpo)
-        expoSumList.append(expoSum)
-        # print "expoSum ", expoSum
-        # print "\n"
-    print '\n'
-    print 'expoSumList ', expoSumList
-    print '\n'
-    # purloined from here: http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
-    min_index, min_value = min(enumerate(expoSumList), key=operator.itemgetter(1))
-    max_index, max_value = max(enumerate(expoSumList), key=operator.itemgetter(1))
-    print 'min score ', min_value, 'min objective vals ', objs[min_index]
-    print 'max score ', max_value, 'max objective vals ', objs[max_index]
+    while len(setOfPos) > 10:
+        objs = [model.cal_objs(pos) for pos in setOfPos]
+        print objs
+        expoSumList = list()
+        for i in xrange(len(objs)):
+            # print i
+            diffVect = [[objs[j][k] - objs[i][k] for k in xrange(len(objs[i]))] for j in xrange(len(objs)) if j != i]
+            # print 'diffVect ', diffVect
+            # listOfTruth = [[(objs[i][k] - diffVect[i][k] <= objs[j][k]) for k in xrange(len(objs[i]))] for j in xrange(len(objs)) if j != i]
+            # print 'any list ', any(listOfTruth)
+            diffList = [max(v) for v in diffVect]
+            # print 'diffList ', diffList
+            # print "len ", len(diffList)
+            diffListExpo = [-math.exp(-val/k) for val in diffList]
+            # print 'diffListExpo ', diffListExpo
+            expoSum = sum(diffListExpo)
+            expoSumList.append(expoSum)
+            # print "expoSum ", expoSum
+            # print "\n"
+        print '\n'
+        print 'expoSumList ', expoSumList
+        print '\n'
+        # purloined from here: http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
+        min_index, min_value = min(enumerate(expoSumList), key=operator.itemgetter(1))
+        max_index, max_value = max(enumerate(expoSumList), key=operator.itemgetter(1))
+        print 'min score ', min_value, 'min objective vals ', objs[min_index]
+        print 'max score ', max_value, 'max objective vals ', objs[max_index]
+        setOfPos.pop(min_index)
+        print '\n'
+        print 'setOfPos after pop ', setOfPos, 'Set of pos length after pop ', len(setOfPos)
+    return setOfPos
+
+
 
 
 
