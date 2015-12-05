@@ -32,7 +32,7 @@ def Convergence_wrapper():
 def Convergence(fronts):
     min_dists = list()
 
-    convergence_file = open(".\convergence.txt", 'w')
+    convergence_file = open("convergence.txt", 'w')
 
     for front in fronts:
         for solution in front.obtained_results:
