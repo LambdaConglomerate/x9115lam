@@ -147,8 +147,8 @@ def runDom(st, model, frontier, globalListSize=10, personalListSize=5):
     # print 'frontier before ', frontier
     frontier = dominate(model, frontier, globalListSize)
     # print 'frontier after ', frontier
-    # vel = [x.vel for x in st.s]
-    # print 'velocities ', vel
+    vel = [x.vel for x in st.s]
+    print 'velocities ', vel
     return frontier
 
 
