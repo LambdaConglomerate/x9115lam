@@ -101,6 +101,6 @@ def spread_calculator_wrapper():
 
     for algorithm_name, content in zip(algorithm_names, contents):
         spread = spread_calculator(sort_list_of_list(content), first_extreme_solution, second_extreme_solution)
-        print "Name: ", algorithm_name, " Spread: ", round(spread, 3)
+        print "Optimizer: ", algorithm_name, "\nModel: ", model_name[:-4], "\nSpread: ", round(spread, 3)
 
 spread_calculator_wrapper()

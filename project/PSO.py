@@ -30,16 +30,22 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
     for c in st.s:
         model.updateObjectiveMaxMin(c.pos)
     frontier = runDom(st, model, list())
-    print 'frontier ', frontier
+    # basic idea is this is a list of positions that
+    # persist between retries.
+    global_frontier = list()
     #retry loop
     while st.t:
         print "."
-        model.initializeObjectiveMaxMin(st.sb)
-        for c in st.s:
-            model.updateObjectiveMaxMin(c.pos)
+        # model.initializeObjectiveMaxMin(st.sb)
+        # for c in st.s:
+        #     model.updateObjectiveMaxMin(c.pos)
         st.k = changes
         #iterative loop
         while st.k:
+            if st.k % 100 == 0:
+                print "="*29
+                print "k ", st.k
+                print "tot_deaths ", tot_deaths
             num_deaths = 0
             for can in st.s:
                 can.vel =  [k * (vel + (phi_1 * random.uniform(0,1) * (best - pos)) + \
@@ -53,9 +59,6 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
                     num_deaths += 1
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
-            print "="*29
-            print "k ", st.k
-            print "tot_deaths ", tot_deaths
             # for v in st.s:
             #     g.addVector(v.pos, v.uniq)
             runDom(st, model, frontier)
@@ -64,11 +67,16 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
         st.sb = st.s[0].pbest
         bestcan = st.s[0]
         st.t -= 1
-        print 'final front ', [model.cal_objs_2(f) for f in frontier]
+        # print 'final front ', [model.cal_objs_2(f) for f in frontier]
         for f in frontier:
+            global_frontier.append(f)
             g.addVector(f, int(st.t))
+        frontier = runDom(st,model,list())
         # for v in st.s:
         #     g.addVector(v.pbest[0], v.uniq)
+    for f in global_frontier:
+        st.reg_front.append(model.cal_objs_2(f))
+        st.norm_front.append(model.cal_objs(f))
     g.graph()
     g.graphEnergy()
     st.termPSO()
@@ -139,10 +147,9 @@ def runDom(st, model, frontier, globalListSize=10, personalListSize=5):
     # print 'frontier before ', frontier
     frontier = dominate(model, frontier, globalListSize)
     # print 'frontier after ', frontier
-    vel = [x.vel for x in st.s]
-    print 'velocities ', vel
+    # vel = [x.vel for x in st.s]
+    # print 'velocities ', vel
     return frontier
-
 
 
 

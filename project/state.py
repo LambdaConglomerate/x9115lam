@@ -78,7 +78,8 @@ class state(object):
     self._t = retries
     self._k = changes
     self.era = era
-    self.frontier = list()
+    self.reg_front = list()
+    self.norm_front = list()
     self.spread_path = './metrics/Spread/Obtained_PF/'
     self.hypervolume_path = './metrics/HyperVolume/Pareto_Fronts/'
     if log_level == 'debug':
@@ -107,9 +108,9 @@ class state(object):
     self.logger.info("\nFINAL:\nMODEL:%s\nOPTIMIZER:%s\nEBO:%0.3f\tSBO:%s\n" % \
       (self.name, self.optimizer, self._ebo, self._sbo))
 
-  def addFrontier(self, obVals):
-    if obVals not in self.frontier:
-      self.frontier.append(obVals)
+  # def addFrontier(self, obVals):
+  #   if obVals not in self.frontier:
+  #     self.frontier.append(obVals)
 
   def convergence(self):
     # based on https://github.com/ai-se/storm/blob/master/PerformanceMetrics/IGD/IGD_Calculation.py
@@ -129,15 +130,32 @@ class state(object):
     hypervolume_out = self.hypervolume_path + self.optimizer + "_" + self.name + ".txt"
     hypervolume_file = open(hypervolume_out, 'w')
     spread_file = open(spread_out, 'w')
+
+    print 'reg_front '
+    for vect in self.reg_front:
+      print vect
+    print 'norm_front '
+    for vect in self.norm_front:
+      print vect
+    # First build the output that is
+    # NOT normalized
     outList = list()
-    for front in self.frontier:
-      for vector in front:
-        ln = " ".join(map(str, vector))
-        if not ln in outList:
-          outList.append(ln)
+    for vector in self.reg_front:
+      ln = " ".join(map(str, vector))
+      if not ln in outList:
+        outList.append(ln)
+    outString = "\n".join(outList)
+    spread_file.write(outString)
+
+    # Build the normalized output
+    outList = list()
+    for vector in self.norm_front:
+      ln = " ".join(map(str, vector))
+      if not ln in outList:
+        outList.append(ln)
     outString = "\n".join(outList)
     hypervolume_file.write(outString)
-    spread_file.write(outString)
+
 
     #Write a closing message with frontier, name of optimizer, and name of model
     if self.outstring != "":

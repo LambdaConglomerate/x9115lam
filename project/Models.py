@@ -51,8 +51,7 @@ Fonseca = (Model(3)
            )
 
 # ZDT shared function for ZDT1, 2, and 3
-g1 = (lambda x: 1 + (9.0 * reduce(lambda a, b: a + b,
-                                [x[i] for i in range(1, len(x))])) / (len(x) - 1.0))
+g1 = (lambda x: 1 + (9.0 * sum([x[i] for i in range(1, len(x))])) / (len(x) - 1.0))
 ZDT1 = (Model(30)
         .addBound(range(0, 30), 0, 1)
         .addObjective(lambda x: x[0])
@@ -112,8 +111,8 @@ Constr_Ex = (Model(2)
              .addConstraint([0, 1],lambda x: x[1] + 9 * x[0] >= 6)
              .addConstraint([0, 1],lambda x: -x[1] + 9 * x[0] >= 1)
              .addObjective(lambda x: x[0])
-             .addObjective(lambda x: (1 + x[1]) / x[0])
-             .addName("ConstrEx")
+             .addObjective(lambda x: (0 + x[1]) / x[0])
+             .addName("Constr_Ex")
              )
 
 Srinivas = (Model(2)
@@ -319,9 +318,9 @@ theta_dtlz5 = lambda x, i: (math.pi)/(4*(1 + g_dtlz5(x)))*(1 + 2*g_dtlz5(x)*x[i]
 
 DTLZ5 = (Model(n_dtlz5)
         .addName("DTLZ5")
-        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(x[0]*math.pi/2.0) * math.cos(theta_dtlz5(x, 1)))
-        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(x[0]*math.pi/2.0) * math.sin(theta_dtlz5(x, 1)))
-        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.sin(x[0]*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(theta_dtlz5(x, 0)*math.pi/2.0) * math.cos(theta_dtlz5(x, 1)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.cos(theta_dtlz5(x, 0)*math.pi/2.0) * math.sin(theta_dtlz5(x, 1)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz5(x)) * math.sin(theta_dtlz5(x, 0)*math.pi/2.0))
         )
 
 for i_5 in xrange(n_dtlz5):
@@ -347,9 +346,9 @@ theta_dtlz6 = lambda x, i: (math.pi)/(4*(1 + g_dtlz6(x)))*(1 + 2*g_dtlz6(x)*x[i]
 
 DTLZ6 = (Model(n_dtlz6)
         .addName("DTLZ6")
-        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(x[0]*math.pi/2.0) * math.cos(theta_dtlz6(x, 1)))
-        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(x[0]*math.pi/2.0) * math.sin(theta_dtlz6(x, 1)))
-        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.sin(x[0]*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(theta_dtlz6(x, 0)*math.pi/2.0) * math.cos(theta_dtlz6(x, 1)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.cos(theta_dtlz6(x, 0)*math.pi/2.0) * math.sin(theta_dtlz6(x, 1)*math.pi/2.0))
+        .addObjective(lambda x: (1 + g_dtlz6(x)) * math.sin(theta_dtlz6(x, 0)*math.pi/2.0))
         )
 
 for i_6 in xrange(n_dtlz6):
