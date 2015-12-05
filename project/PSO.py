@@ -12,7 +12,6 @@ def gens(model, np, personalListSize):
     cans =list()
     for i in xrange(np):
         cans.append(can(init_pos[i], init_vel[i], init_bpos[i], init_ids[i]))
-        # cans = [can(pos, vel, pbest, uniq) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
     return cans
 
 def PSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
@@ -36,9 +35,6 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
     #retry loop
     while st.t:
         print "."
-        # model.initializeObjectiveMaxMin(st.sb)
-        # for c in st.s:
-        #     model.updateObjectiveMaxMin(c.pos)
         st.k = changes
         #iterative loop
         while st.k:
@@ -68,7 +64,6 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
         st.sb = st.s[0].pbest
         bestcan = st.s[0]
         st.t -= 1
-        # print 'final front ', [model.cal_objs_2(f) for f in frontier]
         for f in frontier:
             global_frontier.append(f)
             g.addVector(f, int(st.t))
@@ -83,42 +78,21 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
     g.graphTrackedParticle()
     st.termPSO()
 
-
 def dominate(model, setOfPos, pruning=10):
     max_index = 0
-    # objs = list()
     while len(setOfPos) > pruning:
         objs = [model.cal_objs(pos) for pos in setOfPos]
         expoSumList = list()
         for i in xrange(len(objs)):
-            # print i
             diffVect = [[objs[j][k] - objs[i][k] for k in xrange(len(objs[i]))] for j in xrange(len(objs)) if j != i]
-            # print 'diffVect ', diffVect
-            # listOfTruth = [[(objs[i][k] - diffVect[i][k] <= objs[j][k]) for k in xrange(len(objs[i]))] for j in xrange(len(objs)) if j != i]
-            # print 'any list ', any(listOfTruth)
             diffList = [max(v) for v in diffVect]
-            # print 'diffList ', diffList
-            # print "len ", len(diffList)
             diffListExpo = [-math.exp(-val/k) for val in diffList]
-            # print 'diffListExpo ', diffListExpo
             expoSum = sum(diffListExpo)
             expoSumList.append(expoSum)
-            # print "expoSum ", expoSum
-            # print "\n"
-        # print '\n'
-        # print 'expoSumList ', expoSumList
-        # print '\n'
         # purloined from here: http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
         min_index, min_value = min(enumerate(expoSumList), key=operator.itemgetter(1))
         max_index, max_value = max(enumerate(expoSumList), key=operator.itemgetter(1))
-        # print 'min score ', min_value, 'min objective vals ', objs[min_index]
-        # print 'max score ', max_value, 'max objective vals ', objs[max_index]
         setOfPos.pop(min_index)
-        # print '\n'
-        # print 'max idx ', max_index
-        # print '\n'
-        # print 'setOfPos after pop ', setOfPos, 'Set of pos length after pop ', len(setOfPos)
-    # print 'objs ', objs
     # Weird phenonmena: the max gets shoved either to the end or beginning
     # of the list fairly frequently and if we pop it off then the idx is wrong
     if max_index == len(setOfPos):
@@ -129,26 +103,15 @@ def dominate(model, setOfPos, pruning=10):
     tmp = setOfPos[0]
     setOfPos[0] = setOfPos[max_index]
     setOfPos[max_index] = tmp
-    # print '\n'
-    # print 'finalSet ', setOfPos
     return setOfPos
 
 def runDom(st, model, frontier, globalListSize=10, personalListSize=5):
-    #for pbests
-    # print 'st.s ', st.s
     for part in st.s:
-        # print '\n'
         part.pbest.append(part.pos)
         part.pbest = dominate(model, part.pbest, personalListSize)
-    # first add the current positions of all
-    # particles to their pbestlist
-    # then run the list for each of them through
-    # the domination proceedure
     for part in st.s:
         frontier.append(part.pbest[0])
-    # print 'frontier before ', frontier
     frontier = dominate(model, frontier, globalListSize)
-    # print 'frontier after ', frontier
     # vel = [x.vel for x in st.s]
     # print 'velocities ', vel
     return frontier
