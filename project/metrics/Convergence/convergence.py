@@ -53,7 +53,7 @@ def Convergence(fronts):
 
         mins_sum = sum(min_dists)
         mins_average = mins_sum / len(min_dists)
-        outString = front.model_name + " " + str(mins_average)
+        outString = front.model_name + " " + str(mins_average) + "\n"
         convergence_file.write(outString)
 
 Convergence_wrapper()
