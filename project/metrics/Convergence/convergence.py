@@ -1,6 +1,7 @@
 class ConvergenceContainer():
-    def __init__(self, filename, obtained_results, true_results):
+    def __init__(self, model_name, filename, obtained_results, true_results):
         self.name = filename
+        self.model_name = model_name
         self.dimension = len(obtained_results[0])
         self.obtained_results = obtained_results  # list of list
         self.true_results = true_results
@@ -22,13 +23,16 @@ def Convergence_wrapper():
 
     from os import listdir
     obtained_filenames = [obtained_folder_path + file for file in listdir(obtained_folder_path)]
-    true_filenames = [true_folder_path + filename.split("/")[-1].split("_")[1].split(".")[0] + ".txt" for filename in obtained_filenames]
+    model_names = [filename.split("/")[-1].split("_")[1].split(".")[0] for filename in obtained_filenames]
+    true_filenames = [true_folder_path + model_name + ".txt" for model_name in model_names]
 
-    fronts = [ConvergenceContainer(o_filename.split("/")[-1], file_reader(o_filename), file_reader(t_filename)) for o_filename, t_filename in zip(obtained_filenames, true_filenames)]
+    fronts = [ConvergenceContainer(model_name, filename.split("/")[-1], file_reader(o_filename), file_reader(t_filename)) for model_name, o_filename, t_filename in zip(model_names, obtained_filenames, true_filenames)]
     Convergence(fronts)
 
 def Convergence(fronts):
     min_dists = list()
+
+    convergence_file = open(".\convergence.txt", 'w')
 
     for front in fronts:
         for solution in front.obtained_results:
@@ -49,7 +53,7 @@ def Convergence(fronts):
 
         mins_sum = sum(min_dists)
         mins_average = mins_sum / len(min_dists)
-
-        print mins_average
+        outString = front.model_name + " " + str(mins_average)
+        convergence_file.write(outString)
 
 Convergence_wrapper()
