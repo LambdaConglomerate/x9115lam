@@ -17,7 +17,7 @@ def gens(model, np, personalListSize):
 
 def PSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
 era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
-    g = grapher(model, int(retries))
+    g = grapher(model, int(retries), 1, changes)
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
@@ -59,6 +59,7 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
                     num_deaths += 1
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
+            g.trackParticle(st.s[0].pos, 0, st.k)
             # for v in st.s:
             #     g.addVector(v.pos, v.uniq)
             runDom(st, model, frontier)
@@ -79,6 +80,7 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
         st.norm_front.append(model.cal_objs(f))
     g.graph()
     g.graphEnergy()
+    g.graphTrackedParticle()
     st.termPSO()
 
 
@@ -147,8 +149,8 @@ def runDom(st, model, frontier, globalListSize=10, personalListSize=5):
     # print 'frontier before ', frontier
     frontier = dominate(model, frontier, globalListSize)
     # print 'frontier after ', frontier
-    vel = [x.vel for x in st.s]
-    print 'velocities ', vel
+    # vel = [x.vel for x in st.s]
+    # print 'velocities ', vel
     return frontier
 
 

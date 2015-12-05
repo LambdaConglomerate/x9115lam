@@ -3,16 +3,67 @@ import matplotlib.pyplot as plt
 
 from model import *
 
-colors = ["AliceBlue","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Green","GreenYellow","HoneyDew","HotPink","IndianRed" ,"Indigo" ,"Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"]
+colors = ["Red","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Green","GreenYellow","HoneyDew","HotPink","IndianRed" ,"Indigo" ,"Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"]
 
 class grapher(object):
 
-	def __init__(s, model, numOfCans):
+	def __init__(s, model, numOfCans, numOfTrackedParticles, totalTime):
 		s.listOfVectors = [[]] * (numOfCans + 1)
 		s.model = model
+		s.trackedParticle = [[]] * (numOfTrackedParticles)
+		s.timePoint = [[]] * (numOfTrackedParticles)
+		s.totalTime = totalTime
 
 	def addVector(s, v, i):
 		s.listOfVectors[i].append(v)
+
+	#this is the tracked particle 
+	def trackParticle(s, vector , index, timePoint):
+		s.trackedParticle[index].append(vector)
+		s.timePoint[index].append(timePoint)
+
+	def graphTrackedParticle(s, truePf = True):
+		#check for of objectives
+		if s.model.numOfObjectives() <= 2:
+			fig2 = plt.figure()
+			a2 = fig2.add_subplot(111)
+			plt.title(s.model.name + " Objectives Tracked Particle")
+			for i in xrange(len(s.trackedParticle)):
+				color = [colors[i]]
+				for j in xrange(len(s.trackedParticle[i])):
+					o = s.model.cal_objs_2(s.trackedParticle[i][j])
+					opacity = (s.totalTime - s.timePoint[i][j])/float(s.totalTime)
+					a2.scatter(o[0], o[1], c=color, alpha=opacity)
+			if truePf:
+				path = "./metrics/Spread/True_PF/" + s.model.name + ".txt"
+				f = open(path, "r")
+				ln = f.readline()
+				while ln:
+					o = ln.split()
+					a2.scatter(o[0], o[1], alpha = 0.01)
+					ln = f.readline()
+
+		else:
+			#if # of objectives > 3 this will just plot the first three objectives
+			fig = plt.figure()
+			ax = fig.add_subplot(111, projection='3d')
+			ax.text2D(0.05, 0.95, s.model.name + " Objectives Tracked Particle", transform=ax.transAxes)
+			for i in xrange(len(s.trackedParticle)):
+				color = [colors[i]]
+				for j in xrange(len(s.trackedParticle[i])):
+					o = s.model.cal_objs_2(s.trackedParticle[i][j])
+					opacity = (s.totalTime - s.timePoint[i][j])/float(s.totalTime)
+					ax.scatter(o[0], o[1], o[2], c=color, alpha=opacity)
+			if truePf:
+				path = "./metrics/Spread/True_PF/" + s.model.name + ".txt"
+				f = open(path, "r")
+				ln = f.readline()
+				while ln:
+					o = [float(x) for x in ln.split()]
+					ax.scatter(o[0], o[1], o[2], alpha = 0.5)
+					ln = f.readline()
+
+		plt.savefig("pics/" + s.model.name + "TrackedParticleObjectives.png", bbox_inches='tight')
 
 	#this will graph the decisions
 	#each color is a unique candidate
