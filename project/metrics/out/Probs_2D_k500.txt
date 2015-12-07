@@ -1,0 +1,33 @@
+=========================
+HYPERVOLUME
+=========================
+Name: PSOProbs_Fonseca.txt HyperVolume: 1.2753
+Name: PSOProbs_Osyczka2.txt HyperVolume: 2.1368
+Name: PSOProbs_ZDT1.txt HyperVolume: 2.1122
+=========================
+SPREAD
+=========================
+Optimizer:  PSOProbs 
+Model:  Fonseca.txt 
+Spread:  1.281
+Optimizer:  PSOProbs 
+Model:  Osyczka2.txt 
+Spread:  0.872
+Optimizer:  PSOProbs 
+Model:  ZDT1.txt 
+Spread:  0.767
+=========================
+CONVERGENCE
+=========================
+Optimizer:  PSOProbs 
+Model:  Fonseca
+Convergence: 0.00443174395095
+
+Optimizer:  PSOProbs 
+Model:  Osyczka2
+Convergence: 17.1320601507
+
+Optimizer:  PSOProbs 
+Model:  ZDT1
+Convergence: 10.5324365753
+

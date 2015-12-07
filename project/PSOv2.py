@@ -52,7 +52,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5):
     baseRadius = vmax/float(model.numOfDecisions())
 
     s = gens(model, np, personalListSize)
-    st = state(model.name, 'adaptiveGlobalPSO', s, 0, retries, changes, era)
+    st = state(model.name, 'PSOv2', s, 0, retries, changes, era)
     st.sb = st.s[0].pos
     bestcan = st.s[0]
     tot_deaths = 0

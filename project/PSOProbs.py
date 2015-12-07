@@ -56,14 +56,14 @@ def gens(model, np, personalListSize):
 
 def PSOProbs(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
 era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
-    g = grapher(model, int(retries), 1, changes, "PSOProbs")
+    g = grapher(model, int(retries), 1, changes, "PSOProbsK" + str(changes))
     probTracker = [Probs(np) for i in xrange(np)]
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
     # print "constriction factor ", k
     s = gens(model, np, personalListSize)
-    st = state(model.name, 'adaptiveGlobalPSOwithProbs', s, 0, retries, changes, era, out=out)
+    st = state(model.name, 'PSOProbs', s, 0, retries, changes, era, out=out)
     st.sb = st.s[0].pos
     bestcan = st.s[0]
     tot_deaths = 0
@@ -108,7 +108,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
                     probTracker[can.uniq].decreaseProb(currentParticle)
             #probTracker[0].printProbs()
             tot_deaths += num_deaths
-            g.trackParticle(st.s[0].pos, 0, st.k)
+            #g.trackParticle(st.s[0].pos, 0, st.k)
             # for v in st.s:
             #     g.addVector(v.pos, v.uniq)
             runDom(st, model, frontier)
