@@ -3,7 +3,8 @@ from adaptiveGlobalPSO import *
 from classicalGlobalPSO import *
 from classicalGlobalPSOV2 import *
 from PSO import *
-from adaptiveGlobalPSOwithProbs import *
+from PSOProbs import *
+from PSOv2 import *
 #from pso import *
 
 # full model list

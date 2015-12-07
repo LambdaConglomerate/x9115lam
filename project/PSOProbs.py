@@ -54,7 +54,7 @@ def gens(model, np, personalListSize):
         # cans = [can(pos, vel, pbest, uniq) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
     return cans
 
-def adaptiveGlobalPSOwithProbs(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
+def PSOProbs(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
 era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
     g = grapher(model, int(retries), 1, changes)
     probTracker = [Probs(np) for i in xrange(np)]

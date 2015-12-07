@@ -15,7 +15,7 @@ def gens(model, np, personalListSize):
     return cans
 
 def PSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
-era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
+era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5):
     g = grapher(model, int(retries), 1, changes)
     emin = 0
     phi_tot = phi_1 + phi_2
