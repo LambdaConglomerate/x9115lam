@@ -42,7 +42,7 @@ def repulsion(c1, c2, radius):
 
 def PSOv2(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
 era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5):
-    g = grapher(model, int(retries), 1, changes)
+    g = grapher(model, int(retries), 1, changes, "PSOv2")
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs((2.0 - phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))

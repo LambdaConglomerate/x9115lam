@@ -56,7 +56,7 @@ def gens(model, np, personalListSize):
 
 def PSOProbs(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
 era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
-    g = grapher(model, int(retries), 1, changes)
+    g = grapher(model, int(retries), 1, changes, "PSOProbs")
     probTracker = [Probs(np) for i in xrange(np)]
     emin = 0
     phi_tot = phi_1 + phi_2

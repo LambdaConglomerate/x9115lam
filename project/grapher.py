@@ -7,12 +7,13 @@ colors = ["Red","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAl
 
 class grapher(object):
 
-	def __init__(s, model, numOfCans, numOfTrackedParticles, totalTime):
+	def __init__(s, model, numOfCans, numOfTrackedParticles, totalTime, optimizerName):
 		s.listOfVectors = [[]] * (numOfCans + 1)
 		s.model = model
 		s.trackedParticle = [[]] * (numOfTrackedParticles)
 		s.timePoint = [[]] * (numOfTrackedParticles)
 		s.totalTime = totalTime
+		s.optimizerName = optimizerName
 
 	def addVector(s, v, i):
 		s.listOfVectors[i].append(v)
@@ -27,7 +28,7 @@ class grapher(object):
 		if s.model.numOfObjectives() <= 2:
 			fig2 = plt.figure()
 			a2 = fig2.add_subplot(111)
-			plt.title(s.model.name + " Objectives Tracked Particle")
+			plt.title(s.model.name + " Objectives Tracked Particle" + " - " + s.optimizerName)
 			for i in xrange(len(s.trackedParticle)):
 				color = [colors[i]]
 				for j in xrange(len(s.trackedParticle[i])):
@@ -47,7 +48,7 @@ class grapher(object):
 			#if # of objectives > 3 this will just plot the first three objectives
 			fig = plt.figure()
 			ax = fig.add_subplot(111, projection='3d')
-			ax.text2D(0.05, 0.95, s.model.name + " Objectives Tracked Particle", transform=ax.transAxes)
+			ax.text2D(0.05, 0.95, s.model.name + " Objectives Tracked Particle" + " - " + s.optimizerName, transform=ax.transAxes)
 			for i in xrange(len(s.trackedParticle)):
 				color = [colors[i]]
 				for j in xrange(len(s.trackedParticle[i])):
@@ -63,7 +64,7 @@ class grapher(object):
 					ax.scatter(o[0], o[1], o[2], alpha = 0.5)
 					ln = f.readline()
 
-		plt.savefig("pics/" + s.model.name + "TrackedParticleObjectives.png", bbox_inches='tight')
+		plt.savefig("pics/" + s.optimizerName + s.model.name + "TrackedParticleObjectives.png", bbox_inches='tight')
 
 	#this will graph the decisions
 	#each color is a unique candidate
@@ -73,7 +74,7 @@ class grapher(object):
 
 			fig2 = plt.figure()
 			a2 = fig2.add_subplot(111)
-			plt.title(s.model.name + " Decisions")
+			plt.title(s.model.name + " Decisions" + " - " + s.optimizerName)
 			for i in xrange(1, len(s.listOfVectors)):
 				print(s.listOfVectors[i])
 				color = [colors[i]] * len(s.listOfVectors[i])
@@ -95,7 +96,7 @@ class grapher(object):
 		else:
 			fig = plt.figure()
 			ax = fig.add_subplot(111, projection='3d')
-			ax.text2D(0.05, 0.95, s.model.name + " Decisions", transform=ax.transAxes)
+			ax.text2D(0.05, 0.95, s.model.name + " Decisions" + " - " + s.optimizerName, transform=ax.transAxes)
 			for i in xrange(1, len(s.listOfVectors)):
 				color = [colors[i]] * len(s.listOfVectors[i])
 				energies = [1.0] * len(s.listOfVectors[i])
@@ -110,7 +111,7 @@ class grapher(object):
 				z = [v[2] for v in s.listOfVectors[i]]
 				ax.scatter(x, y, z, s=energies, c=color, alpha=0.5)
 
-		plt.savefig("pics/" + s.model.name + "Decisions.png", bbox_inches='tight')
+		plt.savefig("pics/" + s.optimizerName + s.model.name + "Decisions.png", bbox_inches='tight')
 	#this will graph the energies
 	#each color is a unique candidate
 	def graphEnergy(s, truePf = True):
@@ -119,7 +120,7 @@ class grapher(object):
 
 			fig2 = plt.figure()
 			a2 = fig2.add_subplot(111)
-			plt.title(s.model.name + " Objectives")
+			plt.title(s.model.name + " Objectives" + " - " + s.optimizerName)
 			for i in xrange(1, len(s.listOfVectors)):
 					color = [colors[i]] * len(s.listOfVectors[i])
 					o = [s.model.cal_objs_2(v) for v in s.listOfVectors[i]]
@@ -139,7 +140,7 @@ class grapher(object):
 			#if # of objectives > 3 this will just plot the first three objectives
 			fig = plt.figure()
 			ax = fig.add_subplot(111, projection='3d')
-			ax.text2D(0.05, 0.95, s.model.name + " Objectives", transform=ax.transAxes)
+			ax.text2D(0.05, 0.95, s.model.name + " Objectives" + " - " + s.optimizerName, transform=ax.transAxes)
 			for i in xrange(1, len(s.listOfVectors)):
 					color = [colors[i]] * len(s.listOfVectors[i])
 					o = [s.model.cal_objs_2(v) for v in s.listOfVectors[i]]
@@ -156,5 +157,5 @@ class grapher(object):
 					ax.scatter(o[0], o[1], o[2], alpha = 0.5)
 					ln = f.readline()
 
-		plt.savefig("pics/" + s.model.name + "Objectives.png", bbox_inches='tight')
+		plt.savefig("pics/" + s.optimizerName +  s.model.name + "Objectives.png", bbox_inches='tight')
 
