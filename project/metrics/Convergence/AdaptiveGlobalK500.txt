@@ -1,0 +1,139 @@
+=========================
+SPREAD
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  Constr 
+Spread:  0.711
+Optimizer:  adaptiveGlobalPSO 
+Model:  ConstrEx.txt 
+Spread:  0.526
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ1.txt 
+Spread:  0.228
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ2.txt 
+Spread:  0.671
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ4.txt 
+Spread:  0.745
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ5.txt 
+Spread:  0.736
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ6.txt 
+Spread:  0.171
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca.txt 
+Spread:  0.964
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2.txt 
+Spread:  0.623
+Optimizer:  adaptiveGlobalPSO 
+Model:  Srinivas.txt 
+Spread:  1.465
+Optimizer:  adaptiveGlobalPSO 
+Model:  Tanaka.txt 
+Spread:  1.324
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet2.txt 
+Spread:  0.766
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet3.txt 
+Spread:  1.208
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet4.txt 
+Spread:  0.739
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT1.txt 
+Spread:  0.203
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT2.txt 
+Spread:  0.684
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT3.txt 
+Spread:  0.69
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT4.txt 
+Spread:  0.285
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT6.txt 
+Spread:  0.453
+Optimizer:  classicalGlobalPSO 
+Model:  Fonseca.txt 
+Spread:  1.174
+Optimizer:  DE 
+Model:  DTLZ1 
+Spread:  0.871
+Optimizer:  GALE 
+Model:  DTLZ1 
+Spread:  0.871
+Optimizer:  NSGAII 
+Model:  DTLZ1 
+Spread:  0.871
+=========================
+CONVERGENCE
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ1
+Convergence: 81.7428629847
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ2
+Convergence: 10.7835873422
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ4
+Convergence: 10.3014227293
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ5
+Convergence: 9.70216352797
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ6
+Convergence: 9.78229151653
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca
+Convergence: 9.38050003352
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2
+Convergence: 11.6025217479
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Srinivas
+Convergence: 9.49032386528
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Tanaka
+Convergence: 8.61182867561
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet2
+Convergence: 7.29861834829
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet3
+Convergence: 2.82813472794
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT1
+Convergence: 2.81621305148
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT2
+Convergence: 2.79144021201
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT3
+Convergence: 2.74563951554
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT4
+Convergence: 3.86820669191
+
+Optimizer:  classicalGlobalPSO 
+Model:  Fonseca
+Convergence: 3.56654351304
+

@@ -33,6 +33,9 @@ def Convergence_wrapper():
     Convergence(fronts)
 
 def Convergence(fronts):
+    print '='*25
+    print "CONVERGENCE"
+    print '='*25
     min_dists = list()
     for front in fronts:
         for solution in front.obtained_results:

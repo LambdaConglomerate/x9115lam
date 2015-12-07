@@ -3,6 +3,9 @@ from shutil import *
 import Spread
 
 def runner():
+  print "="*25
+  print "SPREAD"
+  print "="*25
   frontier_path = './obtained/'
   runner_path = './Obtained_PF/'
   frontier_list = listdir(frontier_path)

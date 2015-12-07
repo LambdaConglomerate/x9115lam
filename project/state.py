@@ -80,18 +80,19 @@ class state(object):
     self.era = era
     self.reg_front = list()
     self.norm_front = list()
-    self.spread_path = './metrics/Spread/Obtained_PF/'
-    self.hypervolume_path = './metrics/HyperVolume/Pareto_Fronts/'
+    self.spread_path = './metrics/Spread/obtained/'
+    self.hypervolume_path = './metrics/HyperVolume/obtained/'
+    self.convergence_path = './metrics/Convergence/obtained/'
     if log_level == 'debug':
-      logging.basicConfig(filename=out, format='%(message)s',level=logging.DEBUG)
+      logging.basicConfig(filename="./out/" + out, format='%(message)s',level=logging.DEBUG)
     else:
-      logging.basicConfig(filename='./out/out.txt', format='%(message)s',level=logging.INFO)
+      logging.basicConfig(filename="./out/" + out, format='%(message)s',level=logging.INFO)
     self.logger = logging.getLogger('State')
     self.logger.debug("%s\nModel: %s\nOptimizer: %s\nNum Retries: %s\nNum Changes: %s\nInitial S: %s\nInitial E: %0.3f\n%s" % \
       ('-'*100, self.name, self.optimizer, self._t, self._k, self._s, self._e, '-'*100))
     self.logger.info("%s\nModel: %s\nOptimizer: %s\nNum Retries: %s\nNum Changes: %s\n%s" % \
       ('-'*100, self.name, self.optimizer, self._t, self._k, '-'*100))
-    self.logger.info("T:%d\n%s" % (self._t, '-'*100))
+    self.logger.info("T:%d FRONTIER\n%s" % (self._t, '-'*100))
     self.outstring = ""
 
   def __str__(self):
@@ -126,12 +127,14 @@ class state(object):
   def termPSO(self):
 
     #Write to spread and hypervolume files
+    convergence_out = self.convergence_path + self.optimizer + "_" + self.name + ".txt"
     spread_out = self.spread_path + self.optimizer + "_" + self.name + ".txt"
     hypervolume_out = self.hypervolume_path + self.optimizer + "_" + self.name + ".txt"
+    convergence_file = open(convergence_out, 'w')
     hypervolume_file = open(hypervolume_out, 'w')
     spread_file = open(spread_out, 'w')
 
-    print 'reg_front '
+    print 'reg_front'
     for vect in self.reg_front:
       print vect
     print 'norm_front '
@@ -144,25 +147,35 @@ class state(object):
       ln = " ".join(map(str, vector))
       if not ln in outList:
         outList.append(ln)
-    outString = "\n".join(outList)
-    spread_file.write(outString)
+    UnNorm_OutString = "\n".join(outList)
+    spread_file.write(UnNorm_OutString)
+    convergence_file.write(UnNorm_OutString)
 
-    # Build the normalized output
-    outList = list()
-    for vector in self.norm_front:
-      ln = " ".join(map(str, vector))
-      if not ln in outList:
-        outList.append(ln)
-    outString = "\n".join(outList)
-    hypervolume_file.write(outString)
+    #idea here is that if the optimizer
+    #is DTLZ we don't want to normalize
+    Norm_OutString = None
+    if(self.name[:4] == "DTLZ"):
+      hypervolume_file.write(UnNorm_OutString)
+    else:
+      # Build the normalized output
+      outList = list()
+      for vector in self.norm_front:
+        ln = " ".join(map(str, vector))
+        if not ln in outList:
+          outList.append(ln)
+      Norm_OutString = "\n".join(outList)
+      hypervolume_file.write(Norm_OutString)
 
 
     #Write a closing message with frontier, name of optimizer, and name of model
     if self.outstring != "":
       self.logger.info(self.outstring)
       self.outstring =""
-    self.logger.info("%s\nFINAL:\nMODEL:%s\nOPTIMIZER:%s" % ('-'*100, self.name, self.optimizer))
-    self.logger.info("FRONTIER:\n%s" % outString)
+    # self.logger.info("%s\nFINAL:\nMODEL:%s\nOPTIMIZER:%s" % ('-'*100, self.name, self.optimizer))
+    self.logger.info("%s" % ('-'*100))
+    self.logger.info("FINAL NON-NORMALIZED FRONTIER:\n%s\n%s" % ('-'*100, UnNorm_OutString))
+    if(Norm_OutString):
+      self.logger.info("FINAL NORMALIZED FRONTIER:\n%s\n%s" % ('-'*100, Norm_OutString))
 
   def bored(self):
     self.app_out("\ngot bored at K:%d" % (self._k))
@@ -181,7 +194,7 @@ class state(object):
       self.logger.info(self.outstring)
       self.outstring =""
     if self._t != 0:
-      self.logger.info("%s\nT:%d\n%s" % ('-'*100, self._t, '-'*100))
+      self.logger.info("%s\nT:%d FRONTIER\n%s" % ('-'*100, self._t, '-'*100))
       self.logger.debug("\n%s\nT:%d\tK:%d\tEBO:%0.3f\tSBO:%s\n%s" % \
         ('-'*100, self._t, self._k, self._ebo, self._sbo, '-'*100))
 
@@ -193,10 +206,12 @@ class state(object):
   def k(self, val):
     self._k = val
     if self._k % self.era == 0 and self._k != 0:
-      self.logger.info(self.outstring)
-      self.outstring = ""
-      self.logger.info("K:%d\tEB:%0.3f\tSB:%s" % \
-        (self._k, self._eb, self._sb))
+      # self.logger.info(self.outstring)
+      # self.outstring = ""
+      # self.logger.info("K:%d\nNON-NORMALIZED FRONTIER:\n%s\n" % \
+      #   (self._k, self.outstring))
+      self.logger.debug("T:%d\tK:%d\tEB:%0.3f\tSB:%s" % \
+      (self._t, self._k, self._eb, self._sb))
 
   @property
   def e(self):
