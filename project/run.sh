@@ -10,7 +10,7 @@ for f in ./obtained/*; do
 	fi
 done
 cd ..
-cd Hypervolume
+cd HyperVolume
 for f in ./obtained/*; do
   if [ -e "$f" ]
     then
@@ -43,7 +43,8 @@ while getopts ":hscx:o:" opt; do
       fi
       python test.py $OPTARG
       echo "Outputting metric data to: "
-      DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+      # DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+      DIR=$(pwd)
       F=$DIR"/metrics/out/"$OPTARG
       if [ -f $F ]
         then
@@ -62,7 +63,7 @@ while getopts ":hscx:o:" opt; do
       cd ..
       echo "Calculate Convergence" >&2
       cd metrics/Convergence/
-      python Convergence.py >> $F
+      python convergence.py >> $F
       cd ..
       cd ..
       ;;
@@ -83,7 +84,7 @@ while getopts ":hscx:o:" opt; do
     c)
       echo "Calculate Convergence" >&2
       cd metrics/Convergence/
-      python Convergence.py
+      python convergence.py
       cd ..
       cd ..
       ;;
