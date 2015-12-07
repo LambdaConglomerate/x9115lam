@@ -41,7 +41,7 @@ def repulsion(c1, c2, radius):
     return force
 
 def PSOv2(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
-era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5):
+era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
     g = grapher(model, int(retries), 1, changes, "PSOv2")
     emin = 0
     phi_tot = phi_1 + phi_2
@@ -52,7 +52,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5):
     baseRadius = vmax/float(model.numOfDecisions())
 
     s = gens(model, np, personalListSize)
-    st = state(model.name, 'adaptiveGlobalPSO', s, 0, retries, changes, era)
+    st = state(model.name, 'adaptiveGlobalPSO', s, 0, retries, changes, era, out=out)
     st.sb = st.s[0].pos
     bestcan = st.s[0]
     tot_deaths = 0

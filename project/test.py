@@ -15,8 +15,8 @@ Three_D_List = [DTLZ1, DTLZ2, DTLZ3, DTLZ4, DTLZ5, DTLZ6, DTLZ7, Viennet2, Vienn
 num_retries = 30.0
 num_changes = 500.0
 
-for m in [Two_D_List]:
-    for o in [adaptiveGlobalPSO]:
+for m in Two_D_List:
+    for o in [PSOv2]:
         #Absolutely do not pass integers for retries or changes
         if(len(sys.argv) > 1):
           o(m, num_retries, num_changes, out=sys.argv[1])
