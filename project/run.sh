@@ -44,7 +44,7 @@ while getopts ":hscx:o:" opt; do
       python test.py $OPTARG
       echo "Outputting metric data to: "
       DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-      F=$DIR"/"$OPTARG
+      F=$DIR"/metrics/out/"$OPTARG
       if [ -f $F ]
         then
           rm $F

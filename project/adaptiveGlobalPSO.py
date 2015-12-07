@@ -15,7 +15,7 @@ def gens(model, np, personalListSize):
     return cans
 
 def adaptiveGlobalPSO(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
-era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5, out = 'out.txt'):
+era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out = 'out.txt'):
     g = grapher(model, int(retries), 1, changes)
     emin = 0
     phi_tot = phi_1 + phi_2
@@ -74,8 +74,8 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5, out = 'out.txt'):
     for f in global_frontier:
         st.reg_front.append(model.cal_objs_2(f))
         st.norm_front.append(model.cal_objs(f))
-    # g.graph()
-    # g.graphEnergy()
+    g.graph()
+    g.graphEnergy()
     # g.graphTrackedParticle()
     st.termPSO()
 

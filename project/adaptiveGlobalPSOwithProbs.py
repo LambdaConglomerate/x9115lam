@@ -54,15 +54,16 @@ def gens(model, np, personalListSize):
         # cans = [can(pos, vel, pbest, uniq) for pos, vel, pbest, uniq in zip(init_pos, init_vel, init_bpos, init_ids)]
     return cans
 
-def PSOwithProbs(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
-era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
+def adaptiveGlobalPSOwithProbs(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
+era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
     g = grapher(model, int(retries), 1, changes)
     probTracker = [Probs(np) for i in xrange(np)]
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
+    # print "constriction factor ", k
     s = gens(model, np, personalListSize)
-    st = state(model.name, 'adaptiveGlobalPSOwithProbs', s, 0, retries, changes, era)
+    st = state(model.name, 'adaptiveGlobalPSOwithProbs', s, 0, retries, changes, era, out=out)
     st.sb = st.s[0].pos
     bestcan = st.s[0]
     tot_deaths = 0
@@ -115,12 +116,12 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
         st.s = gens(model, np, personalListSize)
         st.sb = st.s[0].pbest
         bestcan = st.s[0]
-        st.t -= 1
-        # print 'final front ', [model.cal_objs_2(f) for f in frontier]
         for f in frontier:
+            st.app_out(str(model.cal_objs_2(f)) + '\n')
             global_frontier.append(f)
             g.addVector(f, int(st.t))
         frontier = runDom(st,model,list())
+        st.t -= 1
         # for v in st.s:
         #     g.addVector(v.pbest[0], v.uniq)
     for f in global_frontier:
@@ -128,7 +129,7 @@ era = 100, np=30, phi_1=2.8, phi_2=1.2, personalListSize=5):
         st.norm_front.append(model.cal_objs(f))
     g.graph()
     g.graphEnergy()
-    g.graphTrackedParticle()
+    # g.graphTrackedParticle()
     st.termPSO()
 
 
