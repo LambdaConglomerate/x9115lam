@@ -58,6 +58,10 @@ while getopts ":hscx:o:" opt; do
       cd ..
       echo "Calculate Spread" >&2
       cd metrics/Spread/
+      if [ ! -d "./Obtained_PF" ]
+        then 
+          mkdir ./Obtained_PF
+      fi
       python SpreadMill.py >> $F
       cd ..
       cd ..
