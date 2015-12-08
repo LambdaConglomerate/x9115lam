@@ -76,7 +76,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out = 'out.txt'):
         st.norm_front.append(model.cal_objs(f))
     g.graph()
     g.graphEnergy()
-    # g.graphTrackedParticle()
+    g.graphTrackedParticle()
     st.termPSO()
 
 def dominate(model, setOfPos, pruning=10):
