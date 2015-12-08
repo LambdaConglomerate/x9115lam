@@ -1,0 +1,41 @@
+=========================
+HYPERVOLUME
+=========================
+Name: PSOv2_DTLZ1.txt HyperVolume: 925052884.361
+Name: PSOv2_DTLZ4.txt HyperVolume: 926870270.129
+Name: PSOv2_DTLZ3.txt HyperVolume: 802776318.86
+Name: PSOv2_DTLZ2.txt HyperVolume: 926839912.54
+=========================
+SPREAD
+=========================
+Optimizer:  PSOv2 
+Model:  DTLZ1.txt 
+Spread:  0.197
+Optimizer:  PSOv2 
+Model:  DTLZ4.txt 
+Spread:  1.113
+Optimizer:  PSOv2 
+Model:  DTLZ3.txt 
+Spread:  0.605
+Optimizer:  PSOv2 
+Model:  DTLZ2.txt 
+Spread:  0.579
+=========================
+CONVERGENCE
+=========================
+Optimizer:  PSOv2 
+Model:  DTLZ1
+Convergence: 42.0345034305
+
+Optimizer:  PSOv2 
+Model:  DTLZ4
+Convergence: 14.3261150182
+
+Optimizer:  PSOv2 
+Model:  DTLZ3
+Convergence: 260.981433412
+
+Optimizer:  PSOv2 
+Model:  DTLZ2
+Convergence: 208.925176533
+
