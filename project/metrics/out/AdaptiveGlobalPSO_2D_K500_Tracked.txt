@@ -1,0 +1,73 @@
+=========================
+HYPERVOLUME
+=========================
+Name: adaptiveGlobalPSO_Fonseca.txt HyperVolume: 1.2103
+Name: adaptiveGlobalPSO_Osyczka2.txt HyperVolume: 2.1071
+Name: adaptiveGlobalPSO_Srinivas.txt HyperVolume: 1.7823
+Name: adaptiveGlobalPSO_Tanaka.txt HyperVolume: 1.5465
+Name: adaptiveGlobalPSO_ZDT1.txt HyperVolume: 2.0565
+Name: adaptiveGlobalPSO_ZDT2.txt HyperVolume: 2.0701
+Name: adaptiveGlobalPSO_ZDT3.txt HyperVolume: 2.0225
+Name: adaptiveGlobalPSO_ZDT4.txt HyperVolume: 2.1564
+=========================
+SPREAD
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca.txt 
+Spread:  1.48
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2.txt 
+Spread:  0.724
+Optimizer:  adaptiveGlobalPSO 
+Model:  Srinivas.txt 
+Spread:  1.254
+Optimizer:  adaptiveGlobalPSO 
+Model:  Tanaka.txt 
+Spread:  1.189
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT1.txt 
+Spread:  0.384
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT2.txt 
+Spread:  0.475
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT3.txt 
+Spread:  0.569
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT4.txt 
+Spread:  0.955
+=========================
+CONVERGENCE
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca
+Convergence: 0.000793169340968
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2
+Convergence: 13.3812060595
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Srinivas
+Convergence: 7.1055538109
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Tanaka
+Convergence: 5.40066078583
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT1
+Convergence: 4.68325048016
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT2
+Convergence: 4.03797664513
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT3
+Convergence: 3.48126886577
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT4
+Convergence: 4.51729189328
+

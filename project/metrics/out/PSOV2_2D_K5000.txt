@@ -1,0 +1,73 @@
+=========================
+HYPERVOLUME
+=========================
+Name: PSOv2_Srinivas.txt HyperVolume: 1.8253
+Name: PSOv2_Fonseca.txt HyperVolume: 1.2444
+Name: PSOv2_Tanaka.txt HyperVolume: 1.5656
+Name: PSOv2_Osyczka2.txt HyperVolume: 2.1193
+Name: PSOv2_ZDT4.txt HyperVolume: 2.1233
+Name: PSOv2_ZDT2.txt HyperVolume: 1.9893
+Name: PSOv2_ZDT3.txt HyperVolume: 1.9956
+Name: PSOv2_ZDT1.txt HyperVolume: 2.0166
+=========================
+SPREAD
+=========================
+Optimizer:  PSOv2 
+Model:  Srinivas.txt 
+Spread:  1.218
+Optimizer:  PSOv2 
+Model:  Fonseca.txt 
+Spread:  1.447
+Optimizer:  PSOv2 
+Model:  Tanaka.txt 
+Spread:  0.949
+Optimizer:  PSOv2 
+Model:  Osyczka2.txt 
+Spread:  0.513
+Optimizer:  PSOv2 
+Model:  ZDT4.txt 
+Spread:  0.787
+Optimizer:  PSOv2 
+Model:  ZDT2.txt 
+Spread:  0.363
+Optimizer:  PSOv2 
+Model:  ZDT3.txt 
+Spread:  0.598
+Optimizer:  PSOv2 
+Model:  ZDT1.txt 
+Spread:  0.688
+=========================
+CONVERGENCE
+=========================
+Optimizer:  PSOv2 
+Model:  Srinivas
+Convergence: 0.132837423801
+
+Optimizer:  PSOv2 
+Model:  Fonseca
+Convergence: 0.0899892254642
+
+Optimizer:  PSOv2 
+Model:  Tanaka
+Convergence: 0.0715674828938
+
+Optimizer:  PSOv2 
+Model:  Osyczka2
+Convergence: 5.07580699366
+
+Optimizer:  PSOv2 
+Model:  ZDT4
+Convergence: 12.1595419171
+
+Optimizer:  PSOv2 
+Model:  ZDT2
+Convergence: 10.5150879794
+
+Optimizer:  PSOv2 
+Model:  ZDT3
+Convergence: 8.94847075544
+
+Optimizer:  PSOv2 
+Model:  ZDT1
+Convergence: 8.10061559355
+
