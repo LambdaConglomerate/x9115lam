@@ -15,6 +15,11 @@ In 2002, Maurice Clerc and James Kennedy [3] explored PSO from the particle's pe
 ## Parameter Tuning ##
 Due to the many parameters of classical PSO, tuning these parameters is a must to get good results. A well-known paper by Anthony Carlisle and Gerry Dozier [4] does just that. Their goal was to give recommendations for the parameters that future researchers could use as a good baseline to get up and running. They found that a good population size was 30, a global neighborhood was better than a local neighborhood, asynchronous updates were less costly than synchronous updates,
 
+# Threats to Validity #
+## External Validity ##
+We only ran the models with either two or three objectives. Today however, there is more focus on testing optimizers with a high number of objectives. We believe that running our optimizers with two and three objectives serves as a baseline which shows some improvement over classical PSO. Also, we were able to visualize the results more easily than with more than three objectives, and can get a better understanding of how our heuristics improve PSO's performance.
+
+
 # References
 [1] http://www.cs.tufts.edu/comp/150GA/homeworks/hw3/_reading6%201995%20particle%20swarming.pdf
 
