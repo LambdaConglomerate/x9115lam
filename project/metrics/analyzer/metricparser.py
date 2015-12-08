@@ -3,38 +3,38 @@ from os import path
 from os.path import isfile
 
 def metric_parser(filepath, separator=" "):
-    print filepath
     assert(isfile(filepath) == True), "file doesn't exist"
     content = []
 
     with open(filepath, "r") as f:
         out = open(filepath.replace(".txt", ".csv"), 'w')
         state = 0
+        s_c = c_c = 1
+        output_array = []
+        output_array.append(["Model", "Hypervolume", "Spread", "Convergence"])
         for line in f:
             if line.startswith("HYPERVOLUME"):
-                out.write("Hypervolume\n\n")
                 state = 1
             elif line.startswith("SPREAD"):
-                out.write("\nSpread\n\n")
                 state = 2
             elif line.startswith("CONVERGENCE"):
-                out.write("\nConvergence\n\n")
                 state = 3
             elif line not in ['\n', '\r\n']:
                 if state == 1 and line.startswith("Name"):
-                    out.write(line.split(" ")[1].split("_")[1].split(".")[0] + "," + line.split(" ")[3])
-                elif state == 2 and line.startswith("Model"):
-                    out.write(line.split("  ")[1].split(".")[0] + ",")
+                    output_array.append([line.split(" ")[1].split("_")[1].split(".")[0], line.split(" ")[3].replace("\n", ""), "", ""])
                 elif state == 2 and line.startswith("Spread"):
-                    out.write(line.split("  ")[1])
-                elif state == 3 and line.startswith("Model"):
-                    out.write(line.split("  ")[1].split(".")[0].replace("\n", "") + ",")
+                    output_array[s_c][2] = line.split("  ")[1].replace("\n", "")
+                    s_c = s_c + 1
                 elif state == 3 and line.startswith("Convergence"):
-                    out.write(line.split(" ")[1])
+                    output_array[c_c][3] = line.split(" ")[1].replace("\n", "")
+                    c_c = c_c + 1
 
+        for out_line in output_array:
+            out.write(out_line[0] + "," + out_line[1] + "," + out_line[2] + "," + out_line[3] + "\n")
+            
         out.close()
 
-files = [f for f in os.listdir("../out/")]
+files = [f for f in os.listdir("../out/") if f.endswith("txt")]
 
 for f in files:
     metric_parser("../out/" + f)
