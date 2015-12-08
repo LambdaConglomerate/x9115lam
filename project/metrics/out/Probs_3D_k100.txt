@@ -1,0 +1,81 @@
+=========================
+HYPERVOLUME
+=========================
+Name: PSOProbs_DTLZ1.txt HyperVolume: 5389608120.68
+Name: PSOProbs_DTLZ2.txt HyperVolume: 5390381069.92
+Name: PSOProbs_DTLZ3.txt HyperVolume: 5362661957.76
+Name: PSOProbs_DTLZ4.txt HyperVolume: 5390375215.5
+Name: PSOProbs_DTLZ5.txt HyperVolume: 5393204403.33
+Name: PSOProbs_DTLZ6.txt HyperVolume: 5433485461.45
+Name: PSOProbs_DTLZ7.txt HyperVolume: 5373788315.18
+Name: PSOProbs_Viennet2.txt HyperVolume: 5390380952.43
+Name: PSOProbs_Viennet3.txt HyperVolume: 5390347053.41
+=========================
+SPREAD
+=========================
+Optimizer:  PSOProbs 
+Model:  DTLZ1.txt 
+Spread:  0.838
+Optimizer:  PSOProbs 
+Model:  DTLZ2.txt 
+Spread:  0.904
+Optimizer:  PSOProbs 
+Model:  DTLZ3.txt 
+Spread:  0.704
+Optimizer:  PSOProbs 
+Model:  DTLZ4.txt 
+Spread:  1.598
+Optimizer:  PSOProbs 
+Model:  DTLZ5.txt 
+Spread:  1.275
+Optimizer:  PSOProbs 
+Model:  DTLZ6.txt 
+Spread:  1.209
+Optimizer:  PSOProbs 
+Model:  DTLZ7.txt 
+Spread:  1.165
+Optimizer:  PSOProbs 
+Model:  Viennet2.txt 
+Spread:  0.762
+Optimizer:  PSOProbs 
+Model:  Viennet3.txt 
+Spread:  1.196
+=========================
+CONVERGENCE
+=========================
+Optimizer:  PSOProbs 
+Model:  DTLZ1
+Convergence: 69.4921683317
+
+Optimizer:  PSOProbs 
+Model:  DTLZ2
+Convergence: 26.792789179
+
+Optimizer:  PSOProbs 
+Model:  DTLZ3
+Convergence: 243.299641061
+
+Optimizer:  PSOProbs 
+Model:  DTLZ4
+Convergence: 182.055994836
+
+Optimizer:  PSOProbs 
+Model:  DTLZ5
+Convergence: 146.00402915
+
+Optimizer:  PSOProbs 
+Model:  DTLZ6
+Convergence: 119.182443888
+
+Optimizer:  PSOProbs 
+Model:  DTLZ7
+Convergence: 105.234118556
+
+Optimizer:  PSOProbs 
+Model:  Viennet2
+Convergence: 86.9191516797
+
+Optimizer:  PSOProbs 
+Model:  Viennet3
+Convergence: 74.4725295512
+

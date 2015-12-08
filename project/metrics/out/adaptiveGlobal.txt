@@ -1,0 +1,17 @@
+=========================
+HYPERVOLUME
+=========================
+Name: adaptiveGlobalPSO_DTLZ1.txt HyperVolume: 3674.5504
+=========================
+SPREAD
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ1.txt 
+Spread:  0.999
+=========================
+CONVERGENCE
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ1
+Convergence: 16.1229251657
+

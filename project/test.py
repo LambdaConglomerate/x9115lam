@@ -13,7 +13,7 @@ Two_D_List = [Osyczka2, Fonseca, ZDT1, ZDT2, ZDT3, ZDT4, Tanaka, Srinivas]
 Three_D_List = [DTLZ1, DTLZ2, DTLZ3, DTLZ4, DTLZ5, DTLZ6, DTLZ7, Viennet2, Viennet3]
 
 num_retries = 30.0
-num_changes = 500.0
+num_changes = 100.0
 
 for m in Three_D_List:
     for o in [adaptiveGlobalPSO]:
