@@ -1,33 +1,73 @@
 =========================
 HYPERVOLUME
 =========================
-Name: PSOProbs_Fonseca.txt HyperVolume: 1.2753
-Name: PSOProbs_Osyczka2.txt HyperVolume: 2.1368
-Name: PSOProbs_ZDT1.txt HyperVolume: 2.1122
+Name: PSOProbs_Fonseca.txt HyperVolume: 1.3927
+Name: PSOProbs_Osyczka2.txt HyperVolume: 2.1595
+Name: PSOProbs_Srinivas.txt HyperVolume: 1.939
+Name: PSOProbs_Tanaka.txt HyperVolume: 1.6209
+Name: PSOProbs_ZDT1.txt HyperVolume: 2.1348
+Name: PSOProbs_ZDT2.txt HyperVolume: 2.1438
+Name: PSOProbs_ZDT3.txt HyperVolume: 2.0626
+Name: PSOProbs_ZDT4.txt HyperVolume: 2.2209
 =========================
 SPREAD
 =========================
 Optimizer:  PSOProbs 
 Model:  Fonseca.txt 
-Spread:  1.281
+Spread:  1.25
 Optimizer:  PSOProbs 
 Model:  Osyczka2.txt 
-Spread:  0.872
+Spread:  0.862
+Optimizer:  PSOProbs 
+Model:  Srinivas.txt 
+Spread:  1.227
+Optimizer:  PSOProbs 
+Model:  Tanaka.txt 
+Spread:  1.529
 Optimizer:  PSOProbs 
 Model:  ZDT1.txt 
-Spread:  0.767
+Spread:  0.861
+Optimizer:  PSOProbs 
+Model:  ZDT2.txt 
+Spread:  0.795
+Optimizer:  PSOProbs 
+Model:  ZDT3.txt 
+Spread:  0.944
+Optimizer:  PSOProbs 
+Model:  ZDT4.txt 
+Spread:  1.194
 =========================
 CONVERGENCE
 =========================
 Optimizer:  PSOProbs 
 Model:  Fonseca
-Convergence: 0.00443174395095
+Convergence: 0.00402283373256
 
 Optimizer:  PSOProbs 
 Model:  Osyczka2
-Convergence: 17.1320601507
+Convergence: 14.2547375047
+
+Optimizer:  PSOProbs 
+Model:  Srinivas
+Convergence: 7.40242185441
+
+Optimizer:  PSOProbs 
+Model:  Tanaka
+Convergence: 5.80925641073
 
 Optimizer:  PSOProbs 
 Model:  ZDT1
-Convergence: 10.5324365753
+Convergence: 4.95718009149
+
+Optimizer:  PSOProbs 
+Model:  ZDT2
+Convergence: 4.36397205998
+
+Optimizer:  PSOProbs 
+Model:  ZDT3
+Convergence: 3.83687194014
+
+Optimizer:  PSOProbs 
+Model:  ZDT4
+Convergence: 5.16771791245
 
