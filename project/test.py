@@ -15,7 +15,7 @@ Three_D_List = [DTLZ1, DTLZ2, DTLZ3, DTLZ4, DTLZ5, DTLZ6, DTLZ7, Viennet2, Vienn
 num_retries = 1.0
 num_changes = 5000.0
 
-for m in Two_D_List:
+for m in Three_D_List:
     for o in [PSOProbs]:
         #Absolutely do not pass integers for retries or changes
         if(len(sys.argv) > 1):
