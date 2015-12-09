@@ -22,7 +22,7 @@ class Probs(object):
         s.particleProbs[index] = newProb
 
     def decreaseProb(s, index):
-        oldProb = s.particleProbs[index]
+        oldProb = s.particleProbs[ixndex]
         newProb = oldProb * s.scaling
         sumOfOldProbs = sum(s.particleProbs) - oldProb
         scalingFactor = (sumOfOldProbs + (oldProb - newProb))/sumOfOldProbs

@@ -124,7 +124,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
                     num_deaths += 1
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
-            g.trackParticle(st.s[0].pos, 0, st.k)
+            #g.trackParticle(st.s[0].pos, 0, st.k)
             # for v in st.s:
             #     g.addVector(v.pos, v.uniq)
             runDom(st, model, frontier)
@@ -148,7 +148,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
         st.norm_front.append(model.cal_objs(f))
     g.graph()
     g.graphEnergy()
-    g.graphTrackedParticle()
+    #g.graphTrackedParticle()
     st.termPSO()
 
 
