@@ -1,11 +1,2 @@
-Hypervolume
-
-DTLZ1,3674.5504
-
-Spread
-
-DTLZ1,0.999
-
-Convergence
-
-DTLZ1,16.1229251657
+Model,Hypervolume,Spread,Convergence
+DTLZ1,3674.5504,0.999,16.1229251657

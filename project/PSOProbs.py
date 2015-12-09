@@ -22,7 +22,7 @@ class Probs(object):
         s.particleProbs[index] = newProb
 
     def decreaseProb(s, index):
-        oldProb = s.particleProbs[index]
+        oldProb = s.particleProbs[ixndex]
         newProb = oldProb * s.scaling
         sumOfOldProbs = sum(s.particleProbs) - oldProb
         scalingFactor = (sumOfOldProbs + (oldProb - newProb))/sumOfOldProbs
@@ -63,7 +63,7 @@ era = 100, np=60, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
     k = (2.0/math.fabs(2.0 - (phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
     # print "constriction factor ", k
     s = gens(model, np, personalListSize)
-    st = state(model.name, 'PSOProbs', s, 0, retries, changes, era, out=out)
+    st = state(model.name, '60NP_PSOProbs', s, 0, retries, changes, era, out=out)
     st.sb = st.s[0].pos
     bestcan = st.s[0]
     tot_deaths = 0
@@ -108,7 +108,7 @@ era = 100, np=60, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
                     probTracker[can.uniq].decreaseProb(currentParticle)
             #probTracker[0].printProbs()
             tot_deaths += num_deaths
-            g.trackParticle(st.s[0].pos, 0, st.k)
+            #g.trackParticle(st.s[0].pos, 0, st.k)
             # for v in st.s:
             #     g.addVector(v.pos, v.uniq)
             runDom(st, model, frontier)
@@ -129,7 +129,7 @@ era = 100, np=60, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
         st.norm_front.append(model.cal_objs(f))
     g.graph()
     g.graphEnergy()
-    g.graphTrackedParticle()
+    #g.graphTrackedParticle()
     st.termPSO()
 
 

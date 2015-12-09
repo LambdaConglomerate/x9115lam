@@ -1,11 +1,2 @@
-Hypervolume
-
-Fonseca,1.184
-
-Spread
-
-Fonseca,0.975
-
-Convergence
-
-Fonseca,0.0156216116298
+Model,Hypervolume,Spread,Convergence
+Fonseca,1.184,0.975,0.0156216116298

@@ -42,7 +42,7 @@ def repulsion(c1, c2, radius):
 
 def PSOv2(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
 era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
-    g = grapher(model, int(retries), 1, changes, "PSOv2-K" + str(changes))
+    #g = grapher(model, int(retries), 1, changes, "PSOv2" + str(changes))
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs((2.0 - phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
@@ -112,7 +112,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
                         for i in xrange(len(can.pos)):
                             can.pos = model.singleRetry(can.pos, i)
 
-                        #other particle will repulse the opposite direction
+                        #other particle will repulse the opposite direction    
                         c.vel = [-repulsedVelocity * vmax + vel for vel in c.vel]
                         c.pos = [pos + vel for pos, vel in zip(c.pos, c.vel)]
                         for i in xrange(len(c.pos)):
@@ -124,7 +124,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
                     num_deaths += 1
                 model.updateObjectiveMaxMin(can.pos)
             tot_deaths += num_deaths
-            # g.trackParticle(st.s[0].pos, 0, st.k)
+            #g.trackParticle(st.s[0].pos, 0, st.k)
             # for v in st.s:
             #     g.addVector(v.pos, v.uniq)
             runDom(st, model, frontier)
@@ -148,7 +148,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
         st.norm_front.append(model.cal_objs(f))
     g.graph()
     g.graphEnergy()
-    # g.graphTrackedParticle()
+    g.graphTrackedParticle()
     st.termPSO()
 
 
