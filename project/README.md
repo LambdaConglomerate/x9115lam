@@ -54,7 +54,7 @@ This process is used twice in each run. First it is used against a list of perso
 Once the personal bests have all been run a global frontier is run through IBEA, that frontier is made up of a set of 10 positions that are either arrived at randomly on the first run, or are left over from the last run.  In addition to that set of 10 positions are another 30 positions that are taken as the best positions from each particle's personal best list.  When the set of positions are setnt in to IBEA there are 40 positions and those positions are pared to 10.
 
 ##Objective Minimum Maximum Update##
-We use a continuous objective minimum maximum update in each run. We prime with 10 vectors and if the new maximum or minimum is encountered the overall minimum and maximum is updated
+We use a continuous objective minimum maximum update in each run. We prime with 10 vectors and if the new maximum or minimum is encountered the overall minimum and maximum is updated.
 
 
 ##Novel Heuristics##
