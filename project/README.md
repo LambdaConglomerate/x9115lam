@@ -270,7 +270,7 @@ Future work could include using these heuristics in other versions of PSO includ
 
 #Conclusions#
 
-We have demonstrated two unique heuristics of PSO adapting them to adaptive PSO with IBEA domination. The probabilistic heuristic and V2-repulsion showed promising results and increased the performance of certain aspects of the optimizer.
+We have demonstrated two unique heuristics of PSO adapting them to adaptive PSO with IBEA domination. The probabilistic heuristic and V2-repulsion showed promising results and increased the performance of certain aspects of the optimizer. We have also shown certain optimizers are useful for certain models and the no free lunch theorem holds.
 
 #Appendix#
 
