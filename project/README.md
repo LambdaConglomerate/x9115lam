@@ -231,15 +231,15 @@ There is again a mix, with no optimizer that has a consistently higher or lower 
 
 ##3d Objective 100 Step Run##
 
-![100 Convergence](./metrics/pics/2D_K100_Convergence.png)
+![100 Convergence](./metrics/pics/3D_K100_Convergence.png)
 ###Convergence####
 For most of the models, the V2 heuristic performed much better than the other optimizers. But on DTLZ3, V2 had a significantly higher convergence.
 
-![100 Hypervolume](./metrics/pics/2D_K100_Hypervolume.png)
+![100 Hypervolume](./metrics/pics/3D_K100_Hypervolume.png)
 ###Hypervolume###
 The probability heuristic was consistently slightly higher than the base optimizer. The V2 heuristic was slightly higher than the other two for DTLZ3, but was strangely very low for the rest.
 
-![100 Spread](./metrics/pics/2D_K100_Spread.png)
+![100 Spread](./metrics/pics/3D_K100_Spread.png)
 ###Spread###
 As with all the other configurations, all three optimizers had around the same spread, with none consistently higher or lower than the other two.
 
