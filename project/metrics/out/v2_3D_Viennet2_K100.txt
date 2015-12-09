@@ -1,0 +1,17 @@
+=========================
+HYPERVOLUME
+=========================
+Name: PSOv2_Viennet2.txt HyperVolume: 0.0
+=========================
+SPREAD
+=========================
+Optimizer:  PSOv2 
+Model:  Viennet2.txt 
+Spread:  0.747
+=========================
+CONVERGENCE
+=========================
+Optimizer:  PSOv2 
+Model:  Viennet2
+Convergence: 0.230777769074
+
