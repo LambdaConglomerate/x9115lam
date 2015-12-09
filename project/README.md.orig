@@ -1,11 +1,7 @@
 # CSC 591 Final Project Report #
 
 # Introduction #
-<<<<<<< HEAD
-Particle swarm optimization (PSO) is an optimization technique inspired by the "murmurations" of swarms of birds. Each candidate in a PSO swarm relies on its own knowledge of the domain space as well as the collective knowledge of the swarm. The simple baseline implementation of PSO provided by the authors [1](http://www.cs.tufts.edu/comp/150GA/homeworks/hw3/_reading6%201995%20particle%20swarming.pdf) to first coin the technique leaves plenty of opportunities for the addition of heuristics, which may improve the performance of PSO. We experimented with a few tweaks and heuristics to see if they give better results than the classical version by Kennedy and Eberhart. The two heuristics 
-=======
-Particle swarm optimization (PSO) is an optimization technique inspired by the "murmurations" of swarms of birds. Each candidate in a PSO swarm relies on its own knowledge of the domain space as well as the collective knowledge of the swarm. The simple baseline implementation of PSO provided by the authors [1] to first coin the technique leaves plenty of opportunities for the addition of heuristics, which may improve the performance of PSO. We experimented with a few tweaks and heuristics to see if they give better results than the classical version by Kennedy and Eberhart. The two heuristics
->>>>>>> 228ab6b644701ff0565d14645578b83ee336fbb5
+Particle swarm optimization (PSO) is an optimization technique inspired by the "murmurations" of swarms of birds. Each candidate in a PSO swarm relies on its own knowledge of the domain space as well as the collective knowledge of the swarm. The simple baseline implementation of PSO provided by the authors [1] to first coin the technique leaves plenty of opportunities for the addition of heuristics, which may improve the performance of PSO. We experimented with a few tweaks and heuristics to see if they give better results than the classical version by Kennedy and Eberhart. The two heuristics 
 
 # Related Work #
 ## The Classical Model ##
@@ -65,7 +61,7 @@ We use a continuous objective minimum maximum update in each run. We prime with 
 
 ###Probablistic###
 
-The heuristic replaces the personal best value with a probabilistic decision for the overall best particle. This is an extension of reinforcement learning.
+The heuristic replaces the personal best value with a probabilistic decision for the overall best particle. This is an extension of reinforcement learning. 
 
 The basic premise involves maintaining a list of probabilities as member for each particle. The length of this list is the number of particles in the whole swarm and represent all the other particles in the swarm. Each member of the list is a probability representing how well the particle did when using that particle as a personal best in the velocity update function. Below is code for this representation:
 
@@ -110,23 +106,23 @@ class Probs(object):
 Each particle has on associated Prob object. To initialize we have a uniform probability for selecting another particle for the update function. The scaling factor is a discounting factor for increasing and decreasing probabilities. Initially the first particle selected by each particle is random according the uniform distribution. If the energy of that particle is better after the update the probabilities will be increased so the likelihood selecting that particle during the next position update is increased. Similarly, if the energy is worse the probabilities are decreased as it becomes less likely that particle is selected during the next update phase. During particle selection the particles associated with better energies are more likely to be selected and those associated with worse energies are less likely selected. Conceptually this creates a personal global best for each particle. Below is a summary of the process:
 
 ```
-	Initialize all probabilities uniformly
-
+	Initialize all probabilities uniformly 
+    
     Loop
     	Radomly select particle as pbest
-        Update position
+        Update position 
         Is position better than before:
         	Increase probability of selecting this particle
         Is position worse than before:
         	Decrease probability of selecting this particle   
-
+       
 ```
 
 ###V2 - Repulsion###
 
 In adaptive PSO particles will usually converge and lead to a less diverse pareto frontier. The electron repulsion heuristic is used to keep particles separated and exhibit more divergent behavior while also maintaining the useful properties of adaptive PSO. Each particle repulses other particles based on Coulomb's law so the repulsion is inversely proportional to the distance between the particles. After each update of position each particle goes through a repulsion loop for each particle and gets slightly nudged away from other particles. There is an additional mechanism to increase the radius(weight) of a particle if it gets too close to another particle to increase the repulsion. Below is the code to handle this logic:
 
-```python
+```python 
 def distance(v1, v2):
     return sum([(a + b)**2.0 for a, b in zip(v1, v2)])**(1/2.0)
 
@@ -140,16 +136,16 @@ Below is the repulsion loop which runs after adaptive PSO position update:
 
 ```python
 for c in st.s:
-    if c.uniq in uniqTracker:
+    if c.uniq in uniqTracker: 
         continue
     else:
         radius = distance(c.pos, can.pos)
-
+      
         if(radius < baseRadius):
             newRadius = (c.radius + can.radius)**(0.5)
             c.radius = newRadius
             can.radius = newRadius
-
+              
         repulsedVelocity = repulsion(c, can, radius)
         can.vel = [repulsedVelocity * vmax + vel for vel in can.vel]
         can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
@@ -205,35 +201,26 @@ Spread perfomance varied based on model with some of the optimizers doing better
 ##3d Objective 500 Step Run##
 
 ###Convergence####
-The probability and V2 heuristics had worse convergence on DTLZ1-3, but better convergence on DTLZ4-7 and on Viennet2 and 3.
 
 ###Hypervolume###
-The probability heuristic had a hypervolume than the base optimizer, but the V2 heuristic had lower hypervolume, especially with DTLZ5-7 and Viennet2 and 3.
 
 ###Spread###
-As in the 2D objectives, there was no optimizer which consistently had a higher or lower spread than another.
 
 ##2d Objective 100 Step Run##
 
 ###Convergence####
-One interesting observation to note is that Fonseca had an extremely low convergence, meaning that the frontiers of all three optimizers converged to the true pareto frontiers. For the other models, the base optimizer has the lowest convergence, followed by the probability heuristic and then the V2 heuristic.
 
 ###Hypervolume###
-The base optimizer generally had the lowest hypervolume, followed by the probability heuristic and then the V2 heuristic.
 
 ###Spread###
-There is again a mix, with no optimizer that has a consistently higher or lower spread than the others.
 
 ##3d Objective 100 Step Run##
 
 ###Convergence####
-For most of the models, the V2 heuristic performed much better than the other optimizers. But on DTLZ3, V2 had a significantly higher convergence.
 
 ###Hypervolume###
-The probability heuristic was consistently slightly higher than the base optimizer. The V2 heuristic was slightly higher than the other two for DTLZ3, but was strangely very low for the rest.
 
 ###Spread###
-As with all the other configurations, all three optimizers had around the same spread, with none consistently higher or lower than the other two.
 
 ##Objective and Decision Space Analysis##
 
@@ -276,14 +263,14 @@ Also, because we dynamically adjust the objective minimum and maximum values, an
 ## External Validity ##
 We only ran the models with either two or three objectives. Today however, there is more focus on testing optimizers with a high number of objectives. We believe that running our optimizers with two and three objectives serves as a baseline which shows some improvement over Adaptive PSO. Also, we were able to visualize the results more easily than with more than three objectives, and can get a better understanding of how our heuristics improve PSO's performance.
 
-Another threat is the fact that we have relied on true frontier data from jMetal.  It seems unlikely that these frontiers are incorrect, but we did find some odd inconsistencies on performance against the true frontiers posted on their site.  A good example of that can be found at this [link](https://github.com/LambdaConglomerate/x9115lam/blob/master/project/pics/PSOProbsK500.0ZDT1Objectives.png),  The true frontier from jMetal is shown in grey below the frontier found by our Probablistic PSO implementation.  This seemed to be a boundary for all of our optimizers, that made us wonder whether jMetal may have implemented ZDT1 differently than we did.  In any cases where our implementation of models deviated from jMetal our metrics would have validity issues.
+Another threat is the fact that we have relied on true frontier data from jMetal.  It seems unlikely that these frontiers are incorrect, but we did find some odd inconsistencies on performance against the true frontiers posted on their site.  A good example of that can be found at this [link](https://github.com/LambdaConglomerate/x9115lam/blob/master/project/pics/PSOProbsK500.0ZDT1Objectives.png),  The true frontier from jMetal is shown in grey below the frontier found by our Probablistic PSO implementation.  This seemed to be a boundary for all of our optimizers, that made us wonder whether jMetal may have implemented ZDT1 differently than we did.  In any cases where our implementation of models deviated from jMetal our metrics would have validity issues. 
 
 As mentioned above, all of the metrics that we used other than convergence were written by other teams, so any inconsistencies or issues in their code would also affect our own work.   
 
 #Future Work#
-The heuristics we used added complexity to the PSO algorithm. Future work could decrease this complexity. For example, the probability heuristic could be implemented without probability measurements but instead a count for each particle indicidating it's usefulness. Negative values could be associated with particles that make energy worse while positive values could indicate a particle makes and energy better. And instead of taking a probabilistic determination for best particle take the max of the values. This could decrease the complexity of the algorithm.
+The heuristics we used added complexity to the PSO algorithm. Future work could decrease this complexity. For example, the probability heuristic could be implemented without probability measurements but instead a count for each particle indicidating it's usefulness. Negative values could be associated with particles that make energy worse while positive values could indicate a particle makes and energy better. And instead of taking a probabilistic determination for best particle take the max of the values. This could decrease the complexity of the algorithm. 
 
-Future work could include using these heuristics in other versions of PSO including classical PSO.  We implemented the beginnings of those PSO's in our
+Future work could include using these heuristics in other versions of PSO including classical PSO.  We implemented the beginnings of those PSO's in our 
 repo.  We believe that overall our setup could be used as a testharness to work on a large number of different PSO heuristic implementations.  The running of the system, logging, metric orchestration, and quality of the testharness itself could be improved considerably with more time and effort.
 
 #Conclusions#
