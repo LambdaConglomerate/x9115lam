@@ -222,6 +222,37 @@ Spread perfomance varied based on model with some of the optimizers doing better
 
 ###Spread###
 
+##Objective and Decision Space Analysis##
+
+###DTLZ1 Objective Space###
+
+[DTLZ1 Probs 500](./pics/PSOProbsK500.0DTLZ1Objectives.png)
+[DTLZ1 Base 500](./pics/adaptiveFlobalPSODTLZ1Objectives.png)
+
+Comparing these two graphs of the objectives for DTLZ1 shows that the probabilisitc heuristic came much closer to the to the paretor frontier(in blue) than the base adaptive global PSO. This can be seen by the scale of the axis.
+
+###DTLZ6 Objective Space###
+
+[DTLZ6 Probs 500](./pics/PSOProbsK500.0DTLZ6Objectives.png)
+[DTLZ6 Base 500](./pics/adaptiveFlobalPSODTLZ6Objectives.png)
+
+[DTLZ6 Probs Decisions 500](./pics/PSOProbsK500.0DTLZ6Decisions.png)
+[DTLZ6 Base Decisions 500](./pics/adaptiveFlobalPSODTLZ6Decisions.png)
+
+Here we observe probs producing much right clumps than the base adaptive method. Decisions also show this same pattern
+
+###DTLZ2 Objective Space###
+
+[DTLZ2 Probs 500](./pics/PSOProbsK500.0DTLZ2Objectives.png)
+[DTLZ2 Base 500](./pics/adaptiveFlobalPSODTLZ2Objectives.png)
+
+[DTLZ2 Probs Decisions 500](./pics/PSOProbsK500.0DTLZ2Decisions.png)
+[DTLZ2 Base Decisions 500](./pics/adaptiveFlobalPSODTLZ2Decisions.png)
+
+The probabilistic heuristic optimizing DTLZ2 shows this same phenomenon of clumping and overall getting better results for spread, convergence, and hypevolume.
+
+Pictures of all our runs are available in the pics folder.
+
 
 # Threats to Validity #
 ##Internal Validity##
