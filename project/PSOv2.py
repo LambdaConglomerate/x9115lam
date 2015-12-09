@@ -1,7 +1,7 @@
 from Models import *
 from random import *
 from state import *
-from grapher import *
+#from grapher import *
 import sys, random, math, copy, operator
 
 class can(can):
@@ -42,7 +42,7 @@ def repulsion(c1, c2, radius):
 
 def PSOv2(model, retries, changes, graph=False, goal = 0.01, pat = 100, \
 era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
-    g = grapher(model, int(retries), 1, changes, "PSOv2" + str(changes))
+    #g = grapher(model, int(retries), 1, changes, "PSOv2" + str(changes))
     emin = 0
     phi_tot = phi_1 + phi_2
     k = (2.0/math.fabs((2.0 - phi_tot) - math.sqrt(phi_tot**2.0 - 4.0*phi_tot)))
@@ -139,15 +139,15 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
         # print 'final front ', [model.cal_objs_2(f) for f in frontier]
         for f in frontier:
             global_frontier.append(f)
-            g.addVector(f, int(st.t))
+            #g.addVector(f, int(st.t))
         frontier = runDom(st,model,list())
         # for v in st.s:
         #     g.addVector(v.pbest[0], v.uniq)
     for f in global_frontier:
         st.reg_front.append(model.cal_objs_2(f))
         st.norm_front.append(model.cal_objs(f))
-    g.graph()
-    g.graphEnergy()
+    #g.graph()
+    #g.graphEnergy()
     #g.graphTrackedParticle()
     st.termPSO()
 
