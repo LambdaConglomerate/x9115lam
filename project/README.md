@@ -243,7 +243,7 @@ The probability heuristic was consistently slightly higher than the base optimiz
 ###Spread###
 As with all the other configurations, all three optimizers had around the same spread, with none consistently higher or lower than the other two.
 
-##Objective and Decision Space Analysis##
+##Objective Space Analysis##
 
 ###DTLZ1 Objective Space###
 
@@ -257,18 +257,13 @@ Comparing these two graphs of the objectives for DTLZ1 shows that the probabilis
 ![DTLZ6 Probs 500](./pics/PSOProbsK500.0DTLZ6Objectives.png)
 ![DTLZ6 Base 500](./pics/adaptiveGlobalPSODTLZ6Objectives.png)
 
-![DTLZ6 Probs Decisions 500](./pics/PSOProbsK500.0DTLZ6Decisions.png)
-![DTLZ6 Base Decisions 500](./pics/adaptiveGlobalPSODTLZ6Decisions.png)
 
-Here we observe probs producing much right clumps than the base adaptive method. Decisions also show this same pattern
+Here we observe probs producing much right clumps than the base adaptive method. 
 
 ###DTLZ2 Objective Space###
 
 ![DTLZ2 Probs 500](./pics/PSOProbsK500.0DTLZ2Objectives.png)
 ![DTLZ2 Base 500](./pics/adaptiveGlobalPSODTLZ2Objectives.png)
-
-![DTLZ2 Probs Decisions 500](./pics/PSOProbsK500.0DTLZ2Decisions.png)
-![DTLZ2 Base Decisions 500](./pics/adaptiveGlobalPSODTLZ2Decisions.png)
 
 The probabilistic heuristic optimizing DTLZ2 shows this same phenomenon of clumping and overall getting better results for spread, convergence, and hypervolume.
 
