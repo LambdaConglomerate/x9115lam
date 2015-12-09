@@ -159,7 +159,7 @@ for c in st.s:
 
 ## Metrics ##
 
-The overall metric structure used, was a combination of the canonical metrics used for many papers in the field (Spread, Hypvervolume), and Convergence. True Pareto Frontiers were taken from [jMetal](http://jmetal.sourceforge.net/problems.html).
+The overall metric structure used was a combination of the canonical metrics used for many papers in the field: Spread, Hypervolume, and Convergence. True Pareto Frontiers were taken from [jMetal](http://jmetal.sourceforge.net/problems.html).
 
 ### Convergence ###
 
