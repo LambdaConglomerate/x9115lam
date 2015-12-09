@@ -256,21 +256,30 @@ Pictures of all our runs are available in the pics folder.
 
 # Threats to Validity #
 ##Internal Validity##
-Because we append the list of frontiers for each retry to our global list, we run the metrics on this cumulative list. We potentially lose the variance created by each retry. 
+Because we append the list of frontiers for each retry to our global list, and then we run the metrics on this cumulative list. Normally each retry would add an element of variance to running the optimizers, but because of the fact that each retry is another input into a larger frontier we do not get the benefit of running multiple retries and starting from random positions for entire fronts.  This makes our evidence more thin than it should be for the amount of sheer run time that we ran the optimizers.   
 
-Also, because we dynamically adjust the objective minimum and maximum values, and the hypervolume metric values were calculated from the normalized mins/maxs, the hypervolume values may not be consistent. However, this threat only appears on the hypervolume metric values, and not for any of the DTLZ models. 
+Also, because we dynamically adjust the objective minimum and maximum values, and the hypervolume metric values were calculated from the normalized mins/maxs, the hypervolume values may not be consistent across optimizers. This problem is brought on in any situation where the output from the optimzier is a normalized front.  Luckily only one of our metrics actually uses a normalized front, HyperVolume. Furthermore, the Hypervolume metric does not use a normalized front for DTLZ, so at least those metrics are shielded from this issue.
 
 ## External Validity ##
-We only ran the models with either two or three objectives. Today however, there is more focus on testing optimizers with a high number of objectives. We believe that running our optimizers with two and three objectives serves as a baseline which shows some improvement over classical PSO. Also, we were able to visualize the results more easily than with more than three objectives, and can get a better understanding of how our heuristics improve PSO's performance.
+We only ran the models with either two or three objectives. Today however, there is more focus on testing optimizers with a high number of objectives. We believe that running our optimizers with two and three objectives serves as a baseline which shows some improvement over Adaptive PSO. Also, we were able to visualize the results more easily than with more than three objectives, and can get a better understanding of how our heuristics improve PSO's performance.
+
+Another threat is the fact that we have relied on true frontier data from jMetal.  It seems unlikely that these frontiers are incorrect, but we did find some odd inconsistencies on performance against the true frontiers posted on their site.  A good example of that can be found at this [link](https://github.com/LambdaConglomerate/x9115lam/blob/master/project/pics/PSOProbsK500.0ZDT1Objectives.png),  The true frontier from jMetal is shown in grey below the frontier found by our Probablistic PSO implementation.  This seemed to be a boundary for all of our optimizers, that made us wonder whether jMetal may have implemented ZDT1 differently than we did.  In any cases where our implementation of models deviated from jMetal our metrics would have validity issues. 
+
+As mentioned above, all of the metrics that we used other than convergence were written by other teams, so any inconsistencies or issues in their code would also affect our own work.   
 
 #Future Work#
-The heuristics we used added complexity to the PSO algorithm. Future work could decrease this complexity. For example, the probability heuristic could be implemented without probability measurements but instead a count for each particle indicidating it's usefulness. For instance, negative values could be associated with particles that make energy worse while positive values could indicate a particle makes and energy better. And instead of taking a probabilistic determination for best particle take the max of the values. This could decrease the complexity of the algorithm. 
+The heuristics we used added complexity to the PSO algorithm. Future work could decrease this complexity. For example, the probability heuristic could be implemented without probability measurements but instead a count for each particle indicidating it's usefulness. Negative values could be associated with particles that make energy worse while positive values could indicate a particle makes and energy better. And instead of taking a probabilistic determination for best particle take the max of the values. This could decrease the complexity of the algorithm. 
 
-Future work could include using these heuristics in other versions of PSO including classical PSO.
+Future work could include using these heuristics in other versions of PSO including classical PSO.  We implemented the beginnings of those PSO's in our 
+repo.  We believe that overall our setup could be used as a testharness to work on a large number of different PSO heuristic implementations.  The running of the system, logging, metric orchestration, and quality of the testharness itself could be improved considerably with more time and effort.
 
 #Conclusions#
 
+<<<<<<< HEAD
 We have demonstrated two unique heuristics of PSO adapting them to adaptive PSO with IBEA domination. The probabilistic heuristic and V2-repulsion showed promising results and increased the performance of certain aspects of the optimizer. We have also shown certain optimizers are useful for certain models and the no free lunch theorem holds.
+=======
+We have demonstrated two unique heuristics of PSO adapting them to adaptive PSO with IBEA domination. The probabilistic heuristic and V2-repulsion showed promising results and increased the performance of certain aspects of the optimizer.  
+>>>>>>> c853a7a6ba2d180a8614759663fbaf661ea5007e
 
 #Appendix#
 
