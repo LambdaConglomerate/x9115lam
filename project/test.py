@@ -15,11 +15,7 @@ Three_D_List = [DTLZ1, DTLZ2, DTLZ3, DTLZ4, DTLZ5, DTLZ6, DTLZ7, Viennet2, Vienn
 num_retries = 30.0
 num_changes = 100.0
 
-<<<<<<< HEAD
 for m in [Viennet3]:
-=======
-for m in [DTLZ7]:
->>>>>>> d93a7636464d00a2701dcd7aa69dc56f1b3a4ea0
     for o in [PSOv2]:
         #Absolutely do not pass integers for retries or changes
         if(len(sys.argv) > 1):
