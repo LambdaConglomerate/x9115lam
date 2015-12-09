@@ -112,7 +112,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
                         for i in xrange(len(can.pos)):
                             can.pos = model.singleRetry(can.pos, i)
 
-                        #other particle will repulse the opposite direction
+                        #other particle will repulse the opposite direction    
                         c.vel = [-repulsedVelocity * vmax + vel for vel in c.vel]
                         c.pos = [pos + vel for pos, vel in zip(c.pos, c.vel)]
                         for i in xrange(len(c.pos)):
