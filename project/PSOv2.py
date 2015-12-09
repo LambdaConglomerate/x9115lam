@@ -1,7 +1,7 @@
 from Models import *
 from random import *
 from state import *
-#from grapher import *
+from grapher import *
 import sys, random, math, copy, operator
 
 class can(can):
@@ -90,23 +90,23 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
                 #tracks to make sure we are not doubling up
                 uniqTracker.append(can.uniq)
                 for c in st.s:
-                    if c.uniq in uniqTracker: 
+                    if c.uniq in uniqTracker:
                         continue
                     else:
                         radius = distance(c.pos, can.pos)
-                        #stop crowding my space 
+                        #stop crowding my space
                         if(radius < baseRadius):
                             newRadius = (c.radius + can.radius)**(0.5)
                             #print(newRadius)
                             c.radius = newRadius
                             can.radius = newRadius
-                                
+
                         #always repulse for a little jitter
                         repulsedVelocity = repulsion(c, can, radius)
                         #print("repulsed force=" + str(repulsedVelocity))
                         can.vel = [repulsedVelocity * vmax + vel for vel in can.vel]
                         can.pos = [pos + vel for pos, vel in zip(can.pos, can.vel)]
-                        #instead of resetting wiggle 
+                        #instead of resetting wiggle
                         #each index until bounds and constraints
                         #are met
                         for i in xrange(len(can.pos)):
@@ -139,16 +139,16 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
         # print 'final front ', [model.cal_objs_2(f) for f in frontier]
         for f in frontier:
             global_frontier.append(f)
-            #g.addVector(f, int(st.t))
+            g.addVector(f, int(st.t))
         frontier = runDom(st,model,list())
         # for v in st.s:
         #     g.addVector(v.pbest[0], v.uniq)
     for f in global_frontier:
         st.reg_front.append(model.cal_objs_2(f))
         st.norm_front.append(model.cal_objs(f))
-    #g.graph()
-    #g.graphEnergy()
-    #g.graphTrackedParticle()
+    g.graph()
+    g.graphEnergy()
+    g.graphTrackedParticle()
     st.termPSO()
 
 
