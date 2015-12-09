@@ -1,9 +1,17 @@
 =========================
 HYPERVOLUME
 =========================
+Name: PSOv2_DTLZ1.txt HyperVolume: 40992557.3383
 =========================
 SPREAD
 =========================
+Optimizer:  PSOv2 
+Model:  DTLZ1.txt 
+Spread:  0.675
 =========================
 CONVERGENCE
 =========================
+Optimizer:  PSOv2 
+Model:  DTLZ1
+Convergence: 105.298414078
+
