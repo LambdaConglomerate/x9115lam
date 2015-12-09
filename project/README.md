@@ -266,7 +266,7 @@ The rig has a number of tunable parameters to change how each run is orchestrate
 
 [5] - [Indicator Based Multiobjective Search, Zitler et al](http://www.tik.ee.ethz.ch/sop/publicationListFiles/zk2004a.pdf)
 
-[6] - [A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II, Deb et al] http://www.iitk.ac.in/kangal/Deb_NSGA-II.pdf
+[6] - [A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II, Deb et al](http://www.iitk.ac.in/kangal/Deb_NSGA-II.pdf)
 
 [7] - [An Improved Dimension-Sweep Algorithm for the Hypervolume Indicator](http://lopez-ibanez.eu/doc/FonPaqLop06-hypervolume.pdf)
 
