@@ -1,0 +1,25 @@
+=========================
+HYPERVOLUME
+=========================
+Name: adaptiveGlobalPSO_Fonseca.txt HyperVolume: 1.2201
+Name: adaptiveGlobalPSO_Osyczka2.txt HyperVolume: 2.0778
+=========================
+SPREAD
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca.txt 
+Spread:  1.835
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2.txt 
+Spread:  1.227
+=========================
+CONVERGENCE
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca
+Convergence: 0.000229861971067
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2
+Convergence: 8.43898593637
+

@@ -1,0 +1,38 @@
+=========================
+HYPERVOLUME
+=========================
+Name: 60NP_PSOProbs_Fonseca.txt HyperVolume: 1.295
+Name: 60NP_PSOProbs_Osyczka2.txt HyperVolume: 2.1657
+Name: 60NP_PSOProbs_Srinivas.txt HyperVolume: 1.9403
+Name: 60NP_PSOProbs_Tanaka.txt HyperVolume: 1.6223
+Name: 60NP_PSOProbs_ZDT1.txt HyperVolume: 2.0963
+Name: 60NP_PSOProbs_ZDT2.txt HyperVolume: 2.1006
+Name: 60NP_PSOProbs_ZDT3.txt HyperVolume: 2.0746
+Name: 60NP_PSOProbs_ZDT4.txt HyperVolume: 2.2175
+=========================
+SPREAD
+=========================
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  1.371
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  0.87
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  1.165
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  1.217
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  0.716
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  0.751
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  0.905
+Optimizer:  60NP 
+Model:  PSOProbs 
+Spread:  0.787

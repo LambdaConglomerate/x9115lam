@@ -1,0 +1,41 @@
+=========================
+HYPERVOLUME
+=========================
+Name: adaptiveGlobalPSO_Fonseca.txt HyperVolume: 1.3282
+Name: adaptiveGlobalPSO_Osyczka2.txt HyperVolume: 2.1734
+Name: adaptiveGlobalPSO_ZDT1.txt HyperVolume: 2.0986
+Name: adaptiveGlobalPSO_ZDT2.txt HyperVolume: 2.0732
+=========================
+SPREAD
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca.txt 
+Spread:  1.032
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2.txt 
+Spread:  0.978
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT1.txt 
+Spread:  0.902
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT2.txt 
+Spread:  0.805
+=========================
+CONVERGENCE
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  Fonseca
+Convergence: 0.0148769865581
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Osyczka2
+Convergence: 20.4050062006
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT1
+Convergence: 12.4990670791
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  ZDT2
+Convergence: 9.36567461722
+

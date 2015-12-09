@@ -54,6 +54,9 @@ class Model(object):
     def getObjectiveMins(s):
         return s.objectiveMins
 
+    def numOfObjectives(s):
+        return len(s.objectives)
+
     def boundy(s, index):  # generates new single random decision within bounds
         return (s.bounds[index][1] - s.bounds[index][0]) * random() + s.bounds[index][0]
 
@@ -107,16 +110,22 @@ class Model(object):
             return False
 
     def cal_objs(s, vect):
+        # print "vect: ", vect
         obs = list()
         for i in xrange(len(s.objectives)):
             obs.append(s.calculateObjective(vect, i))
+        return obs
+
+    def cal_objs_2(s, vect):
+        obs = list()
+        obs = [obj(vect) for obj in s.objectives]
         return obs
 
     def cdom(self, c1, c2, can1=None, can2=None):
         a = self.loss(c1, c2)
         b = self.loss(c2, c1)
         diff = math.fabs(a-b)
-        if diff < 0.1:
+        if diff < 0.05:
             return -1
         elif(a < b):
             return 1
@@ -124,11 +133,8 @@ class Model(object):
             return 0
 
     # Written to assume minimization
-    # Menzies' code added flexibility to
-    # minimize or maximize.  Figured we'd
-    # just peg this for now.
     def loss(self, c1, c2):
-        c1,c2 = self.cal_objs(c1), self.cal_objs(c2)
+        c1,c2 = self.cal_objs_2(c1), self.cal_objs_2(c2)
         n = min(len(c1), len(c2))
         losses = [math.exp((a - b)/n) for (a,b) in zip(c1, c2)]
         return sum(losses) / n

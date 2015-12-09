@@ -71,7 +71,7 @@ def spread_calculator_wrapper():
     assert(len(model_name) > 0), "Please check the folder ./Obtained_PF/"
     assert(len(set(model_name)) == 1), "The utility cannot handle more than one model at a time"
 
-    model_name = model_name[-1]
+
 
     temp_obtained_pf_files = [name for name in listdir(true_pf_folder)]
     true_frontier_exists = False
@@ -101,6 +101,6 @@ def spread_calculator_wrapper():
 
     for algorithm_name, content in zip(algorithm_names, contents):
         spread = spread_calculator(sort_list_of_list(content), first_extreme_solution, second_extreme_solution)
-        print "Name: ", algorithm_name, " Spread: ", round(spread, 3)
+        print "Optimizer: ", algorithm_name, "\nModel: ", model_name[0], "\nSpread: ", round(spread, 3)
 
-spread_calculator_wrapper()
+# spread_calculator_wrapper()
