@@ -13,15 +13,13 @@ Two_D_List = [Osyczka2, Fonseca, ZDT1, ZDT2, ZDT3, ZDT4, Tanaka, Srinivas]
 Three_D_List = [DTLZ1, DTLZ2, DTLZ3, DTLZ4, DTLZ5, DTLZ6, DTLZ7, Viennet2, Viennet3]
 
 num_retries = 30.0
-<<<<<<< HEAD
-num_changes = 500.0
-
-for m in [DTLZ5, DTLZ6, DTLZ7, Viennet2, Viennet3]:
-=======
 num_changes = 100.0
 
-for m in Two_D_List:
->>>>>>> d23f2dbfbd0310fbb4352630c1234e2b4be8345e
+<<<<<<< HEAD
+
+=======
+>>>>>>> 975d6da12fad4e2ad03615b662a6bb827292ab90
+for m in [Viennet3]:
     for o in [PSOv2]:
         #Absolutely do not pass integers for retries or changes
         if(len(sys.argv) > 1):
