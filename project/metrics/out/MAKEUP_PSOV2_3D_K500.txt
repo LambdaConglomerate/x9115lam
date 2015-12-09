@@ -1,0 +1,49 @@
+=========================
+HYPERVOLUME
+=========================
+Name: PSOv2_DTLZ5.txt HyperVolume: 3328.2135
+Name: PSOv2_DTLZ6.txt HyperVolume: 4060.2995
+Name: PSOv2_DTLZ7.txt HyperVolume: 2082.1281
+Name: PSOv2_Viennet2.txt HyperVolume: 3085.2974
+Name: PSOv2_Viennet3.txt HyperVolume: 3082.5515
+=========================
+SPREAD
+=========================
+Optimizer:  PSOv2 
+Model:  DTLZ5.txt 
+Spread:  1.267
+Optimizer:  PSOv2 
+Model:  DTLZ6.txt 
+Spread:  1.456
+Optimizer:  PSOv2 
+Model:  DTLZ7.txt 
+Spread:  1.36
+Optimizer:  PSOv2 
+Model:  Viennet2.txt 
+Spread:  0.832
+Optimizer:  PSOv2 
+Model:  Viennet3.txt 
+Spread:  1.146
+=========================
+CONVERGENCE
+=========================
+Optimizer:  PSOv2 
+Model:  DTLZ5
+Convergence: 1.46915236168
+
+Optimizer:  PSOv2 
+Model:  DTLZ6
+Convergence: 7.04994187255
+
+Optimizer:  PSOv2 
+Model:  DTLZ7
+Convergence: 5.11952425878
+
+Optimizer:  PSOv2 
+Model:  Viennet2
+Convergence: 3.42702516628
+
+Optimizer:  PSOv2 
+Model:  Viennet3
+Convergence: 2.69091445024
+

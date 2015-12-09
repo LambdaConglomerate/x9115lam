@@ -1,0 +1,81 @@
+=========================
+HYPERVOLUME
+=========================
+Name: adaptiveGlobalPSO_DTLZ1.txt HyperVolume: 5252946973.24
+Name: adaptiveGlobalPSO_DTLZ2.txt HyperVolume: 5254052230.82
+Name: adaptiveGlobalPSO_DTLZ3.txt HyperVolume: 5191558626.27
+Name: adaptiveGlobalPSO_DTLZ4.txt HyperVolume: 5254034503.98
+Name: adaptiveGlobalPSO_DTLZ5.txt HyperVolume: 5257851449.56
+Name: adaptiveGlobalPSO_DTLZ6.txt HyperVolume: 5296815648.69
+Name: adaptiveGlobalPSO_DTLZ7.txt HyperVolume: 5238286233.76
+Name: adaptiveGlobalPSO_Viennet2.txt HyperVolume: 5254049892.59
+Name: adaptiveGlobalPSO_Viennet3.txt HyperVolume: 5254022518.31
+=========================
+SPREAD
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ1.txt 
+Spread:  0.679
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ2.txt 
+Spread:  0.812
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ3.txt 
+Spread:  0.808
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ4.txt 
+Spread:  1.52
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ5.txt 
+Spread:  1.274
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ6.txt 
+Spread:  1.371
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ7.txt 
+Spread:  1.077
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet2.txt 
+Spread:  0.902
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet3.txt 
+Spread:  1.274
+=========================
+CONVERGENCE
+=========================
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ1
+Convergence: 68.1350722996
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ2
+Convergence: 28.7517521776
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ3
+Convergence: 277.998789472
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ4
+Convergence: 231.880500439
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ5
+Convergence: 184.136997649
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ6
+Convergence: 145.981903671
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  DTLZ7
+Convergence: 127.575989503
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet2
+Convergence: 98.7437949806
+
+Optimizer:  adaptiveGlobalPSO 
+Model:  Viennet3
+Convergence: 80.8197768752
+
