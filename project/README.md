@@ -272,7 +272,7 @@ Here we observe probs producing much right clumps than the base adaptive method.
 
 The probabilistic heuristic optimizing DTLZ2 shows this same phenomenon of clumping and overall getting better results for spread, convergence, and hypervolume.
 
-Pictures of all our runs are available in the pics folder.
+Pictures of all our runs are available in the ![pics folder](./pics).
 
 
 # Threats to Validity #
