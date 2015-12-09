@@ -139,7 +139,7 @@ era = 100, np=30, phi_1=3.8, phi_2=2.2, personalListSize=5, out='out.txt'):
         # print 'final front ', [model.cal_objs_2(f) for f in frontier]
         for f in frontier:
             global_frontier.append(f)
-            #g.addVector(f, int(st.t))
+            # g.addVector(f, int(st.t))
         frontier = runDom(st,model,list())
         # for v in st.s:
         #     g.addVector(v.pbest[0], v.uniq)
