@@ -21,7 +21,7 @@ Due to the many parameters of classical PSO, tuning these parameters is a must t
 
 ## IBEA ##
 
-The overall dominence structure of our implementations of PSO were based on the [IBEA](http://www.tik.ee.ethz.ch/sop/publicationListFiles/zk2004a.pdf) paper by Zitler.  Our code is as follows:
+The overall dominance structure of our implementations of PSO were based on the [IBEA](http://www.tik.ee.ethz.ch/sop/publicationListFiles/zk2004a.pdf) paper by Zitler.  Our code is as follows:
 
 ```python
 def dominate(model, setOfPos, pruning=10):
@@ -51,7 +51,7 @@ The algorithm works by calculating the differences between all of the objective 
 
 This process is used twice in each run. First it is used against a list of personal bests for each particle.  At initialization each particle is created with a random list of 10 positions.  On each change the current position of the particle is added to its list of personal bests.  The personal best list for each particle is run through IBEA and pruned from 11 to 10 members.  
 
-Once the personal bests have all been run a global frontier is run through IBEA, that frontier is made up of a set of 10 positions that are either arrived at randomly on the first run, or are left over from the last run.  In addition to that set of 10 positions are another 30 positions that are taken as the best positions from each particle's personal best list.  When the set of positions are setnt in to IBEA there are 40 positions and those positions are pared to 10.
+Once the personal bests have all been run a global frontier is run through IBEA, that frontier is made up of a set of 10 positions that are either arrived at randomly on the first run, or are left over from the last run.  In addition to that set of 10 positions are another 30 positions that are taken as the best positions from each particle's personal best list.  When the set of positions are sent in to IBEA there are 40 positions and those positions are pared to 10.
 
 ##Objective Minimum Maximum Update##
 We use a continuous objective minimum maximum update in each run. We prime with 10 vectors and if the new maximum or minimum is encountered the overall minimum and maximum is updated.
@@ -159,19 +159,19 @@ for c in st.s:
 
 ## Metrics ##
 
-The overall metric structure used, was a combination of the cannonical metrics used for many papers in the field (Spread, Hypvervolume), and Convergence. True Pareto Frontiers were taken from [jMetal](http://jmetal.sourceforge.net/problems.html).
+The overall metric structure used, was a combination of the canonical metrics used for many papers in the field (Spread, Hypvervolume), and Convergence. True Pareto Frontiers were taken from [jMetal](http://jmetal.sourceforge.net/problems.html).
 
 ### Convergence ###
 
-Convergence is described in the [Deb](http://www.tik.ee.ethz.ch/sop/publicationListFiles/zk2004a.pdf) paper on NSGA II.  The calculation is the minimum euclidean distance from each member of the frontier to the true pareto frontier, averaged over the entire front.  The idea is to minimize this calculation, since a value close to zero means that we are essentially on the pareto frontier.  The advantage of this calculation is that we can encapsulate the information shown in our graphs of frontiers and true frontiers in one metric.
+Convergence is described in the [Deb](http://www.tik.ee.ethz.ch/sop/publicationListFiles/zk2004a.pdf) paper on NSGA II.  The calculation is the minimum Euclidean distance from each member of the frontier to the true pareto frontier, averaged over the entire front.  The idea is to minimize this calculation, since a value close to zero means that we are essentially on the pareto frontier.  The advantage of this calculation is that we can encapsulate the information shown in our graphs of frontiers and true frontiers in one metric.
 
 ### Spread ###
 
-Spread, is also mentioned in the [Deb](http://www.iitk.ac.in/kangal/Deb_NSGA-II.pdf) paper on NSGA-II as the diversity metric.  It is a calculation of whether the calculated frontier is covering the entire region of the the true frontier.  The calculation is also a minimization, with a high uniformity in the population of the front yeilding a value of zero.  Our implementation is borrowed from [AI4SE](https://github.com/ai-se/Spread-HyperVolume) with an external batch runner added on top of it to atuomate running models.
+Spread, is also mentioned in the [Deb](http://www.iitk.ac.in/kangal/Deb_NSGA-II.pdf) paper on NSGA-II as the diversity metric.  It is a calculation of whether the calculated frontier is covering the entire region of the the true frontier.  The calculation is also a minimization, with a high uniformity in the population of the front yielding a value of zero.  Our implementation is borrowed from [AI4SE](https://github.com/ai-se/Spread-HyperVolume) with an external batch runner added on top of it to automate running models.
 
 ### Hypervolume ###
 
-Hypervolume is a calculation of the volume of the area dominated by the frontier.  For most of our models this is a 2 or 3 dimensional hypercube.  There are a large number of differnt implmentations for hypervolume and there is little consensus about what calculation is the best.  Our implementation is again borrowed from [AI4SE](https://github.com/ai-se/Spread-HyperVolume).  Their implementation is based on the implementation in this paper by [Fonseca](http://lopez-ibanez.eu/doc/FonPaqLop06-hypervolume.pdf).
+Hypervolume is a calculation of the volume of the area dominated by the frontier.  For most of our models this is a 2 or 3 dimensional hypercube.  There are a large number of different implementations for hypervolume and there is little consensus about what calculation is the best.  Our implementation is again borrowed from [AI4SE](https://github.com/ai-se/Spread-HyperVolume).  Their implementation is based on the implementation in this paper by [Fonseca](http://lopez-ibanez.eu/doc/FonPaqLop06-hypervolume.pdf).
 
 # Experimental Process #
 
@@ -196,7 +196,7 @@ The convergence for both heuristics was generally worse than the base adaptive P
 The probabilistic heuristic outperformed both of the other PSOs on  every model.
 
 ###Spread###
-Spread perfomance varied based on model with some of the optimizers doing better than others.
+Spread performance varied based on model with some of the optimizers doing better than others.
 
 ##3d Objective 500 Step Run##
 
@@ -238,7 +238,7 @@ As with all the other configurations, all three optimizers had around the same s
 ![DTLZ1 Probs 500](./pics/PSOProbsK500.0DTLZ1Objectives.png)
 ![DTLZ1 Base 500](./pics/adaptiveGlobalPSODTLZ1Objectives.png)
 
-Comparing these two graphs of the objectives for DTLZ1 shows that the probabilisitc heuristic came much closer to the to the paretor frontier(in blue) than the base adaptive global PSO. This can be seen by the scale of the axis.
+Comparing these two graphs of the objectives for DTLZ1 shows that the probabilistic heuristic came much closer to the to the pareto frontier(in blue) than the base adaptive global PSO. This can be seen by the scale of the axis.
 
 ###DTLZ6 Objective Space###
 
@@ -258,7 +258,7 @@ Here we observe probs producing much right clumps than the base adaptive method.
 ![DTLZ2 Probs Decisions 500](./pics/PSOProbsK500.0DTLZ2Decisions.png)
 ![DTLZ2 Base Decisions 500](./pics/adaptiveGlobalPSODTLZ2Decisions.png)
 
-The probabilistic heuristic optimizing DTLZ2 shows this same phenomenon of clumping and overall getting better results for spread, convergence, and hypevolume.
+The probabilistic heuristic optimizing DTLZ2 shows this same phenomenon of clumping and overall getting better results for spread, convergence, and hypervolume.
 
 Pictures of all our runs are available in the pics folder.
 
@@ -267,20 +267,20 @@ Pictures of all our runs are available in the pics folder.
 ##Internal Validity##
 Because we append the list of frontiers for each retry to our global list, and then we run the metrics on this cumulative list. Normally each retry would add an element of variance to running the optimizers, but because of the fact that each retry is another input into a larger frontier we do not get the benefit of running multiple retries and starting from random positions for entire fronts.  This makes our evidence more thin than it should be for the amount of sheer run time that we ran the optimizers.   
 
-Also, because we dynamically adjust the objective minimum and maximum values, and the hypervolume metric values were calculated from the normalized mins/maxs, the hypervolume values may not be consistent across optimizers. This problem is brought on in any situation where the output from the optimzier is a normalized front.  Luckily only one of our metrics actually uses a normalized front, HyperVolume. Furthermore, the Hypervolume metric does not use a normalized front for DTLZ, so at least those metrics are shielded from this issue.
+Also, because we dynamically adjust the objective minimum and maximum values, and the hypervolume metric values were calculated from the normalized mins/maxs, the hypervolume values may not be consistent across optimizers. This problem is brought on in any situation where the output from the optimzier is a normalized front.  Luckily only one of our metrics actually uses a normalized front, Hypervolume. Furthermore, the Hypervolume metric does not use a normalized front for DTLZ, so at least those metrics are shielded from this issue.
 
 ## External Validity ##
 We only ran the models with either two or three objectives. Today however, there is more focus on testing optimizers with a high number of objectives. We believe that running our optimizers with two and three objectives serves as a baseline which shows some improvement over Adaptive PSO. Also, we were able to visualize the results more easily than with more than three objectives, and can get a better understanding of how our heuristics improve PSO's performance.
 
-Another threat is the fact that we have relied on true frontier data from jMetal.  It seems unlikely that these frontiers are incorrect, but we did find some odd inconsistencies on performance against the true frontiers posted on their site.  A good example of that can be found at this [link](https://github.com/LambdaConglomerate/x9115lam/blob/master/project/pics/PSOProbsK500.0ZDT1Objectives.png),  The true frontier from jMetal is shown in grey below the frontier found by our Probablistic PSO implementation.  This seemed to be a boundary for all of our optimizers, that made us wonder whether jMetal may have implemented ZDT1 differently than we did.  In any cases where our implementation of models deviated from jMetal our metrics would have validity issues.
+Another threat is the fact that we have relied on true frontier data from jMetal.  It seems unlikely that these frontiers are incorrect, but we did find some odd inconsistencies on performance against the true frontiers posted on their site.  A good example of that can be found at this [link](https://github.com/LambdaConglomerate/x9115lam/blob/master/project/pics/PSOProbsK500.0ZDT1Objectives.png),  The true frontier from jMetal is shown in grey below the frontier found by our Probabilistic PSO implementation.  This seemed to be a boundary for all of our optimizers, that made us wonder whether jMetal may have implemented ZDT1 differently than we did.  In any cases where our implementation of models deviated from jMetal our metrics would have validity issues.
 
 As mentioned above, all of the metrics that we used other than convergence were written by other teams, so any inconsistencies or issues in their code would also affect our own work.   
 
 #Future Work#
-The heuristics we used added complexity to the PSO algorithm. Future work could decrease this complexity. For example, the probability heuristic could be implemented without probability measurements but instead a count for each particle indicidating it's usefulness. Negative values could be associated with particles that make energy worse while positive values could indicate a particle makes and energy better. And instead of taking a probabilistic determination for best particle take the max of the values. This could decrease the complexity of the algorithm.
+The heuristics we used added complexity to the PSO algorithm. Future work could decrease this complexity. For example, the probability heuristic could be implemented without probability measurements but instead a count for each particle indicating its usefulness. Negative values could be associated with particles that make energy worse while positive values could indicate a particle makes and energy better. And instead of taking a probabilistic determination for best particle take the max of the values. This could decrease the complexity of the algorithm.
 
 Future work could include using these heuristics in other versions of PSO including classical PSO.  We implemented the beginnings of those PSO's in our
-repo.  We believe that overall our setup could be used as a testharness to work on a large number of different PSO heuristic implementations.  The running of the system, logging, metric orchestration, and quality of the testharness itself could be improved considerably with more time and effort.
+repo.  We believe that overall our setup could be used as a test harness to work on a large number of different PSO heuristic implementations.  The running of the system, logging, metric orchestration, and quality of the test harness itself could be improved considerably with more time and effort.
 
 #Conclusions#
 
@@ -291,7 +291,7 @@ We have demonstrated two unique heuristics of PSO adapting them to adaptive PSO 
 ## Running the rig ##
 The rig has a number of tunable parameters to change how each run is orchestrated.  test.py contains most of those parameters:
 
-- num_retries and num_changes sare self explanatory. If changes are made, they need to be set to floats.
+- num_retries and num_changes are self explanatory. If changes are made, they need to be set to floats.
 
 - line 18 has the set of models to run, this can either be an array of individual models, or the defined sets of Two_D_List, and Three_D_List. The reason for splitting into 2D and 3D lists is the fact that the hypervolume calculation cannot handle combinations of 2d and 3d fronts.
 
