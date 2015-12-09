@@ -327,4 +327,4 @@ The rig has a number of tunable parameters to change how each run is orchestrate
 
 [7] - [An Improved Dimension-Sweep Algorithm for the Hypervolume Indicator](http://lopez-ibanez.eu/doc/FonPaqLop06-hypervolume.pdf)
 
-[8] - [jMetal](http://jmetal.sourceforge.net/problems.html))
+[8] - [jMetal](http://jmetal.sourceforge.net/problems.html)
