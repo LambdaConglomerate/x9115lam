@@ -1,5 +1,4 @@
 \documentclass[english]{article}
-\usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{babel}
 \usepackage{hyperref} 
@@ -30,12 +29,23 @@ Nam et al. \cite{Nam} listed below.
 \item[{Data}] The authors have provided the data used in their experiments at\\
  \href{https://sites.google.com/site/transferdefect/}{https://sites.google.com/site/transferdefect/}.
 \item[{Future work}] The authors were looking into transferring knowledge across entire domains as an extension of transfer learning. They were also interested in seeing which other prediction and recommendation systems might benefit from transfer learning.
+\item[{Statistical Tests}] The authors use the F-measure as a metric to determine the performance of TCA vs TCA+ vs within target cross prediction.  They state that because of the trade off between precision and recall, providing F-measure is a better metric to provide overall.
 \end{description}
 
 \section*{Possible Improvements}
+\begin{itemize}
+\item The authors make a statement on page five in the section on expirimental design that is unfortunately false.  They state that 10-fold cross validation essetially uses 90 percent of the training data and 10 percent of the test data as a downside of 10-fold cross validation.  They neglect to state that it does that 10 times and actually goes through the entireity of the 10 possible permutations of the data and calculates its error based on that.  It may have been enough to state that random split was used widely in the literature and leave out the statement on 10-fold.
 
+\item There is not a future work section that is actually specifically split out in the paper, and what they do provide is really sparse.  A bit of expansion on that would have been extremely helpful.
+
+\item Tables X and XI could be improved to be a bit simpler to understand.  The within target $\rightarrow$ target column is a bit confusing, and furthermore the reasoning for only providing (N4) and (N2) normalization techniques in X and XI respectively is a bit confusing as well.
+
+\end{itemize}
 \section*{Connection to Other Papers}
+\begin{itemize}
+\item There is a direct connection with \cite{Rahman} as the author discusses his paper as evidence that cross-project defect prediction works as well as within-project prediction in terms of cost effectiveness.
 
+\end{itemize}
 \bibliographystyle{plain}
 \bibliography{references}
 \end{document}
