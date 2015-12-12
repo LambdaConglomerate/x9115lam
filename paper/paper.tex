@@ -145,10 +145,6 @@ Joseph Sankar\\
 % author on the opening page (as the 'third row') but we ask,
 % for aesthetic reasons that you place these 'additional authors'
 % in the \additional authors block, viz.
-\additionalauthors{Additional authors: John Smith (The Th{\o}rv{\"a}ld Group,
-email: {\texttt{jsmith@affiliation.org}}) and Julius P.~Kumquat
-(The Kumquat Consortium, email: {\texttt{jpkumquat@consortium.net}}).}
-\date{30 July 1999}
 % Just remember to make sure that the TOTAL number of authors
 % is the number that will appear on the first page PLUS the
 % number that will appear in the \additionalauthors section.
@@ -223,12 +219,12 @@ is available on the web page to help you with the
 %
 %  Use this command to print the description
 %
-\printccsdesc
+%\printccsdesc
 
 % We no longer use \terms command
 %\terms{Theory}
 
-\keywords{ACM proceedings; \LaTeX; text tagging}
+\keywords{Fault prediction model; Software mining; Ant Colony Optimization; Classification}
 
 \section{Introduction}
 It is a well-known fact that software bugs are much cheaper and easier to fix before being released. But finding these bugs is often difficult and may not be cost effective to fix. Researchers have been working on fault detection models to predict which software modules are most likely to contain bugs post-release. Management can use these predictions to focus testing and bug-fixing efforts on those modules, resulting in fewer bugs in release which are less costly to fix.
@@ -237,6 +233,8 @@ In this paper, we focus on the advances made in software fault prediction models
 
 \section{Related Work}
 Cagatay Catal and Banu Diri \cite{Catal} gave an overview of software fault prediction studies and advancements up to 2008. They found that an increasing number of studies used datasets available to the public. They also found that since 2005, machine learning algorithms have become increasingly popular choices to implement the models. Finally, they observed that the most dominant metrics in fault prediction were at the method level. They recommended that machine learning algorithms and public datasets continue to be used, but caution against using method-level metrics and instead suggested class-level metrics as they can predict faults earlier in the software development cycle.
+
+Vandecruys et al \cite{Vandecruys} mined software repositories to create predictive models. The authors used AntMiner+, an Ant Colony Optimization (ACO)-based classification technique. On public datasets, AntMiner+ was found to be competitive to alternative classification techniques, such as C4.5, logistic regression, and support vector machines. The authors suggested that software managers would find the output of rules produced by AntMiner+ easy to understand and accept.
 
 Typically, the body of a paper is organized
 into a hierarchical structure, with numbered or unnumbered
@@ -513,7 +511,7 @@ two different creation commands are in the
 detailed instructions.  If you need to use another construct,
 not listed therein, which you want to have the same
 formatting as the Theorem
-or the Definition\cite{salas:calculus} shown above,
+or the Definition shown above,
 use the \texttt{{\char'134}newtheorem} or the
 \texttt{{\char'134}newdef} command,
 respectively, to create it.
