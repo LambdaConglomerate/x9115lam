@@ -244,28 +244,11 @@ Arisholm et al \cite{Arisholm} examined different ways to build and evaluate fau
 
 Most software products are structured in a hierarchical format, for example into methods, classes, files, packages, etc. What level of analysis should fault prediction models operate on? And can analysis on one level of study apply to other levels? Posnett et al \cite{Posnett} examines these issues. They observed that sometimes relevant phenomena only occur at an aggregated level or data may only be observed at an aggregated level, meaning that studies are often conducted at aggregated levels. They also noted that in other fields of study there are ecological fallacies which make findings at aggregated levels not apply at disaggregated levels. They found that much of these fallacies also exist in the domain of computer software and that care needs to be taken when employing ecological inference. As to how exactly the risks of ecological fallacies can be dealt with, the authors left open for future research.
 
-Typically, the body of a paper is organized
-into a hierarchical structure, with numbered or unnumbered
-headings for sections, subsections, sub-subsections, and even
-smaller sections.  The command \texttt{{\char'134}section} that
-precedes this paragraph is part of such a
-hierarchy.\footnote{This is the second footnote.  It
-starts a series of three footnotes that add nothing
-informational, but just give an idea of how footnotes work
-and look. It is a wordy one, just so you see
-how a longish one plays out.} \LaTeX\ handles the numbering
-and placement of these headings for you, when you use
-the appropriate heading commands around the titles
-of the headings.  If you want a sub-subsection or
-smaller part to be unnumbered in your output, simply append an
-asterisk to the command name.  Examples of both
-numbered and unnumbered headings will appear throughout the
-balance of this sample document.
+Traditional software fault prediction models are trained on historical project data. Since new projects do not have such a volume of historical data, these fault prediction models are not as effective at within-project defect prediction. A possible solution to this issue is cross-project prediction which uses data from one project to predict defects in another. Still, models using this technique exhibit poor performance. Rahman et al \cite{Rahman} argued that one reason for such behavior is that standard evaluation measures such as precision, recall, and F-measure are taken at specific threshold settings, while they really should be taken in a range of time/cost vs. quality tradeoffs. They took the standard measures at a variety of tradeoffs and found that cross-project defect prediction is at least as good as within-project defect prediction, and sometimes substantially better.
 
-Because the entire article is contained in
-the \textbf{document} environment, you can indicate the
-start of a new paragraph with a blank line in your
-input file; that is why this sentence forms a separate paragraph.
+Also within the area of cross-project defect prediction, Nam et al \cite{Nam} found that when the source and target projects have a different feature distributions, the resulting model gives poor performance. The authors use Transfer Component Analysis (TCA) to find a common feature set for both projects and then map the data of both projects to it. They found that TCA is sensitive to normalization, so they developed an improvement, TCA+ to select appropriate normalization options. After using TCA+ to create cross-project defect prediction models for eight open-source projects, they found a significant improvement in prediction performance compared to traditional algorithms and techniques. The authors proposed applying knowledge in one domain to another to further improve performance. 
+
+As another approach to improving fault prediction, Tian Jiang \cite{Jiang} introduced \emph{personalized defect prediction}. He argued that developers have different coding styles and techniques and that if each developer had their own defect prediction model, performance would improve. He was careful to note that the developer was not a feature of the model, but that there was a model for each developer. He ran experiments on six large open-source projects using PCC+, a model which chooses the highest confidence prediction among CC (traditional change classification), PCC (personalized change classification), and weighted PCC (PCC with changes from other developers added to a developer's model). Compared to CC and MARS (another predictor which also creates different models for different groups of data), PCC+ outperformed CC, MARS, and PCC as long as there is enough training data for each developer. Jiang recommended that PCC+ be applied to other recommendation systems and types of predictions.
 
 \subsection{Type Changes and {\subsecit Special} Characters}
 We have already seen several typeface changes in this sample.  You

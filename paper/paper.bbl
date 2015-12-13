@@ -17,6 +17,12 @@ C.~Catal and B.~Diri.
 \newblock A systematic review of software fault prediction studies.
 \newblock {\em Expert Systems with Applications}, 36(4):7346 -- 7354, 2009.
 
+\bibitem{Jiang}
+T.~Jiang, L.~Tan, and S.~Kim.
+\newblock Personalized defect prediction.
+\newblock In {\em Automated Software Engineering (ASE), 2013 IEEE/ACM 28th
+  International Conference on}, pages 279--289, Nov 2013.
+
 \bibitem{Nagappan}
 N.~Nagappan, B.~Murphy, and V.~Basili.
 \newblock The influence of organizational structure on software quality: An
@@ -24,12 +30,26 @@ N.~Nagappan, B.~Murphy, and V.~Basili.
 \newblock In {\em Proceedings of the 30th International Conference on Software
   Engineering}, ICSE '08, pages 521--530, New York, NY, USA, 2008. ACM.
 
+\bibitem{Nam}
+J.~Nam, S.~J. Pan, and S.~Kim.
+\newblock Transfer defect learning.
+\newblock In {\em Proceedings of the 2013 International Conference on Software
+  Engineering}, ICSE '13, pages 382--391, Piscataway, NJ, USA, 2013. IEEE
+  Press.
+
 \bibitem{Posnett}
 D.~Posnett, V.~Filkov, and P.~Devanbu.
 \newblock Ecological inference in empirical software engineering.
 \newblock In {\em Proceedings of the 2011 26th IEEE/ACM International
   Conference on Automated Software Engineering}, ASE '11, pages 362--371,
   Washington, DC, USA, 2011. IEEE Computer Society.
+
+\bibitem{Rahman}
+F.~Rahman, D.~Posnett, and P.~Devanbu.
+\newblock Recalling the "imprecision" of cross-project defect prediction.
+\newblock In {\em Proceedings of the ACM SIGSOFT 20th International Symposium
+  on the Foundations of Software Engineering}, FSE '12, pages 61:1--61:11, New
+  York, NY, USA, 2012. ACM.
 
 \bibitem{Vandecruys}
 O.~Vandecruys, D.~Martens, B.~Baesens, C.~Mues, M.~De~Backer, and R.~Haesen.
