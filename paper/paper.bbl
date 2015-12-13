@@ -24,6 +24,13 @@ N.~Nagappan, B.~Murphy, and V.~Basili.
 \newblock In {\em Proceedings of the 30th International Conference on Software
   Engineering}, ICSE '08, pages 521--530, New York, NY, USA, 2008. ACM.
 
+\bibitem{Posnett}
+D.~Posnett, V.~Filkov, and P.~Devanbu.
+\newblock Ecological inference in empirical software engineering.
+\newblock In {\em Proceedings of the 2011 26th IEEE/ACM International
+  Conference on Automated Software Engineering}, ASE '11, pages 362--371,
+  Washington, DC, USA, 2011. IEEE Computer Society.
+
 \bibitem{Vandecruys}
 O.~Vandecruys, D.~Martens, B.~Baesens, C.~Mues, M.~De~Backer, and R.~Haesen.
 \newblock Mining software repositories for comprehensible software fault
