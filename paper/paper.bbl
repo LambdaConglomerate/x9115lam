@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{Arisholm}
+E.~Arisholm, L.~C. Briand, and E.~B. Johannessen.
+\newblock A systematic and comprehensive investigation of methods to build and
+  evaluate fault prediction models.
+\newblock {\em J. Syst. Softw.}, 83(1):2--17, Jan. 2010.
+
 \bibitem{Bird}
 C.~Bird, N.~Nagappan, P.~Devanbu, H.~Gall, and B.~Murphy.
 \newblock Does distributed development affect software quality?: An empirical
