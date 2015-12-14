@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Arisholm}
 E.~Arisholm, L.~C. Briand, and E.~B. Johannessen.
@@ -56,5 +56,11 @@ O.~Vandecruys, D.~Martens, B.~Baesens, C.~Mues, M.~De~Backer, and R.~Haesen.
 \newblock Mining software repositories for comprehensible software fault
   prediction models.
 \newblock {\em J. Syst. Softw.}, 81(5):823--839, May 2008.
+
+\bibitem{zheng2010}
+J.~Zheng.
+\newblock Cost-sensitive boosting neural networks for software defect
+  prediction.
+\newblock {\em Expert Systems with Applications}, 37(6):4537--4543, 2010.
 
 \end{thebibliography}
