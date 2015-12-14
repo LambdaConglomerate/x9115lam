@@ -229,30 +229,36 @@ Also within the area of cross-project defect prediction, Nam et al \cite{Nam} fo
 
 As another approach to improving fault prediction, Tian Jiang \cite{Jiang} introduced \emph{personalized defect prediction}. He argued that developers have different coding styles and techniques and that if each developer had their own defect prediction model, performance would improve. He was careful to note that the developer was not a feature of the model, but that there was a model for each developer. He ran experiments on six large open-source projects using PCC+, a model which chooses the highest confidence prediction among CC (traditional change classification), PCC (personalized change classification), and weighted PCC (PCC with changes from other developers added to a developer's model). Compared to CC and MARS (another predictor which also creates different models for different groups of data), PCC+ outperformed CC, MARS, and PCC as long as there is enough training data for each developer. Jiang recommended that PCC+ be applied to other recommendation systems and types of predictions.
 
-\subsection{Type Changes and {\subsecit Special} Characters}
-We have already seen several typeface changes in this sample.  You
-can indicate italicized words or phrases in your text with
-the command \texttt{{\char'134}textit}; emboldening with the
-command \texttt{{\char'134}textbf}
-and typewriter-style (for instance, for computer code) with
-\texttt{{\char'134}texttt}.  But remember, you do not
-have to indicate typestyle changes when such changes are
-part of the \textit{structural} elements of your
-article; for instance, the heading of this subsection will
-be in a sans serif\footnote{A third footnote, here.
-Let's make this a rather short one to
-see how it looks.} typeface, but that is handled by the
-document class file. Take care with the use
-of\footnote{A fourth, and last, footnote.}
-the curly braces in typeface changes; they mark
-the beginning and end of
-the text that is to be in the different typeface.
+\section{Machine Learning Algorithms}
 
-You can use whatever symbols, accented characters, or
-non-English characters you need anywhere in your document;
-you can find a complete list of what is
-available in the \textit{\LaTeX\
-User's Guide}\cite{Lamport:LaTeX}.
+\section{Metrics}
+
+\section{Features}
+
+\section{Data Sources}
+
+\section{Data Preprocessing}
+
+\section{Cross-Project Defect Prediction}
+
+\subsection{Context Factors}
+Context factors for projects were assessed by Fend at el (2014 cite here). Used as a measurement of project similarity. The provides a set of measurements to rank a project's relatedness when performing cross-project defect prediction.
+
+\textbf{Programming Languages} Projects can be divided into groups depending on the programming language they are written in. Projects written in multiple languages could be problematic unless multiple language categories are included.
+
+\textbf{Issue Tracking} Whether or not a project uses an issue tracking system.
+
+\textbf{Total Lines Of Code} Project size based on the total number of lines of code split by quartiles.
+
+\textbf{Total Number of Commits}Project size as a function of the number of commits. Split into quartiles.
+
+\textbf{Total Number of Developers} Project size as a determined by the number of developer. Split into quartiles.
+
+\subsection{Ranking}
+
+\subsection{Clustering}
+
+
 
 \subsection{Math Equations}
 You may want to display math equations in three distinct styles:
