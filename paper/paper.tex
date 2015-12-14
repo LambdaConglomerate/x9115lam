@@ -233,7 +233,21 @@ As another approach to improving fault prediction, Tian Jiang \cite{Jiang} intro
 
 \section{Machine Learning Algorithms}
 
-\section{Metrics}
+\section{Evaluation Metrics}
+
+There are three major approaches to evaluating the performance of models in the area of fault prediction:  Confusion matrix approaches, ROC curve based approaches, and finally cost effectiveness approaches.
+
+\subsection{Confusion Matrix Approaches}
+
+The use of confusion matrices, and the metrics (precision, recall, and F-measure) that revolve around them are very common in the fault prediction area.  As will likely be known by the reader, a confusion matrix is a summary of predicted values compared with actual values.  A confusion matrix in most cases will have been created based on test data where the actual values are known.  Precision, recall, and F-Measure are all statistics that can be used to assess how close a model has come in predicting the actual on the test data.  This methodology is used in nearly all of the papers we read \cite{Posnett} \cite{Nam} \cite{Bird} \cite{Vandecruys} \cite{Nagappan} \cite{Arisholm} \cite{Rahman} \cite{Jiang}. 
+
+Even though the methodology is fairly standard throughout the papers we read, what actual metric is reported between precision, recall, overall accuracy, and F-Measure has considerable variance between papers.  One suggestion in \cite{Hall} is to present the confusion matrix itself rather than to present one statistic or the other when possible (where possible is determined by the sheer number of confusion matrices that would be produced).  The idea is that it would better enable comparison across studies since researchers could produce whatever statistic they happen to need from the data itself.
+
+\subsection{ROC curves}
+
+The ROC curve is another fairly standard metric for performance used in the literature.  ROC, or Receiver Operating Characteristic analysis is an elaboration of the confusion matrix approach.  The idea is to use the rates of false positives and true positives on an x-y plane and to have x values represent the rates of false positives, and y values represent the rates of true positives.  The rate for a particular model can be plotted as point on the ROC curve and the area under the curve be used as a metric to determine the quality of the model with a point at (0,1) being optimal \cite{Posnett}.  
+
+These methods are used in a few of the papers we reviewed \cite{Rahman} \cite{Arisholm} \cite{Posnett}.  The ROC curve has somewhat diminished usage because of a number of downsides that have been discussed in several papers \cite{Hall}.
 
 \section{Features}
 
