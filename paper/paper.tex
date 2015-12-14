@@ -240,6 +240,9 @@ As another approach to improving fault prediction, Tian Jiang \cite{Jiang} intro
 \section{Data Sources}
 The choice of dataset is extremely important, especially when doing software defect prediction research. Datasets should be representative of actual software projects and should ideally be accessible to the public so the results can be re-tested and verified by others. Within the referenced papers, we found a variety of data sources which we feel need to be discussed. Primarily, we found open-source datasets, NASA datasets, and Windows Vista datasets. We will discuss each along with some reasons why they may have been chosen.
 \subsection{Open-source}
+The majority of papers we reviewed used open-source data, with most of those being Apache projects. Open-source projects are accessible to everyone, so researchers can verify the results they read, making every author accountable for the results they publish. Many of the Apache projects are tracked using JIRA which contains a plethora of data, including defect information.
+
+Apache libraries are also commonly used in a variety of products, so defects that are in released code can manifest themselves in projects that use them, creating a sort of ripple effect.
 
 \subsection{NASA}
 A few papers (Zheng \cite{zheng2010}...) used datasets from NASA. Among them were KC1, used for storage management, KC2, used for scientific data processing, CM1, used for NASA spacecraft instruments, and PC1, used for flight software.
