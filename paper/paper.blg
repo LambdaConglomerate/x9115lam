@@ -9,45 +9,45 @@ Warning--I didn't find a database entry for "clark:pct"
 Warning--I didn't find a database entry for "braams:babel"
 Warning--I didn't find a database entry for "herlihy:methodology"
 Warning--I didn't find a database entry for "salas:calculus"
-You've used 12 entries,
+You've used 13 entries,
             2118 wiz_defined-function locations,
-            602 strings with 6303 characters,
-and the built_in function-call counts, 5335 in all, are:
-= -- 556
-> -- 230
-< -- 6
-+ -- 95
-- -- 78
-* -- 399
-:= -- 826
-add.period$ -- 41
-call.type$ -- 12
-change.case$ -- 75
+            610 strings with 6573 characters,
+and the built_in function-call counts, 5865 in all, are:
+= -- 614
+> -- 253
+< -- 7
++ -- 104
+- -- 86
+* -- 435
+:= -- 904
+add.period$ -- 45
+call.type$ -- 13
+change.case$ -- 82
 chr.to.int$ -- 0
-cite$ -- 12
-duplicate$ -- 206
-empty$ -- 406
-format.name$ -- 78
-if$ -- 1161
+cite$ -- 13
+duplicate$ -- 229
+empty$ -- 445
+format.name$ -- 86
+if$ -- 1282
 int.to.chr$ -- 0
-int.to.str$ -- 12
-missing$ -- 12
-newline$ -- 63
-num.names$ -- 24
-pop$ -- 66
+int.to.str$ -- 13
+missing$ -- 13
+newline$ -- 68
+num.names$ -- 26
+pop$ -- 73
 preamble$ -- 1
-purify$ -- 63
+purify$ -- 69
 quote$ -- 0
-skip$ -- 161
+skip$ -- 180
 stack$ -- 0
-substring$ -- 415
-swap$ -- 69
-text.length$ -- 6
+substring$ -- 452
+swap$ -- 79
+text.length$ -- 7
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 48
+type$ -- 52
 warning$ -- 0
-while$ -- 51
-width$ -- 14
-write$ -- 149
+while$ -- 56
+width$ -- 15
+write$ -- 163
 (There were 6 warnings)

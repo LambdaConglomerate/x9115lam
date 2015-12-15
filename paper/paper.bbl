@@ -70,6 +70,12 @@ O.~Vandecruys, D.~Martens, B.~Baesens, C.~Mues, M.~De~Backer, and R.~Haesen.
   prediction models.
 \newblock {\em J. Syst. Softw.}, 81(5):823--839, May 2008.
 
+\bibitem{Zhang:2014:TBU:2597073.2597078}
+F.~Zhang, A.~Mockus, I.~Keivanloo, and Y.~Zou.
+\newblock Towards building a universal defect prediction model.
+\newblock In {\em Proceedings of the 11th Working Conference on Mining Software
+  Repositories}, MSR 2014, pages 182--191, New York, NY, USA, 2014. ACM.
+
 \bibitem{zheng2010}
 J.~Zheng.
 \newblock Cost-sensitive boosting neural networks for software defect
