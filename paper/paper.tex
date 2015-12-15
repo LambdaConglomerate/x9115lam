@@ -345,6 +345,8 @@ Two of the referenced papers (Bird et al \cite{Bird} and Nagappan et al \cite{Na
 
 But why was Windows Vista chosen? Windows in general is a widely used operating system which contains many lines of code. Windows is also known for being vulnerable without frequent patching and antivirus software. Windows Vista may have been the latest version of Windows at the time of both papers, but Vista is also known as a slow and buggy release. Maybe the authors intended to show that Vista did not contain an unusually high number of bugs compared to other releases, or maybe they just wanted to choose a Microsoft product that was well-known, whether for good or bad.
 
+\subsection{Discussion}
+Most of the studies we examined used open-source datasets which is in line with previous recommendations (\cite{Catal}, \cite{Vandecruys}). The two papers which used Windows Vista were not proposing a new or improved fault prediction model but were instead analyzing Microsoft's organizational structure to see how it may have affected bug levels. Although the NASA software isn't open source, we think that its datasets are acceptable because of their domain and the fact that NASA has made the datasets public for research purposes. Research has heeded the recommendations of earlier researchers and now primarily use open-source datasets
 
 \section{Data Preprocessing}
 
@@ -352,6 +354,9 @@ But why was Windows Vista chosen? Windows in general is a widely used operating 
 \subsection{Mann-Whitney U test}
 The Mann-Whitney U test, a non-parametric test that determines if two independent distributions have equally large value,  was used by Zhang et al \cite{Zhang:2014:TBU:2597073.2597078} to pair-wise compare the distribution of metrics of projects in the domain of cross-project defect prediction.
 
+
+\subsection{Cliff's $\delta$}
+Cliffs $\delta$ measures the effect size of the importance of the difference between two distributions. It is a nonparametric statistical test which represents the overlap two distributions. If two distributions are identical then the measurement is 0.  It was used by Zhang et al \cite{Zhang:2014:TBU:2597073.2597078} to determine the difference in the distributions of two project's metrics. If the difference of the effect size was large then the projects were not clustered together.  This was done as second step in clustering similar projects and only on project's whose Mann-Whitney U test determined a statistically significant difference. 
 
 \section{Cross-Project Defect Prediction}
 
