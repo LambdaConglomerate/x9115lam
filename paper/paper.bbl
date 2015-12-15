@@ -17,6 +17,17 @@ C.~Catal and B.~Diri.
 \newblock A systematic review of software fault prediction studies.
 \newblock {\em Expert Systems with Applications}, 36(4):7346 -- 7354, 2009.
 
+\bibitem{Chidamber}
+S.~R. Chidamber and C.~F. Kemerer.
+\newblock A metrics suite for object oriented design.
+\newblock {\em IEEE Trans. Softw. Eng.}, 20(6):476--493, June 1994.
+
+\bibitem{DAmbros}
+M.~D'Ambros, M.~Lanza, and R.~Robbes.
+\newblock An extensive comparison of bug prediction approaches.
+\newblock In {\em Mining Software Repositories (MSR), 2010 7th IEEE Working
+  Conference on}, pages 31--41, May 2010.
+
 \bibitem{Davis}
 J.~Davis and M.~Goadrich.
 \newblock The relationship between precision-recall and roc curves.
@@ -56,6 +67,11 @@ D.~Posnett, V.~Filkov, and P.~Devanbu.
 \newblock In {\em Proceedings of the 2011 26th IEEE/ACM International
   Conference on Automated Software Engineering}, ASE '11, pages 362--371,
   Washington, DC, USA, 2011. IEEE Computer Society.
+
+\bibitem{Radjenovic}
+D.~Radjenovic, M.~Hericko, R.~Torkar, and A.~Zivkovic.
+\newblock Software fault prediction metrics: A systematic literature review.
+\newblock {\em Information and Software Technology}, 55(8):1397 -- 1418, 2013.
 
 \bibitem{Rahman}
 F.~Rahman, D.~Posnett, and P.~Devanbu.
