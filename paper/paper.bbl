@@ -47,6 +47,12 @@ T.~Jiang, L.~Tan, and S.~Kim.
 \newblock In {\em Automated Software Engineering (ASE), 2013 IEEE/ACM 28th
   International Conference on}, pages 279--289, Nov 2013.
 
+\bibitem{Kim}
+S.~Kim, E.~Whitehead, and Y.~Zhang.
+\newblock Classifying software changes: Clean or buggy?
+\newblock {\em Software Engineering, IEEE Transactions on}, 34(2):181--196,
+  March 2008.
+
 \bibitem{Nagappan}
 N.~Nagappan, B.~Murphy, and V.~Basili.
 \newblock The influence of organizational structure on software quality: An
@@ -85,6 +91,13 @@ O.~Vandecruys, D.~Martens, B.~Baesens, C.~Mues, M.~De~Backer, and R.~Haesen.
 \newblock Mining software repositories for comprehensible software fault
   prediction models.
 \newblock {\em J. Syst. Softw.}, 81(5):823--839, May 2008.
+
+\bibitem{Wu}
+R.~Wu, H.~Zhang, S.~Kim, and S.-C. Cheung.
+\newblock Relink: Recovering links between bugs and changes.
+\newblock In {\em Proceedings of the 19th ACM SIGSOFT Symposium and the 13th
+  European Conference on Foundations of Software Engineering}, ESEC/FSE '11,
+  pages 15--25, New York, NY, USA, 2011. ACM.
 
 \bibitem{Zhang:2014:TBU:2597073.2597078}
 F.~Zhang, A.~Mockus, I.~Keivanloo, and Y.~Zou.

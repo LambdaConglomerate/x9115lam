@@ -46,9 +46,11 @@
 % For tracking purposes - this is V2.0 - May 2012
 
 \documentclass{sig-alternate-05-2015}
-
+\usepackage{hyperref}
 
 \begin{document}
+
+
 
 % Copyright
 \setcopyright{acmcopyright}
@@ -281,6 +283,11 @@ The basic idea of the metric is a set of two curves on an x-y plane that has a p
 
 Those same papers that find ROC to be inefficient all suggest that Cost Effectiveness is an important and to some degree a superior metric to use in determining the performance of an algorithm \cite{Posnett} \cite{Arisholm} \cite{Rahman}.  The Arisholm paper was in fact one of the most influential papers that we worked with throughout the semester.  Cross-project defect prediction has been validated to some degree by the existence of Cost Effectiveness as an evaluation metric \cite{Rahman}.    The technique was used in Jiang et al as a metric as well \cite{Jiang}. 
 
+\subsection{Discussion}
+It seems that Arisholm's contribution to the community with Cost Effectiveness back in  2010 has provided a better metric to evaluate fault prediciton models going forward.  Seeing as the point of fault prediction should be to build tools that can be used in the real world for real projects injecting the realism that CE brings to the table seems to be totally appropriate in going forward.  Even though that is viewed as the case by some in the community confusion matrix based approaches and the related ROC curve concept are seemingly going nowhere.  These approaches will continue to be important in evaluating models until something better comes along.  
+
+Our recommendation in this area would be to work with a hybrid approach of using both confusion matrix approaches and the ROC curve as well as CE based metrics.  The suggestion of Hall as listed above to simply report confusion matrices seems like a great recommendation when possible going forward.  At that point researchers could simply report cost effectiveness data along with confusion matrices and leave any further analysis to those that are interested.  If reporting confusion matrices were not to become popular, settling on one confusion matrix based approach such as the F-Measure would be preferable to the random mixture of reporting approaches viewed throughout our papers.
+
 \section{Features}
 
 This section could also be labeled metrics, as it is in many places throughout the literature on this topic, but to not confuse it and the previous section on evaluation metrics we have chosen to label it features.  The main reasoning for this is the fact that metrics are actually used as features in this area and not actually as metrics for comparison of one method versus another.  The Radjenovic paper \cite{Radjenovic} is a fairly exhaustive paper with relation to metrics/features in fault prediction.  Radjenovic came up with three categories to discuss in their literature review, and we will stick with those same categories in relation to the papers we reviewed.  The categories are: Traditional, Object-Oriented, and Process.  Some of the papers we reviewed defy this categorization and use metrics that are either one offs or are hybridized to such a degree that they should be explained on their own.
@@ -302,6 +309,23 @@ This is an approach that was proposed by Nagappan et al at Microsoft Research \c
 
 Naggapan and Bird produced another paper in the next year using organizational metrics again with a bit of a twist in looking at whether distributed development had an effect on software quality \cite{Bird}.  This paper added an additional metric of the actual location of the members of teams working on Windows Vista with levels starting at the same building and growing to the point of developers working at locations across the globe from one another.  Organizaitonal metrics as well as a set of process and traditional metrics were used in conjunction with the distribution metric seemingly out of surprise that there was little difference between distributed projects and more local projects.  The idea was to try to prove that there was not in fact some correlation between the other metrics they looked at and the performance of teams across long distances.  They found that in fact there was no difference and that distributed development within one company was possible without sacrificing quality.
 
+\subsection{Text Classification}
+The paper on Personalized Defect Prediction by Jiang et al uses a methodology based on change classification \cite{Jiang}.  To understand the metrics involved it was necessary to go back to a paper by Kim et al and get an idea of exactly what was done for feature extraction \cite{Kim}.  The basic methodology uses process metrics such as changed LOC between commits, and when commits take place, but also uses traditional techniques like LOC, and complexity analysis.  
+
+The more interesting and complex aspect of both of these papers is text classification.  They both use a tool called BOW (Bag Of Words) to pull features out of log messages (called metadata in Jiang et all) and source code.  The metadata aspect of this approach is also used in the Arisholm paper under the name Deltas where it is stated as simply the change between releases and also calls it Code Churn \cite{Arisholm}.  Code churn in later papers is simply subsumed into process metrics, where later survey papers like Radjenovic simply categorize them together \cite{Radjenovic}.  
+
+The source code inspection can be incredibly low level as in the Kim paper where they "This (text classification) means that every variable, method name, function name, keyword, comment word, and operator, that is everything  in the source code separated by whitespace or a semicolon is used as a feature"\cite{Kim}.  The Jiang paper pulled out features like incorrect calls of individual language level functions like malloc and calloc on a per developer basis and then used those to predict faults for individual developers.  It is an intriguing approach and one that was successful based on Jiang's results, It is an approach that has been cited, but not repeated.  Partially that may be because the paper is fairly recent having been published in 2013, but it may also owe something to the fact that this is a seemingly intensive effort that few would use in industry.
+
+\subsection{Benchmark Data Sets}
+
+In one of our most recent papers (the Nam paper 2013 \cite{Nam}) we found researchers using benchmark data sets that had sets of metrics that could be chosen from in order to build models.  The two sets discussed in the paper are ReLink and AEEEM \cite{Wu} \cite{DAmbros}.  
+
+D'Ambros' AEEEM seemingly took everything he could find that he could rationalize and some new ideas and then just threw all of it into a metric set.  \href{http://bug.inf.usi.ch/}{AEEEM} includes: change metrics, CK metrics, Object Oriented metrics, number of previous defects, complexity of code change, churn of CK and OO metrics, entropy of CK and OO metrics.  ReLink unfortunately was not as helpful in listing out what is available in terms of metrics.  Based on the Nam paper it contains 26 complexity metrics \cite{Nam}.
+
+\subsection{Discussion}
+As can be seen by the length and complexity of this section, the metrics area is still a very open area in fault defect prediction.  The simple fact that there are major differences in terms of what metric set is being used across different projects creates some difficulty when comparing them.  Also since many of these projects also use a hybrid approach, it makes it even less likely that another project will use exactly the same set of metrics.  
+
+There is simply no consensus on what a good metric set really is, and that makes research going forward a difficult proposition.  Our recommendation would be for the community to continue to codify what they believe to be the best metric sets and then to build benchmark data sets like AEEEM and ReLink that can be used across projects so that the approaches of researchers can be appropriately compared. 
 
 \section{Data Sources}
 The choice of dataset is extremely important, especially when doing software defect prediction research. Datasets should be representative of actual software projects and should ideally be accessible to the public so the results can be re-tested and verified by others. Within the referenced papers, we found a variety of data sources which we feel need to be discussed. Primarily, we found open-source datasets, NASA datasets, and Windows Vista datasets. We will discuss each along with some reasons why they may have been chosen.
@@ -320,8 +344,8 @@ NASA datasets are publicly available. Researchers can more easily verify the res
 Two of the referenced papers (Bird et al \cite{Bird} and Nagappan et al \cite{Nagappan}) use data from Windows Vista. Neither paper tests a fault prediction model using Vista test data. Instead, the first paper examined how different development teams worked together within Microsoft and the second paper examined Microsoft's organizational structure. Two of the three authors of the second paper are associated with Microsoft Research. 
 
 But why was Windows Vista chosen? Windows in general is a widely used operating system which contains many lines of code. Windows is also known for being vulnerable without frequent patching and antivirus software. Windows Vista may have been the latest version of Windows at the time of both papers, but Vista is also known as a slow and buggy release. Maybe the authors intended to show that Vista did not contain an unusually high number of bugs compared to other releases, or maybe they just wanted to choose a Microsoft product that was well-known, whether for good or bad.
-\subsection{Discussion}
-Most of the studies we examined used open-source datasets which is in line with previous recommendations (\cite{Catal}, \cite{Vandecruys}). The two papers which used Windows Vista were not proposing a new or improved fault prediction model but were instead analyzing Microsoft's organizational structure to see how it may have affected bug levels. Although the NASA software isn't open source, we think that its datasets are acceptable because of their domain and the fact that NASA has made the datasets public for research purposes. Research has heeded the recommendations of earlier researchers and now primarily use open-source datasets
+
+
 \section{Data Preprocessing}
 
 \section{Statistical Tests}
