@@ -233,6 +233,28 @@ As another approach to improving fault prediction, Tian Jiang \cite{Jiang} intro
 
 \section{Machine Learning Algorithms}
 
+Every fault prediction study used some sort of machine learning algorithm as the heart of the model. There are a variety of ML algorithms including regression, neural networks, support vector machines, and decision trees.
+
+\subsection{Regression}
+Regression is a ML algorithm for data that can be fitted to a curve. A total of X papers use some form of regression (\cite{Posnett}, \cite{Rahman}, ...). Regression algorithms are considered to be the simplest type, but can perform well if the data can be well fitted to some sort of line or curve.
+
+\subsection{Neural Networks}
+Neural networks are designed to model the learning pattern of the human brain. Essentially, neural networks consist of nodes connected by links. The more a link is activated during training, the stronger it becomes and the more likely it will be selected during testing. 
+
+Jun Zheng \cite{zheng2010} used a back propagation neural network (BPNN) with AdaBoost, a way to achieve better classification results by producing diverse base classifiers. Zheng states that he used neural networks because they are popular in pattern recognition and BPNNs because they were the most frequent neural network used in the literature. AdaBoost was chosen because it is a popular way to improve the performance of the model.
+
+\subsection{Other ML Algorithms}
+Vandecruys et al \cite{Vandecruys} used a novel algorithm known as AntMiner+, which is based on Ant Colony Optimization which models the foraging behavior of ant colonies. 
+
+Tian Jiang's algorithm \cite{Jiang} was based on a classification scheme known as Personalized Change Classification+ (PCC+).
+
+Nam et al \cite{Nam} implemented TCA+, which is a novel feature extraction technique for transfer learning with improved normalization.
+
+\subsection{Discussion}
+Catal et al \cite{Catal} suggested that more models be based on machine learning techniques rather than statistical methods or expert based systems. We see that research has followed the advice of the authors. Arisholm et al \cite{Arisholm} did not find any major differences among the different machine learning techniques, although they found that C4.5 with Adaboost gave the best results. 
+
+Not only have authors used well-known ML algorithms, but they have even implemented new ones. This shows that ML algorithms were the primary choice of recent studies and still are today.
+
 \section{Evaluation Metrics}
 
 There are three major approaches to evaluating the performance of models in the area of fault prediction:  Confusion matrix approaches, ROC curve based approaches, and finally cost effectiveness approaches.
