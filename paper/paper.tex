@@ -63,24 +63,24 @@
 
 
 % DOI
-\doi{10.475/123_4}
+%\doi{10.475/123_4}
 
 % ISBN
-\isbn{123-4567-24-567/08/06}
+%\isbn{123-4567-24-567/08/06}
 
 %Conference
-\conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
+%\conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
 
-\acmPrice{\$15.00}
+%\acmPrice{\$15.00}
 
 %
 % --- Author Metadata here ---
-\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+%\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
 %\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
-\title{Software Defect Prediction: Review, Commentary, and Future Work}
+\title{Software Defect Prediction: Review, Commentary, and Recommendations}
 %
 % You need the command \numberofauthors to handle the 'placement
 % and alignment' of the authors beneath the title.
@@ -141,7 +141,7 @@ Joseph Sankar\\
        \affaddr{North Carolina State University}\\
        \affaddr{Raleigh, North Carolina, USA}\\
        \email{aisobran@ncsu.edu}
-\and  % use '\and' if you need 'another row' of author names
+%\and  % use '\and' if you need 'another row' of author names
 }
 % There's nothing stopping you putting the seventh, eighth, etc.
 % author on the opening page (as the 'third row') but we ask,
@@ -153,7 +153,7 @@ Joseph Sankar\\
 
 \maketitle
 \begin{abstract}
-This paper provides a comprehensive review and commentary on software defect prediction research. Review and criticism of previous work is presented. Future steps in the domain are given.
+This paper provides a comprehensive review and commentary on software defect prediction research. Review and criticism of previous work is presented. Recommendations and future steps in the domain are given.
 \end{abstract}
 
 
@@ -208,12 +208,16 @@ This paper provides a comprehensive review and commentary on software defect pre
 \keywords{Fault prediction model, Software mining, Ant Colony Optimization, Classification, Defect Prediction}
 
 \section{Introduction}
-It is a well-known fact that software bugs are much cheaper and easier to fix before being released. But finding these bugs is often difficult and may not be cost effective to fix. Researchers have been working on fault detection models to predict which software modules are most likely to contain bugs post-release. Management can use these predictions to focus testing and bug-fixing efforts on those modules, resulting in fewer bugs in release which are less costly to fix.
+It is a well-known fact that software bugs are much cheaper and easier to fix before being released. But finding these bugs is often difficult and some bugs may be cheaper to fix than others. Researchers have been working on fault detection models to predict which software modules are most likely to contain bugs post-release. Management can use these predictions to focus testing and bug-fixing efforts on those modules, resulting in fewer bugs in release which are less costly to fix.
 
-In this paper, we focus on the advances made in software fault prediction models in the literature. Section 2 contains an assortment of existing work in the area.
+In this paper, we focus on the progress of software fault prediction models in the literature within the last few years. Section 2 contains an assortment of existing work in the area. We analyze the literature through different perspectives in Sections 3 through 10. Finally, in section 11, we give our overall observations and suggestions for future research in this area.
 
 \section{Related Work}
 Cagatay Catal and Banu Diri \cite{Catal} gave an overview of software fault prediction studies and advancements up to 2008. They found that an increasing number of studies used datasets available to the public. They also found that since 2005, machine learning algorithms have become increasingly popular choices to implement the models. Finally, they observed that the most dominant metrics in fault prediction were at the method level. They recommended that machine learning algorithms and public datasets continue to be used, but caution against using method-level metrics and instead suggested class-level metrics as they can predict faults earlier in the software development cycle.
+
+A couple of years later, Hall et al \cite{Hall} performed another comprehensive literature review on fault prediction performance from January 2000 to December 2010. They hoped to see how the context, independent variables, and modeling techniques affected the performance of fault prediction models. They found that simpler modeling techniques seemed to perform better, along with feature selection on sets of independent variables. They encouraged future studies to better report their context, methodology, and performance.
+
+A couple of years after the Hall paper was published, Radjenovic et al \cite{Radjenovic} performed a literature review of metrics used in fault prediction models. The date range of papers was about double that for the Hall paper, from 1991 to 2011. The authors found that there are major differences between the metrics used, and that object-oriented and process metrics seemed to be better at predicting faults than static code metrics.
 
 Vandecruys et al \cite{Vandecruys} mined software repositories to create predictive models. The authors used AntMiner+, an Ant Colony Optimization (ACO)-based classification technique. On public datasets, AntMiner+ was found to be competitive to alternative classification techniques, such as C4.5, logistic regression, and support vector machines. The authors suggested that software managers would find the output of rules produced by AntMiner+ easy to understand and accept.
 
@@ -229,31 +233,64 @@ Most software products are structured in a hierarchical format, for example into
 
 Traditional software fault prediction models are trained on historical project data. Since new projects do not have such a volume of historical data, these fault prediction models are not as effective at within-project defect prediction. A possible solution to this issue is cross-project prediction which uses data from one project to predict defects in another. Still, models using this technique exhibit poor performance. Rahman et al \cite{Rahman} argued that one reason for such behavior is that standard evaluation measures such as precision, recall, and F-measure are taken at specific threshold settings, while they really should be taken in a range of time/cost vs. quality trade offs. They took the standard measures at a variety of tradeoffs and found that cross-project defect prediction is at least as good as within-project defect prediction, and sometimes substantially better.
 
-Also within the area of cross-project defect prediction, Nam et al \cite{Nam} found that when the source and target projects have a different feature distributions, the resulting model gives poor performance. The authors use Transfer Component Analysis (TCA) to find a common feature set for both projects and then map the data of both projects to it. They found that TCA is sensitive to normalization, so they developed an improvement, TCA+ to select appropriate normalization options. After using TCA+ to create cross-project defect prediction models for eight open-source projects, they found a significant improvement in prediction performance compared to traditional algorithms and techniques. The authors proposed applying knowledge in one domain to another to further improve performance. 
+Also within the area of cross-project defect prediction, Nam et al \cite{Nam} found that when the source and target projects have different feature distributions, the resulting model gives poor performance. The authors use Transfer Component Analysis (TCA) to find a common feature set for both projects and then map the data of both projects to it. They found that TCA is sensitive to normalization, so they developed an improvement, TCA+ to select appropriate normalization options. After using TCA+ to create cross-project defect prediction models for eight open-source projects, they found a significant improvement in prediction performance compared to traditional algorithms and techniques. The authors proposed applying knowledge in one domain to another to further improve performance. 
 
 As another approach to improving fault prediction, Tian Jiang \cite{Jiang} introduced \emph{personalized defect prediction}. He argued that developers have different coding styles and techniques and that if each developer had their own defect prediction model, performance would improve. He was careful to note that the developer was not a feature of the model, but that there was a model for each developer. He ran experiments on six large open-source projects using PCC+, a model which chooses the highest confidence prediction among CC (traditional change classification), PCC (personalized change classification), and weighted PCC (PCC with changes from other developers added to a developer's model). Compared to CC and MARS (another predictor which also creates different models for different groups of data), PCC+ outperformed CC, MARS, and PCC as long as there is enough training data for each developer. Jiang recommended that PCC+ be applied to other recommendation systems and types of predictions.
 
+Two common approaches to evaluating defect prediction models are precision-recall and ROC curves. Davis et al \cite{Davis} showed that there exists a deep connection between the two. Additionally, they claimed that ROC curves are overly optimistic with highly skewed data, and that PR curves are better suited for that type of data. While there exists a connection between the two types of curves, the authors showed that an algorithm that optimizes the area under the ROC curve does not necessarily optimize the area under the PR curve. Essentially, they were trying to show that although both evaluation methods are related, just one does not show the complete picture. Both are needed to gain a better understanding of the performance of an optimization algorithm.
+
+Given that managers are trying to improve the process of software development, how do we best manage such a process? Chidamber and Kemerer \cite{Chidamber}
+developed and evaluated six such metrics. They were then tested at two different sites via automated tools. The authors concluded by suggesting how these metrics can be adapted in a software development environment and correlated with managerial performance indicators.
+
+D'Ambros et al \cite{DAmbros} presented a benchmark for fault prediction. Their motivation was the observation that such a benchmark did not exist, making it difficult to compare the models and approaches found in the literature. Their benchmark consisted of a publicly available data set consisting of five software systems. They also compared and evaluated well-known fault prediction methods and developed some new ones. They then ran their new methods on their benchmark, finding that they actually performed the best out of all. They conclude by stating that techniques based off of only one metric do not work well against every software project, meaning that the more useful metrics included, the better.
+
+Kim et al \cite{Kim} introduced a new technique called \textit{Change Classification}, which looks at individual changes to source code and predicts whether those changes are similar to previous buggy or clean changes. When testing on twelve open-source systems, change classification was found to be as accurate as other leading bug prediction techniques. Since this was a new technique, there were a number of open issues for future research.
+
+Wu et al \cite{Wu} implemented an algorithm which recovers links between bugs and committed changes called \textit{ReLink}. The authors tested this new algorithm on three open-source projects, finding that it was roughly as accurate as traditional heuristics. 
+
+Zhang et al \cite{Zhang2014} attempted to implement a universal defect prediction model, which would work on both new projects and projects with historical data. In order to account for variations in the distributions of predictors, the authors clustered projects based on the similarities of the predictors. Their dataset included almost 1,400 open-source projects. They found their universal model performs well on both within-project and cross-project models. They have hope that such a universal model is achievable. 
+
+\section{Ecological Inference}
+Ecological inference or EI was presented in the first paper we reviewed, the Posnett paper \cite{Posnett}.  Posnett et al explain ecological inference as the idea that an observation or finding at an aggregated level can apply at a disaggregated level.  For example, the idea that a model of defects at the package level also applies at the file level.  
+
+The suggestion is that in the fault prediction area there is in fact an Ecological Fallacy, where findings at the aggregated level are expected to be valid at a disaggregated level.  As in the example above a defect model that is created at a package level is applied to predict defects at a file level. Based on this concept Posnett wanted to prove whether or not the Ecological Fallacy applied to fault prediction. 
+
+Posnett et al posit two main overarching conclusions in their paper:  That aggregated models when evaluated only at the aggregated level may have deceivingly strong performance, and furthermore inferences from aggregated models may not apply to their disaggregated parts \cite{Posnett}.  Posnett cites another of our papers, Bird et al, as a potential rebuttal of his results because of the fact that geographical distribution did not have an effect in Bird's study \cite{Bird}.
+
+Moving beyond the Posnett paper, Rahman et al in 2012 made considerations regarding the aggregation level of their models, in that they decided to examine code at the file level.  Rahman et al went that direction because they were worried that evaluation of a model on a coarser level of aggregation may not be a good predictor at the file level \cite{Rahman}.  Rahman again cites Ecological Inference in a 2013 paper on Process Metrics as a threat for validity \cite{Rahman13}.  
+
+\subsection{Discussion}
+The main question is whether EI and EF represent important concepts to researchers going forward in the fault prediction area.  It seems that only a subset of papers are actually being written currently where EF is recognized as a concern.  Our recommendation would be further study to validate Posnett's 2011 work, and if the work is further validated the community should consider EI/EF when conducting studies.
+
+
 \section{Machine Learning Algorithms}
 
-Every fault prediction study used some sort of machine learning algorithm as the heart of the model. There are a variety of ML algorithms including regression, neural networks, support vector machines, and decision trees.
+Every fault prediction study leverages a machine learning algorithm as the heart of the model. Machine learning algorithms are a way to "learn" from data and create a model that can make predictions. Typically, there is a set of training data which the algorithm uses to generate the model. Then, it is evaluated with test data to see if it generates accurate and reliable predictions. There are a variety of ML algorithms including regression, neural networks, support vector machines, and decision trees.
 
 \subsection{Regression}
-Regression is a ML algorithm for data that can be fitted to a curve. A total of X papers use some form of regression (\cite{Posnett}, \cite{Rahman}, ...). Regression algorithms are considered to be the simplest type, but can perform well if the data can be well fitted to some sort of line or curve.
+Regression is a ML algorithm for data that can be fitted to a curve. Regression algorithms are considered to be the simplest type, but can perform well if the data is a well-fit to some sort of well-behaved mathematical function. Most of the referenced papers used some form of regression as their main algorithm (\cite{Posnett}, \cite{Bird}, \cite{Nagappan}, \cite{Rahman}). 
+
+\subsection{MARS}
+MARS is short for Multivariate Adaptive Regression Splines.  The concept goes back to a 1991 paper by Friedman the technique is a non-parametric method used to model complex multivariate non-linear scenarios.  It is suited modeling non-linear data because of the fact that models have a series of hinge and basis functions.  Each hinge function per Bettenburg et al "partitions the data into disjoint regions that can be described separately"\cite{Bettenburg}.  Bettenburg et al used MARS in building models to look at the difference between global and local trained model.  The Jiang paper used MARS models based on Bettenburg's work as a baseline to compare PCC and PCC+ models against \cite{Jiang}. 
 
 \subsection{Neural Networks}
-Neural networks are designed to model the learning pattern of the human brain. Essentially, neural networks consist of nodes connected by links. The more a link is activated during training, the stronger it becomes and the more likely it will be selected during testing. 
+Neural networks are a family of machine learning algorithms based initially on the perceptron. The basic structure of neural network consist of an input layer, layers of activation functions, and an output layer. Each layer is connected to other layers but no connections exist within the layer. The result of each activation function is delivered to the next connected layer until it finally reaches an output layer.   
 
-Jun Zheng \cite{zheng2010} used a back propagation neural network (BPNN) with AdaBoost, a way to achieve better classification results by producing diverse base classifiers. Zheng states that he used neural networks because they are popular in pattern recognition and BPNNs because they were the most frequent neural network used in the literature. AdaBoost was chosen because it is a popular way to improve the performance of the model.
+Jun Zheng \cite{zheng2010} used a back propagation neural network (BPNN) with AdaBoost, as a way to achieve better classification results by producing diverse base classifiers. Zheng states that he used neural networks based on their popularity in pattern recognition, and BPNNs because they were the most frequent neural network used in the literature. AdaBoost was chosen because it is a popular way to improve the performance of the model.
+
+\subsection{Naive Bayes}
+Zhang et al \cite{Zhang2014} use Naive Bayes classifier as a modeling technique in their approach to build a universal defect prediction model for cross-project defect prediction. They decided on this classifier because previous research determined that Bayes learners outperform other learners when predicting defects in noisy data. The Naive Bayes classifier is based on Bayes' theorem with independence assumptions.
+
+\subsection{Probabilistic Graphical Models}
+Probabilistic graphical models are considered powerful machine learning tools. They consist of a graphical structure where nodes are events and edges are conditional dependencies. Some examples include bayesian networks and hidden markov models. They have many strength including informative visualization from structures, insights from model inference, and lower complexities. Inferring insights from model structure could be leveraged in software defect prediction. Certain conditional relationships can be reported verbally to all concerned parties. It has also been posited every machine learning algorithm is an instance of a probabilistic graphical model.\cite{Bishop:2006:PRM:1162264}   
 
 \subsection{Other ML Algorithms}
-Vandecruys et al \cite{Vandecruys} used a novel algorithm known as AntMiner+, which is based on Ant Colony Optimization which models the foraging behavior of ant colonies. 
+Vandecruys et al \cite{Vandecruys} used a novel algorithm known as AntMiner+, which is based on Ant Colony Optimization(ACO) which models the foraging behavior of ant colonies. In AntMiner+, ACO is used to optimize a rule based classification algorithm. Rule based classification algorithms usually have greater comprehensibility than other machine learning algorithms as the association rules can be reported. Vandecruys also presented good accuracy using AntMiner+. 
 
 Tian Jiang's algorithm \cite{Jiang} was based on a classification scheme known as Personalized Change Classification+ (PCC+).
 
-Nam et al \cite{Nam} implemented TCA+, which is a novel feature extraction technique for transfer learning with improved normalization.
-
 \subsection{Discussion}
-Catal et al \cite{Catal} suggested that more models be based on machine learning techniques rather than statistical methods or expert based systems. We see that research has followed the advice of the authors. Arisholm et al \cite{Arisholm} did not find any major differences among the different machine learning techniques, although they found that C4.5 with Adaboost gave the best results. 
+Catal et al \cite{Catal} suggested that more models be based on machine learning techniques rather than statistical methods or expert based systems. We see that research has followed the advice of the authors. Among them, Arisholm et al \cite{Arisholm} did not find any major differences among the different machine learning techniques, although they found that C4.5 with Adaboost gave the best results. 
 
 Not only have authors used well-known ML algorithms, but they have even implemented new ones. This shows that ML algorithms were the primary choice of recent studies and still are today.
 
@@ -263,50 +300,57 @@ There are three major approaches to evaluating the performance of models in the 
 
 \subsection{Confusion Matrix Approaches}
 
-The use of confusion matrices, and the metrics (precision, recall, and F-measure) that revolve around them are very common in the fault prediction area.  As will likely be known by the reader, a confusion matrix is a summary of predicted values compared with actual values.  A confusion matrix in most cases will have been created based on test data where the actual values are known.  Precision, recall, and F-Measure are all statistics that can be used to assess how close a model has come in predicting the actual on the test data.  This methodology is used in nearly all of the papers we read \cite{Posnett} \cite{Nam} \cite{Bird} \cite{Vandecruys} \cite{Nagappan} \cite{Arisholm} \cite{Rahman} \cite{Jiang}. 
+The use of confusion matrices, and the metrics (precision, recall, and F-measure) derived from them are very common in the fault prediction area.  As will likely be known by the reader, a confusion matrix is a contingency table summarizing the predicted values compared with actual values.  A confusion matrix in most cases will have been created based on test data where the actual values are known.  Precision, recall, type I errors, type II errors, and F-Measure are all statistics that can be used to assess how close a model has come in predicting the actual on the test data.  This methodology is used in nearly all of the papers we read \cite{Posnett} \cite{Nam} \cite{Bird} \cite{Vandecruys} \cite{Nagappan} \cite{Arisholm} \cite{Rahman} \cite{Jiang} \cite{Zhang2014} 
 
-Even though the methodology is fairly standard throughout the papers we read, what actual metric is reported between precision, recall, overall accuracy, and F-Measure has considerable variance between papers.  The Vandecruys paper \cite{Vandecruys} even uses terminology that is separate from many other publications in using sensitivity for recall and specificity for the true negative rate, which is a seldom reported statistic. One suggestion in \cite{Hall} is to present the confusion matrix itself rather than to present one statistic or the other when possible (where possible is determined by the sheer number of confusion matrices that would be produced).  The idea is that it would better enable comparison across studies since researchers could produce whatever statistic they happen to need from the data itself.
+Even though the methodology is fairly standard throughout the papers we read, what actual metric is reported between precision, recall, overall accuracy, type I errors, type II errors, and F-Measure has considerable variance between papers.  The Vandecruys paper \cite{Vandecruys} even uses terminology that is separate from many other publications in using sensitivity for recall and specificity for the true negative rate, which is a seldom reported statistic. One suggestion in \cite{Hall} is to present the confusion matrix itself rather than to present one statistic or the other when possible (where possible is determined by the sheer number of confusion matrices that would be produced).  The idea is that it would better enable comparison across studies since researchers could produce whatever statistic they happen to need from the data itself.
+
+Another measurement we encountered is the g-measure. It is used by Zhang et al \cite{Zhang2014} in their cross-project defect prediction study. They use it to combat the the instability of precision in datasets with low percentages of defects.  
 
 \subsection{ROC curves}
 
-The ROC curve is another fairly standard metric for performance used in the literature.  ROC, or Receiver Operating Characteristic analysis is an elaboration of the confusion matrix approach.  The idea is to use the rates of false positives and true positives on an x-y plane and to have x values represent the rates of false positives, and y values represent the rates of true positives.  The rate for a particular model can be plotted as point on the ROC curve and the area under the curve (AUC) be used as a metric to determine the quality of the model with a point at (0,1) being optimal \cite{Posnett}.  
+The ROC curve is another fairly standard metric for performance used in the literature.  ROC, or Receiver Operating Characteristic analysis is an elaboration of the confusion matrix approach.  The idea is to use the rates of false positives and true positives on an x-y plane and to have x values represent the rates of false positives, and y values represent the rates of true positives.  The rate for a particular model can be plotted as a point on the ROC curve and the area under the curve (AUC) be used as a metric to determine the quality of the model with a point at (0,1) being optimal \cite{Posnett}.  
 
-These methods are used in a few of the papers we reviewed \cite{Rahman} \cite{Arisholm} \cite{Posnett}.  Some negatives have been pointed out about the ROC approach and it's usefulness in certain circumstances.  One such negative is the fact that ROC curve approaches have "an overly optimistic view of an algorithm's performance if there is a large skew in the class distribution".  \cite{Davis}  Other papers mention the fact that both ROC/AUC approaches and confusion matrix based approaches in general do not address the whether a particular fault prediction methodology can pinpoint the source of the faults or not.  Since knowing where to find errors is just as important or more important than knowing whether errors exist or not several papers find ROC/AUC insufficient as an evaluation metric \cite{Posnett} \cite{Arisholm} \cite{Rahman}. 
+These methods are used in a few of the papers we reviewed \cite{Rahman} \cite{Arisholm} \cite{Posnett}.  Some negatives have been pointed out about the ROC approach and its usefulness in certain circumstances.  One such negative is the fact that ROC curve approaches have "an overly optimistic view of an algorithm's performance if there is a large skew in the class distribution".  \cite{Davis}  Other papers mention the fact that both ROC/AUC approaches and confusion matrix based approaches in general do not address the whether a particular fault prediction methodology can pinpoint the source of the faults or not.  Since knowing where to find errors is just as important or more important than knowing whether errors exist or not several papers find ROC/AUC insufficient as an evaluation metric \cite{Posnett} \cite{Arisholm} \cite{Rahman}. 
 
 \subsection{Cost Effectiveness}
 
 Arisholm et al \cite{Arisholm} contributed Cost Effectiveness as a metric to software defect prediction.  The high level idea behind Cost Effectiveness is the idea that it is impossible in most cases to inspect the entire code base of a large project for bugs. Defect prediction models that can guide inspection of code to find the largest number of bugs by inspecting the smallest percentage of the code base are viewed as models with high cost effectiveness.
 
-The basic idea of the metric is a set of two curves on an x-y plane that has a percentage of faults as the y-axis, and the percentage of the lines of code included in classes selected to focus verification as the x-axis.  Classes are ranked according to their likelihood of having defects, first by the model, and next by the size of the class in case of ties.  The graph has a baseline of $y=x$ which is essentially the assumption that the percentage of faults will be equivalent to the percentage of lines of code inspected, this is done using a random ranking of the classes.  On the same graph is the cost effectiveness curve which is the actual percentage of faults given the percentage of LOC of class selected to focus verification according to the ranking determined by the model. 
+The basic implementation of the metric is a set of two curves on an x-y plane that has a percentage of faults as the y-axis, and the percentage of LOC included in classes selected to focus verification as the x-axis.  Classes are ranked according to their likelihood of having defects, first by the model, and next by the size of the class in case of ties.  The graph has a baseline of $y=x$ which is essentially the assumption that the percentage of faults will be equivalent to the percentage of lines of code inspected, this is done using a random ranking of the classes.  On the same graph is the cost effectiveness curve which is the actual percentage of faults given the percentage of LOC of classes selected to focus verification according to the ranking determined by the model. 
 
- Arisholm et al use an area calculation that is normalized to be a proportion of the optimal area under the curve.  To find an approximation of the optimal cost effectiveness they use a ranking that puts the most error filled classes towards the front and then create a cost effectiveness line according to that ranking.  The actual calculation is\\ $CE_{\pi} = (CE_{pi}(model) - CE_{pi}(baseline))/$\\ $(CE_{pi}(optimal) - CE_{pi}(baseline))$  Other papers have used a simpler calculation of the area under the cost effectiveness curve, or AUCCE \cite{Posnett}.  The same concept is also used by Rahman et al under the name AUCEC \cite{Rahman}.
+ Arisholm et al use an area calculation that is normalized to be a proportion of the optimal area under the curve.  To find an approximation of the optimal cost effectiveness they use a ranking that ranks the most error filled classes highly and then create a cost effectiveness line according to that ranking.  The actual calculation is\\ $CE_{\pi} = (CE_{pi}(model) - CE_{pi}(baseline))/$\\ $(CE_{pi}(optimal) - CE_{pi}(baseline))$  Other papers have used a simpler calculation of the area under the cost effectiveness curve, or AUCCE \cite{Posnett}.  The same concept is also used by Rahman et al under the name AUCEC \cite{Rahman}.
 
-Those same papers that find ROC to be inefficient all suggest that Cost Effectiveness is an important and to some degree a superior metric to use in determining the performance of an algorithm \cite{Posnett} \cite{Arisholm} \cite{Rahman}.  The Arisholm paper was in fact one of the most influential papers that we worked with throughout the semester.  Cross-project defect prediction has been validated to some degree by the existence of Cost Effectiveness as an evaluation metric \cite{Rahman}.    The technique was used in Jiang et al as a metric as well \cite{Jiang}. 
+Those same papers that find ROC to be inefficient all suggest that Cost Effectiveness is an important and to some degree a superior metric to use in determining the performance of an algorithm \cite{Posnett} \cite{Arisholm} \cite{Rahman}.  The Arisholm paper was in fact one of the most influential papers that we worked with throughout the semester.  Cross-project defect prediction has been validated to some degree by the existence of Cost Effectiveness as an evaluation metric \cite{Rahman}.  The technique was used in Jiang et al as a metric as well \cite{Jiang}. 
 
 \subsection{Discussion}
-It seems that Arisholm's contribution to the community with Cost Effectiveness back in  2010 has provided a better metric to evaluate fault prediciton models going forward.  Seeing as the point of fault prediction should be to build tools that can be used in the real world for real projects injecting the realism that CE brings to the table seems to be totally appropriate in going forward.  Even though that is viewed as the case by some in the community confusion matrix based approaches and the related ROC curve concept are seemingly going nowhere.  These approaches will continue to be important in evaluating models until something better comes along.  
+It seems that Arisholm's contribution to the community with Cost Effectiveness back in 2010 has provided a better metric to evaluate fault prediciton models going forward.  Seeing as the point of fault prediction should be to build tools that can be used in the real world for real projects, injecting the realism that CE brings to the table seems to be totally appropriate in going forward.  Even though that is viewed as the case by some in the community, confusion matrix based approaches and the related ROC curve concept are seemingly going nowhere.  These approaches will continue to be important in evaluating models until something better comes along.  
 
 Our recommendation in this area would be to work with a hybrid approach of using both confusion matrix approaches and the ROC curve as well as CE based metrics.  The suggestion of Hall as listed above to simply report confusion matrices seems like a great recommendation when possible going forward.  At that point researchers could simply report cost effectiveness data along with confusion matrices and leave any further analysis to those that are interested.  If reporting confusion matrices were not to become popular, settling on one confusion matrix based approach such as the F-Measure would be preferable to the random mixture of reporting approaches viewed throughout our papers.
 
 \section{Features}
 
-This section could also be labeled metrics, as it is in many places throughout the literature on this topic, but to not confuse it and the previous section on evaluation metrics we have chosen to label it features.  The main reasoning for this is the fact that metrics are actually used as features in this area and not actually as metrics for comparison of one method versus another.  The Radjenovic paper \cite{Radjenovic} is a fairly exhaustive paper with relation to metrics/features in fault prediction.  Radjenovic came up with three categories to discuss in their literature review, and we will stick with those same categories in relation to the papers we reviewed.  The categories are: Traditional, Object-Oriented, and Process.  Some of the papers we reviewed defy this categorization and use metrics that are either one offs or are hybridized to such a degree that they should be explained on their own.
+This section could also be labeled metrics, as it is in many places throughout the literature on this topic, but to not confuse it and the previous section on evaluation metrics we have chosen to label it features.  The main reasoning for this is the fact that metrics are actually used as features in Machine Learning algorithms and not actually as metrics for comparison of one method versus another.  The Radjenovic paper \cite{Radjenovic} is a fairly exhaustive paper with relation to metrics/features in fault prediction.  Radjenovic came up with three metric categories to discuss in their literature review, and we will stick with those same categories in relation to the papers we reviewed.  The categories are: Traditional, Object-Oriented, and Process.  Some of the papers we reviewed defy this categorization and use metrics that are either one offs or are hybridized to such a degree that they should be explained on their own.
 
 \subsection{Traditional}
 
-These are metrics that relate to complexity (ie McCabe or Halstead calculations) and lines of code.  A good number of papers we reviewed used these metrics as feature \cite{Posnett} \cite{Vandecruys} \cite{Bird}.  There is considerable discussion in terms of whether these sorts of metrics provide good quality models or not.  Hall et al indicate that in their review that models using only static code metrics that are complexity based have poor performance, but that Lines of Code based models tend to be useful \cite{Hall}.  Radjenovic et al indicate that LOC has no strong evidence behind it in terms of faults furthermore they state that smaller studies in general have given more weight to LOC and size metrics than larger studies, because of that they rated the effectiveness of the metric as "moderate"\cite{Radjenovic}.  On complexity metrics Radjenovic states that these metrics are reasonable, but that "others are better"\cite{Radjenovic}.  
+These are metrics that relate to complexity (ie McCabe or Halstead calculations) and lines of code.  A good number of papers we reviewed used these metrics as features \cite{Posnett} \cite{Vandecruys} \cite{Bird}.  There is considerable discussion in terms of whether these sorts of metrics provide good quality models or not.  Hall et al indicate that in their review that models using only static code metrics that are complexity based have poor performance, but that Lines of Code based models tend to be useful \cite{Hall}.  Radjenovic et al indicate that LOC based methods have no strong evidence behind them in terms of faults furthermore they state that smaller studies in general have given more weight to LOC and size metrics than larger studies, because of that they rated the effectiveness of the metric as "moderate"\cite{Radjenovic}.  On complexity metrics Radjenovic states that these metrics are reasonable, but that "others are better"\cite{Radjenovic}.  
 
 \subsection{Object Oriented Metrics}
 
-Object oriented metrics seem to have been dominated by the metrics presented by Chidamber and Kemerer \cite{Chidamber} \cite{DAmbros}.  These metrics include things like number of children(NOC), coupling between classes (CBO), or lack of cohesion of methods (LCOM).    Object oriented metrics were used in only one of our papers, Arisholm et al, and used there really only as a comparison metric\cite{Arisholm}.  In terms of evaluation of their success or failure Radjenovic et al indicate that OO metrics are useful but that there is some debate about whether OO metrics and size are correlated and that further work is needed in that area  \cite{Radjenovic}.  Hall et al state that OO and LOC are actually on pretty equal footing and that OO provides better performance than source code metrics \cite{Hall}.
+Object oriented metrics seem to have been dominated by the metrics presented by Chidamber and Kemerer \cite{Chidamber} \cite{DAmbros}.  These metrics include things like number of children(NOC), coupling between classes (CBO), or lack of cohesion of methods (LCOM).  Object oriented metrics were used in only one of our papers, Arisholm et al, and used there really only as a comparison metric\cite{Arisholm}.  In terms of evaluation of their success or failure Radjenovic et al indicate that OO metrics are useful but that there is some debate about whether OO metrics and size metrics are correlated and that further work is needed in that area  \cite{Radjenovic}.  Hall et al state that OO and LOC are actually on pretty equal footing and that OO provides better performance than source code metrics \cite{Hall}.
 
 \subsection{Process Metrics}
 
-Process metrics relate to things like number of developers, code churn, number of commits, features, etc.  Process metrics are mostly mined from source code management systems like Git, and also bug tracking and issue tracking systems like Jira.   These metrics have a strong following in the fault prediction community and are well represented in our papers \cite{Posnett} \cite{Bird} \cite{Arisholm} \cite{Rahman}.  Rahman et al particularly only used a set of process metrics while the other papers mentioned used some sort of combination of process and other metrics.  There is some dispute between Radjenovic and Hall with regards to process metrics, with Hall suggesting that their performance was the worst out of everything they had examined where Radjenovic considers process metrics to be promising and that they are deserving of further study and validation while additionally stating that they provide superior post-release fault prediction \cite{Hall} \cite{Radjenovic}.  
+Process metrics relate to things like number of developers, code churn, number of commits, features, etc.  Process metrics are mostly mined from source code management systems like Git, and also bug tracking and issue tracking systems like Jira.   These metrics have a strong following in the fault prediction community and are well represented in our papers \cite{Posnett} \cite{Bird} \cite{Arisholm} \cite{Rahman}.  Rahman et al particularly only used a set of process metrics while the other papers mentioned used some sort of combination of process and other metrics.  
+
+There is some dispute between Radjenovic and Hall with regards to process metrics, with Hall suggesting that their performance was the worst out of everything they had examined where Radjenovic considers process metrics to be promising and that they are deserving of further study and validation while additionally stating that they provide superior post-release fault prediction \cite{Hall} \cite{Radjenovic}.  
+
+Another discussion of the strength of process metrics can be found in a 2013 paper by Rahman where he and Devanbu examine "How, and Why, Process Metrics are better"\cite{Rahman13}.  Based on the title it is fairly clear where Rahman and Devanbu come out on this, but the main thrust of their argument is that process metrics do not suffer from the stasis that code metrics do suffer from.  The idea is that between releases code metric based models lose relevancy as the distribution of defects in the project changes.  Further Rahman indicates that this assessment is geared towards situations in which AUC and Cost-Sensitive evaluation methods are being used. 
+
+Process metrics were also used by Zhang et al \cite{Zhang2014} to build a successful universal defect prediction model. This reaffirms the feature set as generalizable to other projects when performing cross-project defect prediction.
 
 \subsection{Organizational Structure}
 This is an approach that was proposed by Nagappan et al at Microsoft Research \cite{Nagappan}.  The metrics included a set of 8 measures of organizational complexity: Number of engineers, Edit Frequency, Depth of Master Ownership, Percentage of Org contributing to development, Overall Organization Ownership, and Organization Intersection Factor.  They used these metrics to create a fault prediction model and compared its performance in Precision and recall against a set of OO, Traditional, and Process metrics.  For Windows Vista they show that Organizational metrics are superior to the other types of metrics available.  As mentioned in the paper there are questions about whether this approach would work outside Microsoft or with a smaller project.  
-
 Naggapan and Bird produced another paper in the next year using organizational metrics again with a bit of a twist in looking at whether distributed development had an effect on software quality \cite{Bird}.  This paper added an additional metric of the actual location of the members of teams working on Windows Vista with levels starting at the same building and growing to the point of developers working at locations across the globe from one another.  Organizaitonal metrics as well as a set of process and traditional metrics were used in conjunction with the distribution metric seemingly out of surprise that there was little difference between distributed projects and more local projects.  The idea was to try to prove that there was not in fact some correlation between the other metrics they looked at and the performance of teams across long distances.  They found that in fact there was no difference and that distributed development within one company was possible without sacrificing quality.
 
 \subsection{Text Classification}
@@ -322,6 +366,8 @@ In one of our most recent papers (the Nam paper 2013 \cite{Nam}) we found resear
 
 D'Ambros' AEEEM seemingly took everything he could find that he could rationalize and some new ideas and then just threw all of it into a metric set.  \href{http://bug.inf.usi.ch/}{AEEEM} includes: change metrics, CK metrics, Object Oriented metrics, number of previous defects, complexity of code change, churn of CK and OO metrics, entropy of CK and OO metrics.  ReLink unfortunately was not as helpful in listing out what is available in terms of metrics.  Based on the Nam paper it contains 26 complexity metrics \cite{Nam}.
 
+Rahman et al also use a benchmark set of metrics for their 2013 paper.  The metric set is called \href{https://scitools.com/feature/metrics/}{UNDERSTAND} from Scitools.  It uses a set of complexity, LOC, and OO metrics \cite{Rahman13}.
+
 \subsection{Discussion}
 As can be seen by the length and complexity of this section, the metrics area is still a very open area in fault defect prediction.  The simple fact that there are major differences in terms of what metric set is being used across different projects creates some difficulty when comparing them.  Also since many of these projects also use a hybrid approach, it makes it even less likely that another project will use exactly the same set of metrics.  
 
@@ -334,8 +380,10 @@ The majority of papers we reviewed used open-source data, with most of those bei
 
 Apache libraries are also commonly used in a variety of products, so defects that are in released code can manifest themselves in projects that use them, creating a sort of ripple effect.
 
+Sourceforge and GoogleCode projects were used by Zhang et al \cite{Zhang2014} for cross-project defect prediction. Although open source projects are a viable data source they also contain many useless projects where defects are not properly tracked.
+
 \subsection{NASA}
-A few papers (Zheng \cite{zheng2010}...) used datasets from NASA. Among them were KC1, used for storage management, KC2, used for scientific data processing, CM1, used for NASA spacecraft instruments, and PC1, used for flight software.
+A couple of papers (\cite{zheng2010}, \cite{Vandecruys}) used datasets from NASA. Among them were KC1, used for storage management, KC2, used for scientific data processing, CM1, used for NASA spacecraft instruments, and PC1 and PS4, used for flight software.
 
 One major reason for using NASA datasets is that most of their software is critical. A malfunction or crash due to a software defect is not only costly, but can also be deadly. NASA's software needs to be thoroughly tested and bug-fixed before it is ready for use. Software defect models which work well on these datasets can be claimed to be more reliable and trustworthy. Additionally, NASA's datasets contain code metrics and defect information, which is easy to mine and create training and test data from.
 
@@ -349,19 +397,79 @@ But why was Windows Vista chosen? Windows in general is a widely used operating 
 Most of the studies we examined used open-source datasets which is in line with previous recommendations (\cite{Catal}, \cite{Vandecruys}). The two papers which used Windows Vista were not proposing a new or improved fault prediction model but were instead analyzing Microsoft's organizational structure to see how it may have affected bug levels. Although the NASA software isn't open source, we think that its datasets are acceptable because of their domain and the fact that NASA has made the datasets public for research purposes. Research has heeded the recommendations of earlier researchers and now primarily use open-source datasets
 
 \section{Data Preprocessing}
+\subsection{Filtering}
+Zhang et al \cite{Zhang2014} filtered for projects to meet specific programming language criteria. To perform this they specifically filter for file types associated to those languages. They also apply a second filtering to remove small projects by filtering out projects with a small number of commits. The decide on the 25\% quantile which is 32 commits. This is to confirm projects have enough information for extracting viable features. Next they filter projects with a lifespan of less than one year and project with limited defects for the same reasoning. Finally, they filter out projects without fix-inducing commits as they are marked abnormal. 
+
+Vandecruys et al also utilize a filtering based approach to rank variables according to their predictive power.  They used a $\chi^{2}$ based filter.  The idea was to decrease the number of metrics to the point that only the metrics that were useful would be actually added to the model \cite{Vandecruys}.
+
+\subsection{Discretization}
+Generally a method to turn continuous variables into discrete variables.  Vandecruys et al used this technique because AntMiner plus could not deal with continuous variables \cite{Vandecruys}.    
+
+\subsection{Oversampling}
+The data in many fault prediction data sets has many more clean files than faulty files the data is considered to be heavily skewed.  One method for dealing with skewed data is oversampling, as discussed in \cite{Vandecruys}.  The idea is when sampling for training data to repeat observations that correspond to faults in the data.  Vandecruys et al found in their study that oversampling had different effects at different levels of oversampling (the number of times faulty observations were repeated).  
+
+The true positive rate, sensitivity or recall, and the true negative rate, specificity are affected by the levels of oversampling.  In Vandercruy's case an increase in oversampling increased specificity, but decreased sensitivity.  This change also coincides with a decrease in accuracy.  Their perspective was that it was important to reach a break even point in terms of oversampling where they could live with the level of accuracy and sensitivity on one hand but specificity on the other.  They found that oversampling to the level where there were equal numbers of faulty and non-faulty observations was optimal\cite{Vandecruys}. 
+
+\subsection{Normalization}
+Normalization was a key part of Nam et al's paper on TCA.  TCA requires normalization to function correctly, this is fairly common throughout that statistical/machine learning/ASE world, and is essentially scaling all features in a data set to the same scale.  This is often necessary because features may well be from completely different scales such as liters of oil and pounds sterling.  
+
+Nam et al use 4 different schemes for normalization: The first is a simple Min-Max scheme where $norm_x = \frac{x - min}{max - min}$. The other methods are z score normalizations with slight changes, such as $norm_x = \frac{x-mean}{std_dev}$.  The difference comes in where the mean is either the mean of all of the features, or the mean of a particular feature vector.  As follows in the section on TCA+ Nam et al used this as an optimization for TCA since it had such a high sensitivity to normalization\cite{Nam}
+
+\subsection{PCA}
+PCA or principal component analysis does not completely fit into data preprocessing, but is not significant enough to be its own section.  The technique is used to take a large number of features and flatten them into a smaller number of features through a transformation using Eigenvectors and Eigenvalues \cite{James}.  
+
+This technique is used by Nagappan et al, they actually use PCA in a somewhat odd manner.  They first state that there is a concern with multicollinerity between the organizational metrics that the propose, so they decide to use PCA to deal with the multicollinerity in the data.  They find that PCA returns 8 principal components and then determine on that basis as well as step-wise regression that all of the measures are valuable and should be retained \cite{Nagappan}.  It is possible that this is a legitimate use for PCA, but it is not a use that we are familiar with.
 
 \section{Statistical Tests}
+
 \subsection{Mann-Whitney U test}
-The Mann-Whitney U test, a non-parametric test that determines if two independent distributions have equally large value,  was used by Zhang et al \cite{Zhang:2014:TBU:2597073.2597078} to pair-wise compare the distribution of metrics of projects in the domain of cross-project defect prediction.
+The Mann-Whitney U test, a non-parametric test that determines if two independent distributions have equally large value,  was used by Zhang et al \cite{Zhang2014} to pair-wise compare the distribution of metrics of projects in the domain of cross-project defect prediction.  
+
+The Mann-Whitney test is also used in Bird et al to test the differences in mean number of failures between projects that were distributed and non-distributed projects. \cite{Bird}  Bird et al indicate that the usage of the Mann-Whitney test is more appropriate to their circumstances because of the fact that the number of failures that they were looking at were not normally distributed.
 
 
 \subsection{Cliff's $\delta$}
-Cliffs $\delta$ measures the effect size of the importance of the difference between two distributions. It is a nonparametric statistical test which represents the overlap two distributions. If two distributions are identical then the measurement is 0.  It was used by Zhang et al \cite{Zhang:2014:TBU:2597073.2597078} to determine the difference in the distributions of two project's metrics. If the difference of the effect size was large then the projects were not clustered together.  This was done as second step in clustering similar projects and only on project's whose Mann-Whitney U test determined a statistically significant difference. 
+Cliffs $\delta$ measures the effect size of the importance of the difference between two distributions. It is a nonparametric statistical test which represents the overlap two distributions. If two distributions are identical then the measurement is 0.  It was used by Zhang et al \cite{Zhang2014} to determine the difference in the distributions of two project's metrics. If the difference of the effect size was large then the projects were not clustered together.  This was done as second step in clustering similar projects and only on project's whose Mann-Whitney U test determined a statistically significant difference. 
+
+\subsection{Wilcoxon signed-rank test}
+
+This is a hypothesis testing technique that is used in the comparison of two samples.  It is a non-parametric method so, does not assume any particular distribution which increases its usefulness in certain circumstances.  The Rahman paper uses the WSR test for hypothesis testing to try to prove that cross-project\%SLOC AUCEC (Area under the cost effectiveness curve) is "resilient to parameter selection for a reasonable cutoff choice"\cite{Rahman}.  This is in the context of determining the size of model in terms of number of parameters to use.  
+
+Wilcoxon Signed rank was also used in the Arisholm paper to determine whether there is a significant difference between all pairs of techniques and metric sets that they studied in their project\cite{Arisholm}.  Arisholm et al only report p-values, but also report what level of significance they used in determining the p-values.  For whatever reason Rahman neglects to do so, from our perspective this is at least somewhat of a failure on the part of Rahman et al.  Without the significance level it is difficult to interpret the p-values quoted.  
+
+WSR was also used in Nam et al to determine whether there was a statistically significant difference in performance between TCA and TCA+ \cite{Nam}.  Jiang et al used WSR to examine the difference between CC and PCC within their paper \cite{Jiang}.
+
+\subsection{Wilcoxon rank-sum test}
+The Wilcoxon rank-sum test is a non-parametric statistical test. It compares the ranks of two independent population based on their whole ordered rank. Zhang et al \cite{Zhang2014} used the test to compare their technique of rank transformation of features with log transformation of features. With this measure they were able to differentiate between the two transformations. 
+
+\subsection{Cohen's d}
+
+Cohen's d is a measure of effect size, per \href{https://en.wikipedia.org/wiki/Effect_size#cite_note-CohenJ1988Statistical-7}{Wikipedia} it is defined as the difference between two means divided by a standard deviation for the data.  Arisholm et al use Cohen's D to report the effect size of the differences generated by the Wilcoxon Signed Rank test commented on above \cite{Arisholm}.  Between the two measures Arisholm creates a fantastic table presented in their paper that shows both the p-values generated and the effect sizes. Zhang et al \cite{Zhang2014} map Cliff's $\delta$ to Cohen's d standards to determine effect size of project metric distribution difference.
+
+\subsection{Spearman's Rank Correlation}
+This technique was used in the Nagappan paper to determine the correlation between organizational metrics.  The paper suggests that Spearman's rank correlation is superior to the Pearson correlation because it does not require a linear relationship between elements under consideration \cite{Nagappan}.  Nagappan et al use the rank correlation in terms of a hypothesis test between the organization metrics that are discussed in the metrics section above.  They report p-values along with the associated significance level.
+
+Bird et al used the Spearman Rank Correlation in their paper as well, perhaps because Nagappan was the second writer on this paper as well \cite{Bird}.  In this circumstance they wanted to determine whether there was a correlation between the distribution level of projects and process metrics.  The reasoning was that they wanted to prove that the results they had found in terms of distributed projects being no more fault prone than non-distributed projects.  If they could show that there was no real correlation between other factors and the fact that distribution was not a cause for faults.
+
+\subsection{AIC}
+The AIC is the Akaike Information Criterion.  It is generally used as a methodology to reduce the number of features in a machine learning model.  In a feature selection scenario, features are removed/added and the AIC value is checked to determine whether removing/adding a feature leads to a better model \cite{James}.  Rahman et al use AIC for the same purpose of reducing the number of variables in their models \cite{Rahman}.
+
+\subsection{VIF}
+The Variance Inflation Factor is a metric used to determine whether multicollinearity exists within a particular model \cite{James}.  It was used alongside the AIC score in the Posnett paper we reviewed.  As Posnett et al indicate AIC should not be used without using VIF because of the potential for high Multicollinearity.  In their feature selection process they used VIF as another factor to determine which models were best.  They ranked by AIC and then additionally removed any models with high VIF from consideration.
+
+\subsection{F Statistic}
+The F statistic is generally used to test the relationship between the independent and dependent variables in regression scenarios \cite{James}.  The Bird paper makes extensive use of the F-Statistic to determine whether the distribution level of developers has an effect on the response variable, the number of faults.  The paper presents p-values with significance levels as should be standard.  The p-values test the hypothesis that there is no effect of the independent variable on the dependent variables discussed above \cite{Bird}.  
+
+Bird et al use this setup to prove that a majority of the difference in defects is in fact the number of developers working on a binary.  He attempts to prove that using the F statistic and its concurrent adjusted $R^{2}$ statistic when adding in the number of developers to the project. Since Adjusted $R^{2}$ is meant to show the amount of variance in the response variable explained by the predictor variable adding the number of developers to the model should increase the $R^{2}$ value which it does.
+
+\subsection{Discussion}
+Our main recommendation with regards to statical testing is that there should be at least basic significance testing in general in the defect prediction community.  Surprisingly there were no statistical significance tests of any sort in one of the papers we reviewed \cite{Vandecruys}. Furthermore the reporting of p-values without reporting the statistical significance level that they were evaluated should not happen at this level.
 
 \section{Cross-Project Defect Prediction}
+One of the main limitations of defect prediction models is the within-project requirement for model fitting. Cross-project defect prediction can be used to predict defects in projects with models trained on other projects. This allows the application of defect predictors to new projects without enough history for within-project model fitting. It also allows the development of a universal model for defect prediction on any project.
 
 \subsection{Context Factors}
-Context factors for projects were assessed by Zhanget et al \cite{Zhang:2014:TBU:2597073.2597078}  Used as a measurement of project similarity. The provides a set of measurements to rank a project's relatedness when performing cross-project defect prediction.
+Context factors for projects were assessed by Zhang et al \cite{Zhang2014} and used as a measurement of project similarity. These context factors showed an overall increase in the confusion matrix measure when compared to just code and process metrics. Context factors provide a set of measurements to rank a project's relatedness when performing cross-project defect prediction.
 
 \textbf{Programming Languages} Projects can be divided into groups depending on the programming language they are written in. Projects written in multiple languages could be problematic unless multiple language categories are included.
 
@@ -373,338 +481,28 @@ Context factors for projects were assessed by Zhanget et al \cite{Zhang:2014:TBU
 
 \textbf{Total Number of Developers} Project size as a determined by the number of developer. Split into quartiles.
 
-\subsection{Context-Aware Rank Tranformation}
-Zhang et al \cite{Zhang:2014:TBU:2597073.2597078} propose a context-aware rank transformation approach. First, split the project up into non-overlapped groups based on the previous context factors. Then cluster the groups with similar context factor distributions. Obtain a ranking function based using the 10th quantiles of predictors. Apply this ranking function to bin the predictor values into the 10 levels.
+\subsection{Context-Aware Rank Transformation}
+Zhang et al \cite{Zhang2014} propose a context-aware rank transformation approach. First, split the project up into non-overlapped groups based on the previous context factors. Then cluster the groups with similar context factor distributions. Obtain a ranking function based using the 10th quantiles of predictors. Apply this ranking function to bin the predictor values into the 10 levels. The ranking function achieves the purpose of making projects with different scales of metrics comparable. This is crucial to a cross project defect prediction algorithm.  
 
 \subsection{Clustering}
+Zhang et al \cite{Zhang2014} use a clustering method to group similar projects together for cross-project defect prediction. Projects in the same group are used to predict each others' defects and form a universal defect prediction model. The clustering is a two step process of comparing the distribution of the project metrics and then quantifying the difference between the distributions. The first step leverages the Mann-Whitney U test. The second step leverages the Cliff's $\delta$ measure.
 
+\subsection{TCA}
+Transfer component analysis(TCA) finds the latent feature space for two different projects by minimizing the distance between their distribution while preserving the original data. Features for both projects are then mapped to this latent space. Training and prediction is done on the transformed space. TCA is sensitive the normalization which decreases its performance in transfer defect prediction.  Nam et al \cite{Nam} extended TCA to TCA+ to deal with this sensitivity to normalization.
 
+\subsection{TCA+}
+TCA+ is an extension of TCA proposed by Nam et al \cite{Nam}. By optimizing the normalization stage of data processing they are able to mitigate the sensitivities of TCA to normalization and demonstrate improved software defect prediction performance.
 
-\subsection{Math Equations}
-You may want to display math equations in three distinct styles:
-inline, numbered or non-numbered display.  Each of
-the three are discussed in the next sections.
-
-\subsubsection{Inline (In-text) Equations}
-A formula that appears in the running text is called an
-inline or in-text formula.  It is produced by the
-\textbf{math} environment, which can be
-invoked with the usual \texttt{{\char'134}begin. . .{\char'134}end}
-construction or with the short form \texttt{\$. . .\$}. You
-can use any of the symbols and structures,
-from $\alpha$ to $\omega$, available in
-\LaTeX\cite{Lamport:LaTeX}; this section will simply show a
-few examples of in-text equations in context. Notice how
-this equation: \begin{math}\lim_{n\rightarrow \infty}x=0\end{math},
-set here in in-line math style, looks slightly different when
-set in display style.  (See next section).
-
-\subsubsection{Display Equations}
-A numbered display equation -- one set off by vertical space
-from the text and centered horizontally -- is produced
-by the \textbf{equation} environment. An unnumbered display
-equation is produced by the \textbf{displaymath} environment.
-
-Again, in either environment, you can use any of the symbols
-and structures available in \LaTeX; this section will just
-give a couple of examples of display equations in context.
-First, consider the equation, shown as an inline equation above:
-\begin{equation}\lim_{n\rightarrow \infty}x=0\end{equation}
-Notice how it is formatted somewhat differently in
-the \textbf{displaymath}
-environment.  Now, we'll enter an unnumbered equation:
-\begin{displaymath}\sum_{i=0}^{\infty} x + 1\end{displaymath}
-and follow it with another numbered equation:
-\begin{equation}\sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f\end{equation}
-just to demonstrate \LaTeX's able handling of numbering.
-
-\subsection{Citations}
-Citations to articles \cite{bowman:reasoning,
-clark:pct, braams:babel, herlihy:methodology},
-conference proceedings \cite{clark:pct} or
-books \cite{salas:calculus, Lamport:LaTeX} listed
-in the Bibliography section of your
-article will occur throughout the text of your article.
-You should use BibTeX to automatically produce this bibliography;
-you simply need to insert one of several citation commands with
-a key of the item cited in the proper location in
-the \texttt{.tex} file \cite{Lamport:LaTeX}.
-The key is a short reference you invent to uniquely
-identify each work; in this sample document, the key is
-the first author's surname and a
-word from the title.  This identifying key is included
-with each item in the \texttt{.bib} file for your article.
-
-The details of the construction of the \texttt{.bib} file
-are beyond the scope of this sample document, but more
-information can be found in the \textit{Author's Guide},
-and exhaustive details in the \textit{\LaTeX\ User's
-Guide}\cite{Lamport:LaTeX}.
-
-This article shows only the plainest form
-of the citation command, using \texttt{{\char'134}cite}.
-This is what is stipulated in the SIGS style specifications.
-No other citation format is endorsed or supported.
-
-\subsection{Tables}
-Because tables cannot be split across pages, the best
-placement for them is typically the top of the page
-nearest their initial cite.  To
-ensure this proper ``floating'' placement of tables, use the
-environment \textbf{table} to enclose the table's contents and
-the table caption.  The contents of the table itself must go
-in the \textbf{tabular} environment, to
-be aligned properly in rows and columns, with the desired
-horizontal and vertical rules.  Again, detailed instructions
-on \textbf{tabular} material
-is found in the \textit{\LaTeX\ User's Guide}.
-
-Immediately following this sentence is the point at which
-Table 1 is included in the input file; compare the
-placement of the table here with the table in the printed
-dvi output of this document.
-
-\begin{table}
-\centering
-\caption{Frequency of Special Characters}
-\begin{tabular}{|c|c|l|} \hline
-Non-English or Math&Frequency&Comments\\ \hline
-\O & 1 in 1,000& For Swedish names\\ \hline
-$\pi$ & 1 in 5& Common in math\\ \hline
-\$ & 4 in 5 & Used in business\\ \hline
-$\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
-\hline\end{tabular}
-\end{table}
-
-To set a wider table, which takes up the whole width of
-the page's live area, use the environment
-\textbf{table*} to enclose the table's contents and
-the table caption.  As with a single-column table, this wide
-table will ``float" to a location deemed more desirable.
-Immediately following this sentence is the point at which
-Table 2 is included in the input file; again, it is
-instructive to compare the placement of the
-table here with the table in the printed dvi
-output of this document.
-
-
-\begin{table*}
-\centering
-\caption{Some Typical Commands}
-\begin{tabular}{|c|c|l|} \hline
-Command&A Number&Comments\\ \hline
-\texttt{{\char'134}alignauthor} & 100& Author alignment\\ \hline
-\texttt{{\char'134}numberofauthors}& 200& Author enumeration\\ \hline
-\texttt{{\char'134}table}& 300 & For tables\\ \hline
-\texttt{{\char'134}table*}& 400& For wider tables\\ \hline\end{tabular}
-\end{table*}
-% end the environment with {table*}, NOTE not {table}!
-
-\subsection{Figures}
-Like tables, figures cannot be split across pages; the
-best placement for them
-is typically the top or the bottom of the page nearest
-their initial cite.  To ensure this proper ``floating'' placement
-of figures, use the environment
-\textbf{figure} to enclose the figure and its caption.
-
-This sample document contains examples of \textbf{.eps} files to be
-displayable with \LaTeX.  If you work with pdf\LaTeX, use files in the
-\textbf{.pdf} format.  Note that most modern \TeX\ system will convert
-\textbf{.eps} to \textbf{.pdf} for you on the fly.  More details on
-each of these is found in the \textit{Author's Guide}.
-
-\begin{figure}
-\centering
-\caption{A sample black and white graphic.}
-\end{figure}
-
-\begin{figure}
-\centering
-\caption{A sample black and white graphic
-that has been resized with the \texttt{includegraphics} command.}
-\end{figure}
-
-
-As was the case with tables, you may want a figure
-that spans two columns.  To do this, and still to
-ensure proper ``floating'' placement of tables, use the environment
-\textbf{figure*} to enclose the figure and its caption.
-and don't forget to end the environment with
-{figure*}, not {figure}!
-
-\begin{figure*}
-\centering
-\caption{A sample black and white graphic
-that needs to span two columns of text.}
-\end{figure*}
-
-
-\begin{figure}
-\centering
-\caption{A sample black and white graphic that has
-been resized with the \texttt{includegraphics} command.}
-\vskip -6pt
-\end{figure}
-
-\subsection{Theorem-like Constructs}
-Other common constructs that may occur in your article are
-the forms for logical constructs like theorems, axioms,
-corollaries and proofs.  There are
-two forms, one produced by the
-command \texttt{{\char'134}newtheorem} and the
-other by the command \texttt{{\char'134}newdef}; perhaps
-the clearest and easiest way to distinguish them is
-to compare the two in the output of this sample document:
-
-This uses the \textbf{theorem} environment, created by
-the\linebreak\texttt{{\char'134}newtheorem} command:
-\newtheorem{theorem}{Theorem}
-\begin{theorem}
-Let $f$ be continuous on $[a,b]$.  If $G$ is
-an antiderivative for $f$ on $[a,b]$, then
-\begin{displaymath}\int^b_af(t)dt = G(b) - G(a).\end{displaymath}
-\end{theorem}
-
-The other uses the \textbf{definition} environment, created
-by the \texttt{{\char'134}newdef} command:
-\newdef{definition}{Definition}
-\begin{definition}
-If $z$ is irrational, then by $e^z$ we mean the
-unique number which has
-logarithm $z$: \begin{displaymath}{\log e^z = z}\end{displaymath}
-\end{definition}
-
-Two lists of constructs that use one of these
-forms is given in the
-\textit{Author's  Guidelines}.
- 
-There is one other similar construct environment, which is
-already set up
-for you; i.e. you must \textit{not} use
-a \texttt{{\char'134}newdef} command to
-create it: the \textbf{proof} environment.  Here
-is a example of its use:
-\begin{proof}
-Suppose on the contrary there exists a real number $L$ such that
-\begin{displaymath}
-\lim_{x\rightarrow\infty} \frac{f(x)}{g(x)} = L.
-\end{displaymath}
-Then
-\begin{displaymath}
-l=\lim_{x\rightarrow c} f(x)
-= \lim_{x\rightarrow c}
-\left[ g{x} \cdot \frac{f(x)}{g(x)} \right ]
-= \lim_{x\rightarrow c} g(x) \cdot \lim_{x\rightarrow c}
-\frac{f(x)}{g(x)} = 0\cdot L = 0,
-\end{displaymath}
-which contradicts our assumption that $l\neq 0$.
-\end{proof}
-
-Complete rules about using these environments and using the
-two different creation commands are in the
-\textit{Author's Guide}; please consult it for more
-detailed instructions.  If you need to use another construct,
-not listed therein, which you want to have the same
-formatting as the Theorem
-or the Definition shown above,
-use the \texttt{{\char'134}newtheorem} or the
-\texttt{{\char'134}newdef} command,
-respectively, to create it.
-
-\subsection*{A {\secit Caveat} for the \TeX\ Expert}
-Because you have just been given permission to
-use the \texttt{{\char'134}newdef} command to create a
-new form, you might think you can
-use \TeX's \texttt{{\char'134}def} to create a
-new command: \textit{Please refrain from doing this!}
-Remember that your \LaTeX\ source code is primarily intended
-to create camera-ready copy, but may be converted
-to other forms -- e.g. HTML. If you inadvertently omit
-some or all of the \texttt{{\char'134}def}s recompilation will
-be, to say the least, problematic.
+\subsection{Discussion}
+Our recommendation for future work includes extending the universal model used by Zhang et al \cite{Zhang2014} with the TCA+ approach of Nam et al \cite{Nam}. They both offer different approaches to linking projects with one relying on statistical similarities while the other relies on component analysis, respectively. A method leveraging these two approaches could first cluster based on the rank transformation and then preprocess data using TCA+ before applying a machine learning algorithm for defect prediction.
 
 \section{Conclusions}
-This paragraph will end the body of this sample document.
-Remember that you might still have Acknowledgments or
-Appendices; brief samples of these
-follow.  There is still the Bibliography to deal with; and
-we will make a disclaimer about that here: with the exception
-of the reference to the \LaTeX\ book, the citations in
-this paper are to articles which have nothing to
-do with the present subject and are used as
-examples only.
-%\end{document}  % This is where a 'short' article might terminate
+Software defect prediction has made significant progress within the last few years. Recommendations from earlier papers, such as more machine learning algorithms \cite{Catal}, better metrics \cite{Arisholm} and publicly available datasets (\cite{Catal}, \cite{Vandecruys}) have largely been followed by the papers we reviewed.  
 
-%ACKNOWLEDGMENTS are optional
-\section{Acknowledgments}
-This section is optional; it is a location for you
-to acknowledge grants, funding, editing assistance and
-what have you.  In the present case, for example, the
-authors would like to thank Gerald Murray of ACM for
-his help in codifying this \textit{Author's Guide}
-and the \textbf{.cls} and \textbf{.tex} files that it describes.
+However, there remains room for improvement for future studies, namely with ecological inference concerns \cite{Posnett}, feature metrics \cite{Hall}, and statistical tests.  Recent research into cross-project fault defect prediction has proved to be an area with potential since the application of cost effectiveness as a metric, we hope to see additional effort in this area.  We suggest that researchers focus on these areas to continue the progress that has been occurring recently. 
 
-%
-% The following two commands are all you need in the
-% initial runs of your .tex file to
-% produce the bibliography for the citations in your paper.
+We recommend usage of a greater diversity of machine learning algorithms including probabilistic graphical models. A specific use case could include hidden Markov models. It could be theorized changes to a software component can be viewed as a series of changes with a hidden state of defective or not defective. This sets up a feasible implementation of software defect prediction in a hidden Markov chain where the software metrics are observable and the software defect truth is hidden \cite{Bishop:2006:PRM:1162264}.
+
 \bibliographystyle{abbrv}
-\bibliography{references}  % sigproc.bib is the name of the Bibliography in this case
-% You must have a proper ".bib" file
-%  and remember to run:
-% latex bibtex latex latex
-% to resolve all references
-%
-% ACM needs 'a single self-contained file'!
-%
-%APPENDICES are optional
-%\balancecolumns
-\appendix
-%Appendix A
-\section{Headings in Appendices}
-The rules about hierarchical headings discussed above for
-the body of the article are different in the appendices.
-In the \textbf{appendix} environment, the command
-\textbf{section} is used to
-indicate the start of each Appendix, with alphabetic order
-designation (i.e. the first is A, the second B, etc.) and
-a title (if you include one).  So, if you need
-hierarchical structure
-\textit{within} an Appendix, start with \textbf{subsection} as the
-highest level. Here is an outline of the body of this
-document in Appendix-appropriate form:
-\subsection{Introduction}
-\subsection{The Body of the Paper}
-\subsubsection{Type Changes and  Special Characters}
-\subsubsection{Math Equations}
-\paragraph{Inline (In-text) Equations}
-\paragraph{Display Equations}
-\subsubsection{Citations}
-\subsubsection{Tables}
-\subsubsection{Figures}
-\subsubsection{Theorem-like Constructs}
-\subsubsection*{A Caveat for the \TeX\ Expert}
-\subsection{Conclusions}
-\subsection{Acknowledgments}
-\subsection{Additional Authors}
-This section is inserted by \LaTeX; you do not insert it.
-You just add the names and information in the
-\texttt{{\char'134}additionalauthors} command at the start
-of the document.
-\subsection{References}
-Generated by bibtex from your ~.bib file.  Run latex,
-then bibtex, then latex twice (to resolve references)
-to create the ~.bbl file.  Insert that ~.bbl file into
-the .tex source file and comment out
-the command \texttt{{\char'134}thebibliography}.
-% This next section command marks the start of
-% Appendix B, and does not continue the present hierarchy
-\section{More Help for the Hardy}
-The sig-alternate.cls file itself is chock-full of succinct
-and helpful comments.  If you consider yourself a moderately
-experienced to expert user of \LaTeX, you may find reading
-it useful but please remember not to change it.
-%\balancecolumns % GM June 2007
-% That's all folks!
+\bibliography{references}  
 \end{document}
